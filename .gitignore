@@ -5,6 +5,10 @@
 .idea/**/dictionaries
 .idea/**/shelf
 .idea
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.idea/easycode.ignore
 
 # Gradle
 .idea/**/gradle.xml
