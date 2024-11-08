@@ -8,7 +8,7 @@ Clone of the iconic Wordle, made for the CSC207 group project.
 | Ibrahim Majid |     ibrmaj      |
 | Geon Lim      |    1004gun1     |
 | Carol Xu      |    CaaarolXu    |
-| Ismail Majid  |    majidism     |
+| Ismail Majid  |   majidism006    |
 
 ## To-Do
 - Step 1
