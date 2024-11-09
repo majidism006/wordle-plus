@@ -24,7 +24,7 @@ public class WordleInstructionsGUI {
         JLabel generalInstructions = new JLabel("<html><center>Guess the Wordle in 6 tries.<br>"
                 + "Each guess must be a valid 5-letter word.<br>"
                 + "The color of the tiles will change to show<br>"
-                + "how close your guess was to the word.</center></html>");
+                + "how close your guess was to the word.</center></html>", SwingConstants.CENTER);
         generalInstructions.setFont(new Font("Serif", Font.PLAIN, 14));
         generalInstructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         instructionsPanel.add(generalInstructions);
