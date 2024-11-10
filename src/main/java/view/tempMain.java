@@ -7,7 +7,9 @@ public class tempMain {
         final tempAppBuilder appBuilder = new tempAppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
+                .addSignupView()
                 .addLoggedInView()
+                .addSignupUseCase()
                 .addLoginUseCase()
                 .build();
 

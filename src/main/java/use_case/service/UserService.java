@@ -13,14 +13,14 @@ public class UserService {
         this.passwordHasher = passwordHasher;
     }
 
-    public boolean registerUser(String username, String password) {
+    public User registerUser(String username, String password) {
         if (userRepository.findUserByUsername(username) != null) {
-            return false; // User already exists
+            return null; // User already exists
         }
         String hashedPassword = passwordHasher.hashPassword(password);
         User newUser = new User(0, username, hashedPassword);
         userRepository.saveUser(newUser);
-        return true;
+        return newUser;
     }
 
     public User loginUser(String username, String password) {

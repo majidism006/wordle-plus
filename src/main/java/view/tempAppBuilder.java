@@ -7,10 +7,17 @@ import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.security.PasswordHasher;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.service.UserService;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,13 +41,15 @@ public class tempAppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
+    final PasswordHasher passwordHasher = new PasswordHasher();
+    final UserService userService = new UserService(userRepository, passwordHasher);
 
-    private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private SignupView signupView;
 
     public tempAppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -87,10 +96,21 @@ public class tempAppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userRepository, loginOutputBoundary);
+                userService, loginOutputBoundary);
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public tempAppBuilder addSignupUseCase() {
+        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
+                signupViewModel, loginViewModel);
+        final SignupInputBoundary userSignupInteractor = new SignupInteractor(
+                userService, signupOutputBoundary);
+
+        final SignupController controller = new SignupController(userSignupInteractor);
+        signupView.setSignupController(controller);
         return this;
     }
 

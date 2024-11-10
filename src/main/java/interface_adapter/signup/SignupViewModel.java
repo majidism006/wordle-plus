@@ -1,6 +1,8 @@
 package interface_adapter.signup;
 
-public class SignupViewModel {
+import interface_adapter.ViewModel;
+
+public class SignupViewModel extends ViewModel<SignupState> {
 
     public static final String TITLE_LABEL = "Please Sign Up";
     public static final String USERNAME_LABEL = "Choose username";
@@ -11,9 +13,9 @@ public class SignupViewModel {
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
 
-//    public SignupViewModel() {
-//        super("sign up");
-//        setState(new SignupState());
-//    }
+    public SignupViewModel() {
+        super("sign up");
+        setState(new SignupState());
+    }
 
 }
