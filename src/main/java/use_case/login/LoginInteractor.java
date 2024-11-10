@@ -1,18 +1,18 @@
 package use_case.login;
 
-import data_access.repository.UserRepositoryImpl;
+import use_case.service.UserService;
 import entity.User;
 
 /**
  * The Login Interactor.
  */
 public class LoginInteractor implements LoginInputBoundary {
-    private final UserRepositoryImpl userRepository;
+    private final UserService userService;
     private final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(UserRepositoryImpl userRepository,
+    public LoginInteractor(UserService userService,
                            LoginOutputBoundary loginOutputBoundary) {
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.loginPresenter = loginOutputBoundary;
     }
 
@@ -20,21 +20,13 @@ public class LoginInteractor implements LoginInputBoundary {
     public void execute(LoginInputData loginInputData) {
         final String username = loginInputData.getUsername();
         final String password = loginInputData.getPassword();
-        if (userRepository.findUserByUsername(username) == null) {
-            loginPresenter.prepareFailView(username + ": Account does not exist.");
+        User user = userService.loginUser(username, password);
+        if (user == null) {
+            loginPresenter.prepareFailView("Invalid Credentials.");
         }
         else {
-            final String pwd = userRepository.findUserByUsername(username).getPassword();
-            if (!password.equals(pwd)) {
-                loginPresenter.prepareFailView("Incorrect password for \"" + username + "\".");
-            }
-            else {
-
-                final User user = userRepository.findUserByUsername(loginInputData.getUsername());
-
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
-                loginPresenter.prepareSuccessView(loginOutputData);
-            }
+            final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
+            loginPresenter.prepareSuccessView(loginOutputData);
         }
     }
 }
