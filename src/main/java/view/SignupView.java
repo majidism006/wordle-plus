@@ -186,14 +186,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
 
-    public static void main(String[] args) {
-        SignupViewModel model = new SignupViewModel();
-        SignupView view = new SignupView(model);
-        JFrame frame = new JFrame(view.getViewName());
-        frame.setSize(500, 500);
-        frame.setContentPane(view);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-    }
+//    public static void main(String[] args) {
+//        SignupViewModel model = new SignupViewModel();
+//        SignupView view = new SignupView(model);
+//        JFrame frame = new JFrame(view.getViewName());
+//        frame.setSize(500, 500);
+//        frame.setContentPane(view);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
+//
+//    }
 }
