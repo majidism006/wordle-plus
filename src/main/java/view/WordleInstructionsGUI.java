@@ -4,13 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WordleInstructionsGUI {
-    public static void main(String[] args) {
-        // Create the main frame
-        JFrame frame = new JFrame("How to Play");
+
+    private JFrame frame;
+
+    public WordleInstructionsGUI() {
+        // Initialize the frame here
+        frame = new JFrame("How to Play");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 600);
         frame.setLayout(new BorderLayout());
 
+        setupComponents();
+    }
+
+    private void setupComponents() {
         // Title label
         JLabel titleLabel = new JLabel("How To Play", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
@@ -53,11 +60,14 @@ public class WordleInstructionsGUI {
         playButton.setFont(new Font("Serif", Font.BOLD, 16));
         frame.add(playButton, BorderLayout.SOUTH);
 
-        // Display the frame
+        // Here, we might set an action listener to playButton if needed
+    }
+
+    public void show() {
         frame.setVisible(true);
     }
 
-    private static JPanel createExample(String word, int highlightedIndex) {
+    private JPanel createExample(String word, int highlightedIndex) {
         JPanel examplePanel = new JPanel();
         examplePanel.setLayout(new BorderLayout());
 
@@ -95,6 +105,4 @@ public class WordleInstructionsGUI {
 
         return examplePanel;
     }
-
 }
-
