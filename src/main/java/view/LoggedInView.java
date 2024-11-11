@@ -33,8 +33,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+        final JLabel passwordLabel = new JLabel("Password");
+        JPanel panel = new JPanel();
+        panel.add(passwordLabel);
+        panel.add(passwordInputField);
+
+//        final LabelTextPanel passwordInfo = new LabelTextPanel(
+//                new JLabel("Password"), passwordInputField);
 
         final JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
@@ -90,7 +95,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.add(usernameInfo);
         this.add(username);
 
-        this.add(passwordInfo);
+        this.add(panel);
         this.add(passwordErrorField);
         this.add(buttons);
     }
