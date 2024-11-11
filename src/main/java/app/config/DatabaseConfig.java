@@ -1,17 +1,17 @@
 package app.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConfig {
 
-    private static final String DB_URL;
-    private static final String USER;
-    private static final String PASS;
+    private static HikariDataSource dataSource;
 
     static {
         try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("application.properties")) {
@@ -22,11 +22,15 @@ public class DatabaseConfig {
             // Load the properties file
             prop.load(input);
 
-            // Get the property values
-            DB_URL = prop.getProperty("db.url");
-            USER = prop.getProperty("db.username");
-            PASS = prop.getProperty("db.password");
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(prop.getProperty("db.url"));
+            config.setUsername(prop.getProperty("db.username"));
+            config.setPassword(prop.getProperty("db.password"));
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "250");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
+            dataSource = new HikariDataSource(config);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -34,31 +38,13 @@ public class DatabaseConfig {
         }
     }
 
-
-    private static Connection connection = null;
-
-    public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(DB_URL, USER, PASS);
-                System.out.println("Connected to the database!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to connect to the database", e);
-            }
-        }
-        return connection;
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-                System.out.println("Database connection closed.");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public static void closeDataSource() {
+        if (dataSource != null) {
+            dataSource.close();
         }
     }
 }
-

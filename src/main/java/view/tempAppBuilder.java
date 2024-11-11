@@ -94,7 +94,7 @@ public class tempAppBuilder {
      */
     public tempAppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userService, loginOutputBoundary);
 
@@ -124,7 +124,7 @@ public class tempAppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState("sign up");
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
