@@ -11,16 +11,18 @@ import java.sql.SQLException;
 public class UserRepositoryImpl {
 
     public User findUserByUsername(String username) {
-        Connection connection = DatabaseConfig.getConnection();
-        String query = "SELECT * FROM users WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        String query = "SELECT id, username, password FROM users WHERE username = ?";
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error finding user", e);
         }
         return null;
     }
