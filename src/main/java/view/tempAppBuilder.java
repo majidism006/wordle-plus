@@ -11,6 +11,7 @@ import interface_adapter.security.PasswordHasher;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.grid.GridViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -46,10 +47,13 @@ public class tempAppBuilder {
 
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
+    private GridViewModel gridViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
     private SignupView signupView;
+
+
 
     public tempAppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -77,6 +81,14 @@ public class tempAppBuilder {
         return this;
     }
 
+    public tempAppBuilder addGridView() {
+        gridViewModel = new GridViewModel();
+        GridView gridView = new GridView(gridViewModel);
+        cardPanel.add(gridView, gridView.getViewName());
+        return this;
+    }
+
+
     /**
      * Adds the LoggedIn View to the application.
      * @return this builder
@@ -94,7 +106,7 @@ public class tempAppBuilder {
      */
     public tempAppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel, gridViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userService, loginOutputBoundary);
 

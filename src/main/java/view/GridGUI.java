@@ -6,10 +6,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GridGUI extends JFrame {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Wordle Grid");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
+    private JTextField[][] textFields = new JTextField[6][5];
+
+    public GridGUI() {
+        setTitle("Wordle Grid");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 500);
 
         // Main panel with BorderLayout to hold title and grid, and setting background to black
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -79,9 +81,11 @@ public class GridGUI extends JFrame {
 
         // Add grid panel to the center of the main panel
         mainPanel.add(gridPanel, BorderLayout.CENTER);
+        add(mainPanel);
+    }
 
-        frame.add(mainPanel);
-        frame.setVisible(true);
+    public void showGrid() {
+        setVisible(true);
     }
 
     // Method to auto move
