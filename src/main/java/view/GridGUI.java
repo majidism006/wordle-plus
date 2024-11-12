@@ -11,30 +11,39 @@ public class GridGUI extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
 
-        // Main panel with BorderLayout to hold title and grid
+        // Main panel with BorderLayout to hold title and grid, and setting background to black
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.BLACK);
 
         // Title label
         JLabel titleLabel = new JLabel("WORDLE!!!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setForeground(Color.WHITE);  // White text for dark mode
         mainPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Grid panel with 6x5 grid layout
+        // Grid panel with 6x5 grid layout, background set to black
         JPanel gridPanel = new JPanel(new GridLayout(6, 5, 10, 10));
         gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        gridPanel.setBackground(Color.BLACK);
 
         // Array to keep track of each cell
         JTextField[][] textFields = new JTextField[6][5];
 
-        // Loop will create text fields
+        // Loop to create text fields
         for (int row = 0; row < 6; row++) {
             for (int col = 0; col < 5; col++) {
                 JTextField textField = new JTextField(1);
                 textField.setHorizontalAlignment(JTextField.CENTER);
                 textField.setFont(new Font("Arial", Font.BOLD, 18));
+
+                // Set dark mode colors: black background and white text
+                textField.setBackground(Color.BLACK);
+                textField.setForeground(Color.WHITE);
+                textField.setCaretColor(Color.WHITE);  // White caret for visibility
+
                 textFields[row][col] = textField;
 
-                // KeyListener that ensures one letter per box and auto move forward and back
+                // KeyListener to ensure one letter per box and auto move forward and back
                 int finalRow1 = row;
                 int finalCol1 = col;
                 textField.addKeyListener(new KeyAdapter() {
@@ -62,14 +71,13 @@ public class GridGUI extends JFrame {
                             moveToPreviousField(textFields, finalRow1, finalCol1);
                         }
                     }
-
                 });
 
                 gridPanel.add(textField);
             }
         }
 
-        // Add grid panel to center of main panel
+        // Add grid panel to the center of the main panel
         mainPanel.add(gridPanel, BorderLayout.CENTER);
 
         frame.add(mainPanel);
