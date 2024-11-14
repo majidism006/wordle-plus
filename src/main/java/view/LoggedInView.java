@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
+import interface_adapter.logout.LogoutController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -25,6 +26,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
+    private LogoutController logoutController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -38,8 +40,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         panel.add(passwordLabel);
         panel.add(passwordInputField);
 
-//        final LabelTextPanel passwordInfo = new LabelTextPanel(
-//                new JLabel("Password"), passwordInputField);
 
         final JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
@@ -117,7 +117,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         return viewName;
     }
 
-//    public void setLogoutController(LogoutController logoutController) {
-//        this.logoutController = logoutController;
-//    }
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
+    }
 }

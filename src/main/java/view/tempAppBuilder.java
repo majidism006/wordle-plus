@@ -3,10 +3,15 @@ package view;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.security.PasswordHasher;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -15,6 +20,9 @@ import interface_adapter.grid.GridViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import use_case.service.UserService;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
@@ -49,9 +57,13 @@ public class tempAppBuilder {
     private LoginViewModel loginViewModel;
     private GridViewModel gridViewModel;
     private LoggedInViewModel loggedInViewModel;
+    private LogoutViewModel logoutViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
     private SignupView signupView;
+    private LogoutView logoutView;
+
+    private LoginState loginState;
 
 
 
@@ -85,6 +97,13 @@ public class tempAppBuilder {
         gridViewModel = new GridViewModel();
         GridView gridView = new GridView(gridViewModel);
         cardPanel.add(gridView, gridView.getViewName());
+        return this;
+    }
+
+    public tempAppBuilder addLogoutView() {
+        logoutViewModel = new LogoutViewModel();
+        LogoutView logoutView = new LogoutView(logoutViewModel, userService, loginState);
+        cardPanel.add(logoutView, logoutView.getViewName());
         return this;
     }
 
@@ -123,6 +142,17 @@ public class tempAppBuilder {
 
         final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
+        return this;
+    }
+
+    public tempAppBuilder addLogoutUsecase() {
+        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
+                loggedInViewModel, loginViewModel, gridViewModel);
+
+        final LogoutInputBoundary logoutInteractor = new LogoutInteractor(userService, logoutOutputBoundary);
+
+        final LogoutController logoutController = new LogoutController(logoutInteractor);
+        loggedInView.setLogoutController(logoutController);
         return this;
     }
 

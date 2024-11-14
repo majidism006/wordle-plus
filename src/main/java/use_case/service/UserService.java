@@ -30,5 +30,11 @@ public class UserService {
         }
         return null; // Invalid credentials
     }
+
+    public User setCurrentUsername() {return null;}
+//
+//    public int getUserWins(String username) {return 5;}
+//
+//    public int getUserLosses(String username) {return 10;}
 }
 
