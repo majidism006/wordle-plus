@@ -139,7 +139,7 @@ public class AppBuilder {
      */
     public AppBuilder addLogoutUseCase() {
         final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                loggedInViewModel, loginViewModel, gridViewModel);
 
         final LogoutInputBoundary logoutInteractor =
                 new LogoutInteractor(userService, logoutOutputBoundary);
