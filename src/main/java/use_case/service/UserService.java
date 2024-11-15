@@ -33,9 +33,9 @@ public class UserService {
         return null; // Invalid credentials
     }
 
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
+
+    public String getCurrentUsername() {return currentUsername;}
+  
     public void setCurrentUsername(String name) {this.currentUsername = name;}
 
     public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}

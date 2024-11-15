@@ -1,5 +1,6 @@
 package view;
 
+
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.login.LoginController;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -22,7 +24,9 @@ import java.beans.PropertyChangeListener;
 
 public class LogoutView extends JPanel implements ActionListener, PropertyChangeListener {
 
+
     private final String viewName = "game end";
+
     private final LogoutViewModel logoutViewModel;
 
     private final JButton logout;
@@ -32,7 +36,9 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
 //    private final LoginState loginState;
 
 
+
     private LogoutController logoutController;
+
 
     public LogoutView(LogoutViewModel logoutViewModel, UserService userService) {
 
@@ -60,6 +66,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
         stats.add(winRateLabel);
 
 
+
         final JPanel buttons = new JPanel();
         playagain = new JButton("play again");
         buttons.add(playagain);
@@ -73,7 +80,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
-
+      
 //        logout.addActionListener(
 //                new ActionListener() {
 //                    public void actionPerformed(ActionEvent evt) {
@@ -92,6 +99,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(stats);
+      
         this.add(buttons);
     }
 
@@ -108,6 +116,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
+
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }

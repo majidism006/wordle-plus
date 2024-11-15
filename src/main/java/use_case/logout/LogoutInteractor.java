@@ -3,6 +3,9 @@ package use_case.logout;
 import entity.User;
 import use_case.service.UserService;
 
+/**
+ * The Logout Interactor.
+ */
 public class LogoutInteractor implements LogoutInputBoundary {
     private UserService userService;
     private LogoutOutputBoundary logoutPresenter;
@@ -21,6 +24,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
 //        if (user == null) {
 //            logoutPresenter.prepareSuccessView(logoutOutputData);
 //        }
+
         final String name = logoutInputData.getUsername();
         userService.setCurrentUsername(null);
         final LogoutOutputData logoutOutputData = new LogoutOutputData(name, false);
@@ -28,5 +32,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
     }
 
     @Override
+
     public void switchTogridView() { logoutPresenter.switchTogridView();}
 }
+

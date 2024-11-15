@@ -1,6 +1,10 @@
 package use_case.logout;
 
+/**
+ * Output Data for the Logout Use Case.
+ */
 public class LogoutOutputData {
+
     private String username;
     private boolean useCaseFailed;
 
