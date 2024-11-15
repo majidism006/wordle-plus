@@ -1,6 +1,5 @@
 package use_case.logout;
 
-import entity.User;
 import use_case.service.UserService;
 
 /**
@@ -32,7 +31,6 @@ public class LogoutInteractor implements LogoutInputBoundary {
     }
 
     @Override
-
-    public void switchTogridView() { logoutPresenter.switchTogridView();}
+    public void switchToGridView() { logoutPresenter.switchTogridView();}
 }
 
