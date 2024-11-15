@@ -3,7 +3,6 @@ package view;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -50,9 +49,7 @@ public class AppBuilder {
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private GridViewModel gridViewModel;
-    private LoggedInViewModel loggedInViewModel;
     private LogoutViewModel logoutViewModel;
-    private LoggedInView loggedInView;
     private LoginView loginView;
     private SignupView signupView;
     private LogoutView logoutView;
@@ -99,25 +96,12 @@ public class AppBuilder {
         return this;
     }
 
-
-    /**
-     * Adds the LoggedIn View to the application.
-     * @return this builder
-     */
-    public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
-        return this;
-    }
-
     /**
      * Adds the Login Use Case to the application.
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel, gridViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, gridViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userService, loginOutputBoundary);
 
@@ -138,8 +122,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addLogoutUsecase() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, gridViewModel);
+        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel, loginViewModel, gridViewModel);
 
         final LogoutInputBoundary logoutInteractor = new LogoutInteractor(userService, logoutOutputBoundary);
 

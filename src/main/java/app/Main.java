@@ -7,9 +7,9 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
+                .addLogoutView()
                 .addSignupView()
                 .addGridView()
-                .addLoggedInView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addLogoutUseCase()
