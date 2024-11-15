@@ -2,19 +2,12 @@ package view;
 
 
 import data_access.repository.UserRepositoryImpl;
-import interface_adapter.loggedin.LoggedInState;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutState;
 import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.security.PasswordHasher;
 import use_case.service.UserService;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
@@ -76,7 +69,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
         playagain.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        logoutController.switchTogridView();
+                        logoutController.switchToGridView();
                     }
                 }
         );
