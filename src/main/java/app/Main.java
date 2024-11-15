@@ -1,16 +1,18 @@
-package view;
+package app;
 
 import javax.swing.*;
 
-public class tempMain {
+public class Main {
     public static void main(String[] args) {
-        final tempAppBuilder appBuilder = new tempAppBuilder();
+        final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
                 .addSignupView()
                 .addGridView()
+                .addLoggedInView()
                 .addSignupUseCase()
                 .addLoginUseCase()
+                .addLogoutUseCase()
                 .build();
 
         application.pack();

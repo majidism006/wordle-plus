@@ -7,6 +7,7 @@ import interface_adapter.security.PasswordHasher;
 public class UserService {
     private final UserRepositoryImpl userRepository;
     private final PasswordHasher passwordHasher;
+    private String currentUsername;
 
     public UserService(UserRepositoryImpl userRepository, PasswordHasher passwordHasher) {
         this.userRepository = userRepository;
@@ -30,5 +31,18 @@ public class UserService {
         }
         return null; // Invalid credentials
     }
+
+
+    public void setCurrentUsername(String name) {this.currentUsername = name;}
+
+    public String getCurrentUsername() {
+        return this.currentUsername;
+    }
+
+    public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}
+
+    public int getUserWins(String username) {return 5;}
+
+    public int getUserLosses(String username) {return 10;}
 }
 
