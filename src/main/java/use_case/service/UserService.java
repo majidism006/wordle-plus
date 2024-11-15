@@ -27,17 +27,16 @@ public class UserService {
     public User loginUser(String username, String password) {
         User user = userRepository.findUserByUsername(username);
         if (user != null && passwordHasher.verifyPassword(password, user.getPassword())) {
+            this.currentUsername = user.getUsername();
             return user;
         }
         return null; // Invalid credentials
     }
 
 
+    public String getCurrentUsername() {return currentUsername;}
+  
     public void setCurrentUsername(String name) {this.currentUsername = name;}
-
-    public String getCurrentUsername() {
-        return this.currentUsername;
-    }
 
     public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}
 

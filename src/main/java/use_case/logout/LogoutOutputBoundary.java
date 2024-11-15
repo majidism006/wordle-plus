@@ -1,7 +1,7 @@
 package use_case.logout;
 
 /**
- * The output boundary for the Login Use Case.
+ * The output boundary for the Logout Use Case.
  */
 public interface LogoutOutputBoundary {
     /**
@@ -9,12 +9,6 @@ public interface LogoutOutputBoundary {
      * @param outputData the output data
      */
     void prepareSuccessView(LogoutOutputData outputData);
-
-    /**
-     * Prepares the failure view for the Login Use Case.
-     * @param errorMessage the explanation of the failure
-     */
-    void prepareFailView(String errorMessage);
-
+  
     void switchTogridView();
 }

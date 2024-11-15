@@ -1,8 +1,6 @@
 package use_case.logout;
 
-/**
- * Input Boundary for actions which are related to logging in.
- */
+
 public interface LogoutInputBoundary {
 
     /**
@@ -12,4 +10,5 @@ public interface LogoutInputBoundary {
     void execute(LogoutInputData LogoutInputData);
 
     void switchToGridView();
+
 }
