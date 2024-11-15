@@ -9,10 +9,10 @@ public class tempMain {
                 .addLoginView()
                 .addSignupView()
                 .addGridView()
-//                .addLogoutView()
+                .addLogoutView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-//                .addLogoutUsecase()
+                .addLogoutUsecase()
                 .build();
 
         application.pack();

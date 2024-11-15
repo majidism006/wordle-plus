@@ -102,7 +102,7 @@ public class tempAppBuilder {
 
     public tempAppBuilder addLogoutView() {
         logoutViewModel = new LogoutViewModel();
-        LogoutView logoutView = new LogoutView(logoutViewModel, userService, loginState);
+        logoutView = new LogoutView(logoutViewModel, userService);
         cardPanel.add(logoutView, logoutView.getViewName());
         return this;
     }
@@ -152,7 +152,7 @@ public class tempAppBuilder {
         final LogoutInputBoundary logoutInteractor = new LogoutInteractor(userService, logoutOutputBoundary);
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
-        loggedInView.setLogoutController(logoutController);
+        logoutView.setLogoutController(logoutController);
         return this;
     }
 
