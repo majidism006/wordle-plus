@@ -3,11 +3,9 @@ package view;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
-import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
@@ -37,12 +35,8 @@ import java.awt.*;
  * <p/>
  * This is done by adding each View and then adding related Use Cases.
  */
-// Checkstyle note: you can ignore the "Class Data Abstraction Coupling"
-//                  and the "Class Fan-Out Complexity" issues for this lab; we encourage
-//                  your team to think about ways to refactor the code to resolve these
-//                  if your team decides to work with this as your starter code
-//                  for your final project this term.
-public class tempAppBuilder {
+
+public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
 
@@ -63,11 +57,9 @@ public class tempAppBuilder {
     private SignupView signupView;
     private LogoutView logoutView;
 
-    private LoginState loginState;
 
 
-
-    public tempAppBuilder() {
+    public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
 
@@ -75,7 +67,7 @@ public class tempAppBuilder {
      * Adds the Signup View to the application.
      * @return this builder
      */
-    public tempAppBuilder addSignupView() {
+    public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
@@ -86,21 +78,21 @@ public class tempAppBuilder {
      * Adds the Login View to the application.
      * @return this builder
      */
-    public tempAppBuilder addLoginView() {
+    public AppBuilder addLoginView() {
         loginViewModel = new LoginViewModel();
         loginView = new LoginView(loginViewModel);
         cardPanel.add(loginView, loginView.getViewName());
         return this;
     }
 
-    public tempAppBuilder addGridView() {
+    public AppBuilder addGridView() {
         gridViewModel = new GridViewModel();
         GridView gridView = new GridView(gridViewModel);
         cardPanel.add(gridView, gridView.getViewName());
         return this;
     }
 
-    public tempAppBuilder addLogoutView() {
+    public AppBuilder addLogoutView() {
         logoutViewModel = new LogoutViewModel();
         logoutView = new LogoutView(logoutViewModel, userService);
         cardPanel.add(logoutView, logoutView.getViewName());
@@ -112,7 +104,7 @@ public class tempAppBuilder {
      * Adds the LoggedIn View to the application.
      * @return this builder
      */
-    public tempAppBuilder addLoggedInView() {
+    public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
@@ -123,7 +115,7 @@ public class tempAppBuilder {
      * Adds the Login Use Case to the application.
      * @return this builder
      */
-    public tempAppBuilder addLoginUseCase() {
+    public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel, signupViewModel, gridViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
@@ -134,7 +126,7 @@ public class tempAppBuilder {
         return this;
     }
 
-    public tempAppBuilder addSignupUseCase() {
+    public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
@@ -145,7 +137,7 @@ public class tempAppBuilder {
         return this;
     }
 
-    public tempAppBuilder addLogoutUsecase() {
+    public AppBuilder addLogoutUsecase() {
         final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel, gridViewModel);
 
