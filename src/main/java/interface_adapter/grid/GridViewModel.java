@@ -12,4 +12,7 @@ public class GridViewModel extends ViewModel<GridState> {
         setState(new GridState());
     }
 
+    public void setGameOver(boolean isGameOver) {
+        // to be implemented
+    }
 }

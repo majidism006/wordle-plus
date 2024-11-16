@@ -16,7 +16,7 @@ import java.beans.PropertyChangeListener;
  */
 public class GridView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "grid";
+    private static final String viewName = "grid";
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
@@ -42,14 +42,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 add(cell);
             }
         }
-    }
-
-    /**
-     * Set the GridController for this view.
-     * @param gridController the GridController to set
-     */
-    public void setGridController(GridController gridController) {
-        this.gridController = gridController;
     }
 
     /**
@@ -93,6 +85,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 cell.setText(letter.substring(0, 1)); // Limit input to one letter
             }
             gridController.execute(row, col, cell.getText()); // Send input to the controller
+            gridController.switchToLogoutView(); // TODO: Remove this and implement an actual game end checker
         }
 
         @Override
@@ -113,5 +106,12 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+    /**
+     * Set the GridController for this view.
+     * @param gridController the GridController to set
+     */
+    public void setGridController(GridController gridController) {
+        this.gridController = gridController;
     }
 }

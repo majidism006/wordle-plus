@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
 public class LogoutView extends JPanel implements ActionListener, PropertyChangeListener {
 
 
-    private final String viewName = "game end";
+    private static final String viewName = "game end";
 
     private final LogoutViewModel logoutViewModel;
 
@@ -102,19 +102,19 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // TODO: implement this
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        // TODO: implement this
     }
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         LogoutViewModel model = new LogoutViewModel();
         final UserRepositoryImpl userRepository = new UserRepositoryImpl();
         final PasswordHasher passwordHasher = new PasswordHasher();

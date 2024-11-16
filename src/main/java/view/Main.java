@@ -13,6 +13,7 @@ public class Main {
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addLogoutUsecase()
+                .addGridUseCase()
                 .build();
 
         application.pack();
