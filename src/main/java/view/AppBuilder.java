@@ -3,6 +3,8 @@ package view;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.grid.GridController;
+import interface_adapter.grid.GridPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -14,6 +16,9 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
+import use_case.grid.GridInputBoundary;
+import use_case.grid.GridInteractor;
+import use_case.grid.GridOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -40,7 +45,6 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
 
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
     final PasswordHasher passwordHasher = new PasswordHasher();
@@ -53,6 +57,7 @@ public class AppBuilder {
     private LoginView loginView;
     private SignupView signupView;
     private LogoutView logoutView;
+    private GridView gridView;
 
 
 
@@ -84,7 +89,7 @@ public class AppBuilder {
 
     public AppBuilder addGridView() {
         gridViewModel = new GridViewModel();
-        GridView gridView = new GridView(gridViewModel);
+        gridView = new GridView(gridViewModel);
         cardPanel.add(gridView, gridView.getViewName());
         return this;
     }
@@ -128,6 +133,13 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         logoutView.setLogoutController(logoutController);
+        return this;
+    }
+    public AppBuilder addGridUseCase() {
+        final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
+        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary);
+        final GridController gridController = new GridController(gridInteractor);
+        gridView.setGridController(gridController);
         return this;
     }
 

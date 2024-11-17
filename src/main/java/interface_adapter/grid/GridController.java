@@ -28,7 +28,7 @@ public class GridController {
     /**
      * Requests a transition to signout view when implemented.
      */
-    // public void switchToSignoutView() {
-     //   gridInteractor.switchToSignoutView();
-    //}
+     public void switchToLogoutView() {
+        gridInteractor.switchToLogoutView();
+    }
 }
