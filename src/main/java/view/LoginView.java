@@ -43,18 +43,45 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         panel1.add(usernameLabel);
         panel1.add(usernameInputField);
 
+        // Set preferred size for the username input field
+        usernameInputField.setPreferredSize(new Dimension(200, 30));
+
         final JLabel passwordLabel = new JLabel("Password");
         JPanel panel2 = new JPanel();
         panel2.add(passwordLabel);
         panel2.add(passwordInputField);
 
+        // Set preferred size for the password input field
+        passwordInputField.setPreferredSize(new Dimension(200, 30));
+
         final JPanel buttons = new JPanel();
-        signup = new JButton("sign up");
+        signup = new JButton("Sign Up");
         buttons.add(signup);
-        logIn = new JButton("log in");
+        logIn = new JButton("Log In");
         buttons.add(logIn);
-        cancel = new JButton("cancel");
+        cancel = new JButton("Cancel");
         buttons.add(cancel);
+
+        // Set preferred sizes for buttons
+        signup.setPreferredSize(new Dimension(100, 40));
+        logIn.setPreferredSize(new Dimension(100, 40));
+        cancel.setPreferredSize(new Dimension(100, 40));
+
+        buttons.add(signup);
+        buttons.add(logIn);
+        buttons.add(cancel);
+
+        // border layout for better spacing and alignment
+        this.setLayout(new BorderLayout());
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.add(panel1);
+        centerPanel.add(usernameErrorField);
+        centerPanel.add(panel2);
+
+        // Add padding
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        buttons.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         signup.addActionListener(
                 new ActionListener() {

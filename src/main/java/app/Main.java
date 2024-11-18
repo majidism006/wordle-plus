@@ -15,6 +15,7 @@ public class Main {
                 .addLoginUseCase()
                 .addLogoutUseCase()
                 .addInstructionsUseCase()
+                .addGridUseCase()
                 .build();
 
         application.pack();
