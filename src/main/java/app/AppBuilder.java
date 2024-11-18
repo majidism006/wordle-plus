@@ -61,13 +61,17 @@ public class AppBuilder {
     private GridView gridView;
 
 
-
     public AppBuilder() {
+
         cardPanel.setLayout(cardLayout);
+        // sets size to be a little bigger than whats the default
+        cardPanel.setPreferredSize(new Dimension(600, 500));
+
     }
 
     /**
      * Adds the Signup View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addSignupView() {
@@ -79,6 +83,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login View to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLoginView() {
@@ -111,6 +116,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
@@ -136,6 +142,7 @@ public class AppBuilder {
 
     /**
      * Adds the Logout Use Case to the application.
+     *
      * @return this builder
      */
     public AppBuilder addLogoutUseCase() {
@@ -148,6 +155,7 @@ public class AppBuilder {
         logoutView.setLogoutController(logoutController);
         return this;
     }
+
     public AppBuilder addGridUseCase() {
         final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
         final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary);
@@ -157,18 +165,50 @@ public class AppBuilder {
     }
 
     /**
+     * Allows the title of the Jframe to change depending on what Frame is Visible
+     *
+     * @return Frame title
+     */
+    private String convertStateToTitle(String state) {
+        switch (state) {
+            case "log in":
+                return "Login";
+            case "sign up":
+                return "Signup";
+            case "grid":
+                return "Wordle Grid";
+            default:
+                return "Application";
+        }
+    }
+
+
+    /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     *
      * @return the application
      */
     public JFrame build() {
+        // To ensure resizing of the visible frame
+        cardPanel.revalidate();
+        cardPanel.repaint();
+
         final JFrame application = new JFrame("Login");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         application.add(cardPanel);
 
+        // Add a listener to update the frame title
+        viewManagerModel.addPropertyChangeListener(evt -> {
+            String newState = (String) evt.getNewValue(); // Assume state is the view name
+            application.setTitle(convertStateToTitle(newState));
+        });
+
+        // Set the initial state and fire property changes
         viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChanged();
 
+        application.pack();
+        application.setVisible(true);
         return application;
     }
 }
