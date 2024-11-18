@@ -5,6 +5,7 @@ import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
+import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -58,6 +59,8 @@ public class AppBuilder {
     private SignupView signupView;
     private LogoutView logoutView;
     private GridView gridView;
+    private WordleInstructionsGUI wordleInstructionsGUI;
+    private InstructionsViewModel instructionsViewModel;
 
 
 
@@ -106,7 +109,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, gridViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, gridViewModel, instructionsViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userService, loginOutputBoundary);
 

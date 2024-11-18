@@ -18,5 +18,7 @@ public interface LoginOutputBoundary {
 
     void switchToSignupView();
 
-    void switchToGridView();
+
+
+    void switchToInstructionsView();
 }

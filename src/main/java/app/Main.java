@@ -10,10 +10,11 @@ public class Main {
                 .addLogoutView()
                 .addSignupView()
                 .addGridView()
+                .addWordleInstructionsGUI()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addLogoutUseCase()
-                .addGridUseCase()
+                .addInstructionsUseCase()
                 .build();
 
         application.pack();
