@@ -61,9 +61,9 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
 
 
         final JPanel buttons = new JPanel();
-        playagain = new JButton("play again");
+        playagain = new JButton("Play Again?");
         buttons.add(playagain);
-        logout = new JButton("log out");
+        logout = new JButton("Log Out");
         buttons.add(logout);
 
         playagain.addActionListener(
