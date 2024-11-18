@@ -29,4 +29,8 @@ public class LoginController {
     public void switchToSignupView() {
         loginUseCaseInteractor.switchToSignupView();
     }
+
+    public void switchToInstructionsView() {
+        loginUseCaseInteractor.switchToInstructionsView();
+    }
 }

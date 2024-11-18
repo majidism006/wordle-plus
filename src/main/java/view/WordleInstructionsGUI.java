@@ -2,26 +2,43 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class WordleInstructionsGUI {
+import interface_adapter.grid.GridState;
+import interface_adapter.instructions.InstructionsState;
+import interface_adapter.instructions.InstructionsViewModel;
+import interface_adapter.instructions.InstructionsController;
 
-    private JFrame frame;
+public class WordleInstructionsGUI extends JPanel implements PropertyChangeListener {
 
-    public WordleInstructionsGUI() {
-        // Initialize the frame here
-        frame = new JFrame("How to Play");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 600);
-        frame.setLayout(new BorderLayout());
+    private static final String viewName = "instructions";
+    private InstructionsViewModel instructionsViewModel;
+    private InstructionsController instructionsController;
 
+    public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel) {
+        this.instructionsViewModel = instructionsViewModel;
+        this.instructionsViewModel.addPropertyChangeListener(this);
+        // Set layout for the main panel
+        setLayout(new BorderLayout());
         setupComponents();
+    }
+
+    public void setInstructionsController(InstructionsController instructionsController) {
+        this.instructionsController = instructionsController;
+    }
+
+    public static String getViewName() {
+        return "instructions";
     }
 
     private void setupComponents() {
         // Title label
         JLabel titleLabel = new JLabel("How To Play", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        frame.add(titleLabel, BorderLayout.NORTH);
+        add(titleLabel, BorderLayout.NORTH);
 
         // Main instructions panel
         JPanel instructionsPanel = new JPanel();
@@ -53,18 +70,22 @@ public class WordleInstructionsGUI {
         instructionsPanel.add(examplesPanel);
 
         // Add instructions panel to the main frame
-        frame.add(instructionsPanel, BorderLayout.CENTER);
+        add(instructionsPanel, BorderLayout.CENTER);
 
-        // Placeholder Play button
+        // Play button
         JButton playButton = new JButton("Play");
         playButton.setFont(new Font("Serif", Font.BOLD, 16));
-        frame.add(playButton, BorderLayout.SOUTH);
+        add(playButton, BorderLayout.SOUTH);
 
-        // Here, we might set an action listener to playButton if needed
-    }
+        // Button ActionListener
+        // If onComplete.run() is doing something else, make sure it's not triggering a view switch
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    instructionsController.switchToGridView();
 
-    public void show() {
-        frame.setVisible(true);
+        }});
+
     }
 
     private JPanel createExample(String word, int highlightedIndex) {
@@ -105,4 +126,9 @@ public class WordleInstructionsGUI {
 
         return examplePanel;
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final InstructionsState state = (InstructionsState) evt.getNewValue();
+        }
 }

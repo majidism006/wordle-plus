@@ -5,6 +5,9 @@ import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
+import interface_adapter.instructions.InstructionsController;
+import interface_adapter.instructions.InstructionsPresenter;
+import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -16,6 +19,9 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
+import use_case.WordleInstructions.InstructionsInputBoundary;
+import use_case.WordleInstructions.InstructionsOutputBoundary;
+import use_case.WordleInstructions.InstructionsUseCaseInteractor;
 import use_case.grid.GridInputBoundary;
 import use_case.grid.GridInteractor;
 import use_case.grid.GridOutputBoundary;
@@ -59,6 +65,8 @@ public class AppBuilder {
     private SignupView signupView;
     private LogoutView logoutView;
     private GridView gridView;
+    private InstructionsViewModel instructionsViewModel;
+    private WordleInstructionsGUI wordleInstructionsGUI;
 
 
 
@@ -88,12 +96,26 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the instructions page to the application.
+     * @return this builder.
+     */
+    public AppBuilder addWordleInstructionsGUI() {
+        instructionsViewModel = new InstructionsViewModel();
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel);
+        cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
+        return this;
+    }
+
     public AppBuilder addGridView() {
         gridViewModel = new GridViewModel();
         gridView = new GridView(gridViewModel);
         cardPanel.add(gridView, gridView.getViewName());
         return this;
     }
+
+
+
 
     public AppBuilder addLogoutView() {
         logoutViewModel = new LogoutViewModel();
@@ -114,7 +136,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, gridViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, gridViewModel, instructionsViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userService, loginOutputBoundary);
 
@@ -134,6 +156,17 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addInstructionsUseCase() {
+        final InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
+                instructionsViewModel, gridViewModel);
+        final InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(
+                userService,instructionsOutputBoundary);
+
+        final InstructionsController controller = new InstructionsController(instructionsInteractor);
+        wordleInstructionsGUI.setInstructionsController(controller);
+        return this;
+    }
+
     /**
      * Adds the Logout Use Case to the application.
      * @return this builder
@@ -148,13 +181,7 @@ public class AppBuilder {
         logoutView.setLogoutController(logoutController);
         return this;
     }
-    public AppBuilder addGridUseCase() {
-        final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
-        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary);
-        final GridController gridController = new GridController(gridInteractor);
-        gridView.setGridController(gridController);
-        return this;
-    }
+
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.

@@ -1,7 +1,9 @@
 package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.ViewModel;
 import interface_adapter.grid.GridState;
+import interface_adapter.instructions.InstructionsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -17,24 +19,23 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
     private final GridViewModel gridViewModel;
+    private final InstructionsViewModel instructionsViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-                          LoginViewModel loginViewModel, SignupViewModel signupViewModel, GridViewModel gridViewModel) {
+                          LoginViewModel loginViewModel, SignupViewModel signupViewModel, GridViewModel gridViewModel, InstructionsViewModel instructionsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.signupViewModel = signupViewModel;
         this.gridViewModel = gridViewModel;
+        this.instructionsViewModel = instructionsViewModel;
     }
 
     @Override
     public void prepareSuccessView(LoginOutputData response) {
-        // On success, switch to the grid view.
+        // On success, switch to the Instructions view.
 
-        final GridState gridState = gridViewModel.getState();
-        this.gridViewModel.setState(gridState);
-        this.gridViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setState(gridViewModel.getViewName());
+        this.viewManagerModel.setState(instructionsViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
@@ -51,8 +52,8 @@ public class LoginPresenter implements LoginOutputBoundary {
     }
 
     @Override
-    public void switchToGridView(){
-        viewManagerModel.setState(gridViewModel.getViewName());
+    public void switchToInstructionsView() {
+        viewManagerModel.setState(instructionsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }
