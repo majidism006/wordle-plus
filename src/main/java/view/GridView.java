@@ -56,6 +56,9 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 cell.setForeground(Color.WHITE);
                 cell.setCaretColor(Color.WHITE);
 
+                // Add grey border
+                cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
                 cell.getDocument().addDocumentListener(new CellDocumentListener(row, col, cell));
                 gridCells[row][col] = cell;
                 gridPanel.add(cell);
