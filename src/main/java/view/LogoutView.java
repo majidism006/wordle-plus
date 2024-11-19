@@ -45,10 +45,10 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
         int wins = userService.getUserWins(userService.getCurrentUsername());
         int losses = userService.getUserLosses(userService.getCurrentUsername());
 
-        //Calculate the winning rate
+        // Calculate the winning rate
         double winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
 
-//         Create labels to display the stats
+        // Create labels to display the stats
         JLabel winsLabel = new JLabel("Wins: " + wins, SwingConstants.CENTER);
         JLabel lossesLabel = new JLabel("Losses: " + losses, SwingConstants.CENTER);
         JLabel winRateLabel = new JLabel("Winning Rate: " + String.format("%.2f", winRate) + "%", SwingConstants.CENTER);
