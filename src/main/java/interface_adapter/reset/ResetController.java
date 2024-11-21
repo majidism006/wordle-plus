@@ -17,7 +17,7 @@ public class ResetController {
         resetusecaseInteractor.execute(resetInputData);
     }
 
-    public void switchToGridView() {
-        resetusecaseInteractor.switchToGridView();
+    public void switchToInstructionView() {
+        resetusecaseInteractor.switchToInstructionView();
     }
 }

@@ -17,8 +17,8 @@ public class ResetInteractor implements ResetInputBoundary{
     }
 
     @Override
-    public void switchToGridView() {
-        userpresenter.switchToGridView();
+    public void switchToInstructionView() {
+        userpresenter.switchToInstructionView();
     }
 
 }

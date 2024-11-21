@@ -4,5 +4,5 @@ public interface ResetOutBoundary {
 
     void prepareSuccessView(ResetOutputData resetOutputData);
 
-    void switchToGridView();
+    void switchToInstructionView();
 }

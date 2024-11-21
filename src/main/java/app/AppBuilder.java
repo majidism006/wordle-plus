@@ -200,7 +200,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addResetUseCase() {
-        final ResetOutBoundary resetOutBoundary = new ResetPresenter(viewManagerModel, gridViewModel);
+        final ResetOutBoundary resetOutBoundary = new ResetPresenter(viewManagerModel, gridViewModel, instructionsViewModel);
         final ResetInputBoundary resetInteractor = new ResetInteractor(resetOutBoundary);
         final ResetController resetController = new ResetController(resetInteractor);
         logoutView.setResetController(resetController);

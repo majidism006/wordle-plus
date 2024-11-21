@@ -75,7 +75,7 @@ public class LogoutView extends JPanel implements PropertyChangeListener {
                             final LogoutState currentState = logoutViewModel.getState();
 
                             resetController.execute(currentState.getUsername());
-                            resetController.switchToGridView();
+                            resetController.switchToInstructionView();
                     }
                 }
         );
