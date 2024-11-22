@@ -5,6 +5,7 @@ import data_access.repository.UserRepositoryImpl;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutState;
 import interface_adapter.logout.LogoutViewModel;
+import interface_adapter.reset.ResetController;
 import interface_adapter.security.PasswordHasher;
 import use_case.service.UserService;
 
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class LogoutView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LogoutView extends JPanel implements PropertyChangeListener {
 
 
     private static final String viewName = "game end";
@@ -30,6 +31,7 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
 
 
     private LogoutController logoutController;
+    private ResetController resetController;
 
 
     public LogoutView(LogoutViewModel logoutViewModel, UserService userService) {
@@ -68,9 +70,12 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
         buttons.add(logout);
 
         playagain.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        logoutController.switchToGridView();
+                evt -> {
+                    if (evt.getSource().equals(playagain)) {
+                            final LogoutState currentState = logoutViewModel.getState();
+
+                            resetController.execute(currentState.getUsername());
+                            resetController.switchToInstructionView();
                     }
                 }
         );
@@ -105,17 +110,16 @@ public class LogoutView extends JPanel implements ActionListener, PropertyChange
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO: implement this
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO: implement this
     }
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setResetController(ResetController resetController) {
+        this.resetController = resetController;
     }
 
 //    public static void main(String[] args) {

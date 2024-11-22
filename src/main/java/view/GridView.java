@@ -96,6 +96,9 @@ public class GridView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         final GridState state = (GridState) evt.getNewValue();
         updateGrid(state);
+        if (evt.getPropertyName().equals("reset")) {
+            clear();
+        }
     }
 
     /**
@@ -106,6 +109,14 @@ public class GridView extends JPanel implements PropertyChangeListener {
             for (int col = 0; col < gridCells[row].length; col++) {
                 String letter = state.getCell(row, col);
                 gridCells[row][col].setText(letter);
+            }
+        }
+    }
+
+    public void clear() {
+        for (int row = 0; row < gridCells.length; row++) {
+            for (int col = 0; col < gridCells[row].length; col++) {
+                gridCells[row][col].setText(""); // Reset each cell to an empty string
             }
         }
     }

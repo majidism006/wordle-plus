@@ -28,7 +28,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     private final JButton logIn;
-    private final JButton cancel;
+    private final JButton quit;
     private final JButton signup;
 
     private LoginController loginController;
@@ -59,17 +59,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         buttons.add(signup);
         logIn = new JButton("Log In");
         buttons.add(logIn);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+        quit = new JButton("Quit");
+        buttons.add(quit);
 
         // Set preferred sizes for buttons
         signup.setPreferredSize(new Dimension(100, 40));
         logIn.setPreferredSize(new Dimension(100, 40));
-        cancel.setPreferredSize(new Dimension(100, 40));
+        quit.setPreferredSize(new Dimension(100, 40));
 
         buttons.add(signup);
         buttons.add(logIn);
-        buttons.add(cancel);
+        buttons.add(quit);
 
         // border layout for better spacing and alignment
         this.setLayout(new BorderLayout());
@@ -105,11 +105,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(
+        quit.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(cancel)) {
+                        if (e.getSource().equals(quit)) {
 
                             System.exit(0);
                         }
