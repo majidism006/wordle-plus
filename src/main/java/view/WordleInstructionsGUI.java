@@ -72,10 +72,24 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         // Add instructions panel to the main frame
         add(instructionsPanel, BorderLayout.CENTER);
 
+        // Panel for play and dropdown
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+
+        // Add difficulty dropdown
+        String[] difficulties = { "Easy", "Medium", "Hard" };
+        JComboBox<String> difficultyDropdown = new JComboBox<>(difficulties);
+        difficultyDropdown.setFont(new Font("Serif", Font.PLAIN, 14));
+        bottomPanel.add(difficultyDropdown, BorderLayout.NORTH);
+
         // Play button
         JButton playButton = new JButton("Play");
         playButton.setFont(new Font("Serif", Font.BOLD, 16));
-        add(playButton, BorderLayout.SOUTH);
+        bottomPanel.add(playButton, BorderLayout.SOUTH);
+
+        // Add the bottom panel to the main frame
+        add(bottomPanel, BorderLayout.SOUTH);
+
 
         // Button ActionListener
         // If onComplete.run() is doing something else, make sure it's not triggering a view switch
@@ -85,6 +99,20 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
                     instructionsController.switchToGridView();
 
         }});
+
+        difficultyDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
+                String selectedDifficulty = (String) comboBox.getSelectedItem();
+                // TODO: Handle the selected difficulty level
+                System.out.println("Selected Difficulty: "+selectedDifficulty);
+        }});
+
+        // Sets initial state to easy
+        difficultyDropdown.setSelectedIndex(0);
+        difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent
+                .ACTION_PERFORMED, null));
 
     }
 
