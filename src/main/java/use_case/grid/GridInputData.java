@@ -26,4 +26,9 @@ public class GridInputData {
     public String getLetter() {
         return letter;
     }
+
+    public String getGuess() {
+        // TODO: complete method
+        return "";
+    }
 }

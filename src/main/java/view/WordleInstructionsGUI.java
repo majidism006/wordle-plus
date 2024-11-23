@@ -15,7 +15,7 @@ import interface_adapter.instructions.InstructionsController;
 public class WordleInstructionsGUI extends JPanel implements PropertyChangeListener {
 
     private static final String viewName = "instructions";
-    private InstructionsViewModel instructionsViewModel;
+    private final InstructionsViewModel instructionsViewModel;
     private InstructionsController instructionsController;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel) {

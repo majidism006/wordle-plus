@@ -140,7 +140,7 @@ public class AppBuilder {
     }
     public AppBuilder addGridUseCase() {
         final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
-        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary);
+        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, );
         final GridController gridController = new GridController(gridInteractor);
         gridView.setGridController(gridController);
         return this;
