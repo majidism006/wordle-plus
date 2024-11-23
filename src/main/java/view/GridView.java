@@ -5,8 +5,10 @@ import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -44,7 +46,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
         gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         gridPanel.setBackground(Color.BLACK);
 
-        // Initialize grid cells with DocumentListeners for user input
+        // Initialize grid cells with DocumentFilters for user input
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 JTextField cell = new JTextField(1); // Each cell holds one letter
@@ -59,14 +61,32 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 // Add grey border
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-                cell.getDocument().addDocumentListener(new CellDocumentListener(row, col, cell));
+                // Apply the custom DocumentFilter
+                ((AbstractDocument) cell.getDocument()).setDocumentFilter(new UppercaseDocumentFilter(row, col));
+
+                int finalCol = col;
+                int finalRow = row;
+                cell.addKeyListener(new java.awt.event.KeyAdapter() {
+                    @Override
+                    public void keyPressed(java.awt.event.KeyEvent e) {
+                        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE && cell.getText().isEmpty()) {
+                            // Move to the previous cell on Backspace if the current cell is empty
+                            if (finalCol > 0) {
+                                gridCells[finalRow][finalCol - 1].requestFocus();
+                            }
+                        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                            // If Enter is pressed after filling the row, switch to the logout view
+                            handleEnterKey(finalRow);
+                        }
+                    }
+                });
+
                 gridCells[row][col] = cell;
                 gridPanel.add(cell);
             }
         }
         // Add grid panel to the center of the layout
         add(gridPanel, BorderLayout.CENTER);
-
     }
 
     /**
@@ -76,6 +96,9 @@ public class GridView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         final GridState state = (GridState) evt.getNewValue();
         updateGrid(state);
+        if (evt.getPropertyName().equals("reset")) {
+            clear();
+        }
     }
 
     /**
@@ -90,88 +113,80 @@ public class GridView extends JPanel implements PropertyChangeListener {
         }
     }
 
+    public void clear() {
+        for (int row = 0; row < gridCells.length; row++) {
+            for (int col = 0; col < gridCells[row].length; col++) {
+                gridCells[row][col].setText(""); // Reset each cell to an empty string
+            }
+        }
+    }
+
     /**
-     * Helper class to listen to changes in individual grid cells.
+     * Custom DocumentFilter to enforce uppercase letters and single character input.
      */
-    private class CellDocumentListener implements DocumentListener {
+    private class UppercaseDocumentFilter extends DocumentFilter {
         private final int row;
         private final int col;
-        private final JTextField cell;
 
-        public CellDocumentListener(int row, int col, JTextField cell) {
+        public UppercaseDocumentFilter(int row, int col) {
             this.row = row;
             this.col = col;
-            this.cell = cell;
-
-            // Key listener to handle backspace and Enter key functionality
-            cell.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE && cell.getText().isEmpty()) {
-                        // Move to the previous cell on Backspace if the current cell is empty
-                        if (col > 0) {
-                            gridCells[row][col - 1].requestFocus();
-                        }
-                    }
-                    // TODO: implement game logic here, right now it just goes to logout when row is filled and ener is pressed
-                    else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        // If Enter is pressed after filling the row, switch to the logout view
-                        handleEnterKey(row);
-                    }
-                }
-            });
-        }
-
-        private void documentListenerHelper() {
-            String text = cell.getText().toUpperCase(); // Convert input to uppercase
-            if (text.length() > 1) {
-                cell.setText(text.substring(0, 1)); // Limit input to 1 letter per cell
-            }
-
-            gridController.execute(row, col, cell.getText()); // Send input to the controller
-
-            // Move to the next cell if current cell is filled
-            if (!cell.getText().isEmpty() && col < gridCells[row].length - 1) {
-                    gridCells[row][col + 1].requestFocus();
-                }
-
-        }
-
-        private void handleEnterKey(int row) {
-            if (isRowComplete(row)) {
-                gridController.switchToLogoutView(); // Switch to logout view when row is complete
-            }
-        }
-
-        private boolean isRowComplete(int row) {
-            // Check if all cells in the row are filled
-            for (int col = 0; col < gridCells[row].length; col++) {
-                if (gridCells[row][col].getText().isEmpty()) {
-                    return false;
-                }
-            }
-            return true;
         }
 
         @Override
-        public void insertUpdate(DocumentEvent e) {
-            documentListenerHelper();
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (string != null) {
+                string = string.toUpperCase();
+                if (fb.getDocument().getLength() + string.length() <= 1) {
+                    super.insertString(fb, offset, string, attr);
+                    shiftFocus();
+                }
+            }
         }
 
         @Override
-        public void removeUpdate(DocumentEvent e) {
-            documentListenerHelper();
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            if (text != null) {
+                text = text.toUpperCase();
+                if (fb.getDocument().getLength() - length + text.length() <= 1) {
+                    super.replace(fb, offset, length, text, attrs);
+                    shiftFocus();
+                }
+            }
         }
 
         @Override
-        public void changedUpdate(DocumentEvent e) {
-            documentListenerHelper();
+        public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+            super.remove(fb, offset, length);
         }
+
+        private void shiftFocus() {
+            if (col < gridCells[row].length - 1) {
+                gridCells[row][col + 1].requestFocus();
+            }
+        }
+    }
+
+    private void handleEnterKey(int row) {
+        if (isRowComplete(row)) {
+            gridController.switchToLogoutView(); // Switch to logout view when row is complete
+        }
+    }
+
+    private boolean isRowComplete(int row) {
+        // Check if all cells in the row are filled
+        for (int col = 0; col < gridCells[row].length; col++) {
+            if (gridCells[row][col].getText().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String getViewName() {
         return viewName;
     }
+
     /**
      * Set the GridController for this view.
      * @param gridController the GridController to set
