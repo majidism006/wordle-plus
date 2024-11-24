@@ -6,8 +6,8 @@ import use_case.service.UserService;
  * The Logout Interactor.
  */
 public class LogoutInteractor implements LogoutInputBoundary {
-    private UserService userService;
-    private LogoutOutputBoundary logoutPresenter;
+    private final UserService userService;
+    private final LogoutOutputBoundary logoutPresenter;
 
     public LogoutInteractor(UserService userService,
                             LogoutOutputBoundary logoutOutputBoundary) {

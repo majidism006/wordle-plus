@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class GridGUI extends JFrame {
-    private JTextField[][] textFields = new JTextField[6][5];
+    private final JTextField[][] textFields = new JTextField[6][5];
 
     public GridGUI() {
         setTitle("Wordle Grid");

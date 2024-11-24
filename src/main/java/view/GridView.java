@@ -107,8 +107,16 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private void updateGrid(GridState state) {
         for (int row = 0; row < gridCells.length; row++) {
             for (int col = 0; col < gridCells[row].length; col++) {
-                String letter = state.getCell(row, col);
+                String letter = state.getCellContent(row, col);
                 gridCells[row][col].setText(letter);
+
+                if (state.isCellCorrectPosition(row, col)) {
+                    gridCells[row][col].setBackground(Color.GREEN); // Correct letter, correct position
+                } else if (state.isCellCorrectLetter(row, col)) {
+                    gridCells[row][col].setBackground(Color.YELLOW); // Correct letter, incorrect position
+                } else {
+                    gridCells[row][col].setBackground(Color.GRAY); // Incorrect letter
+                }
             }
         }
     }

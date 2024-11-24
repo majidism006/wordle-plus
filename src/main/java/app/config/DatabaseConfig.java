@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class DatabaseConfig {
 
-    private static HikariDataSource dataSource;
+    private static final HikariDataSource dataSource;
 
     static {
         try (InputStream input = DatabaseConfig.class.getClassLoader().getResourceAsStream("application.properties")) {

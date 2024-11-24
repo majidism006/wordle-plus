@@ -1,6 +1,7 @@
 package app;
 
 
+import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.grid.GridController;
@@ -34,7 +35,6 @@ import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.reset.ResetInputBoundary;
-import use_case.reset.ResetInputData;
 import use_case.reset.ResetInteractor;
 import use_case.reset.ResetOutBoundary;
 import use_case.service.UserService;
@@ -209,7 +209,8 @@ public class AppBuilder {
 
     public AppBuilder addGridUseCase() {
         final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
-        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary);
+        final GameRepositoryImpl gameRepository = new GameRepositoryImpl();
+        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository);
         final GridController gridController = new GridController(gridInteractor);
         gridView.setGridController(gridController);
         return this;
