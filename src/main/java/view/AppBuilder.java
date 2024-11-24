@@ -1,6 +1,7 @@
 package view;
 
 
+import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.grid.GridController;
@@ -59,7 +60,6 @@ public class AppBuilder {
     private SignupView signupView;
     private LogoutView logoutView;
     private GridView gridView;
-    private WordleInstructionsGUI wordleInstructionsGUI;
     private InstructionsViewModel instructionsViewModel;
 
 
@@ -140,7 +140,8 @@ public class AppBuilder {
     }
     public AppBuilder addGridUseCase() {
         final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
-        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, );
+        final GameRepositoryImpl gameRepository = new GameRepositoryImpl();
+        final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository);
         final GridController gridController = new GridController(gridInteractor);
         gridView.setGridController(gridController);
         return this;

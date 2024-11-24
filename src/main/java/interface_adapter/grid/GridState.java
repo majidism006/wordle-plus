@@ -6,6 +6,8 @@ import entity.GuessResult;
 public class GridState {
 
     private final String[][] gridContent = new String[6][5];
+    private final boolean[][] correctPosition = new boolean[6][5];
+    private final boolean[][] correctLetter = new boolean[6][5];
     private String targetWord;
     // private String gridError = "";
 
@@ -62,5 +64,22 @@ public class GridState {
 
         guessResult.setCorrect(isCorrect);
         return guessResult;
+    }
+
+    public void setCellCorrectPosition(int row, int col, boolean isCorrect) {
+        this.correctPosition[row][col] = isCorrect;
+    }
+
+    public void setCellCorrectLetter(int row, int col, boolean isCorrect) {
+        this.correctLetter[row][col] = isCorrect;
+    }
+
+    // Methods to get correct position and correct letter
+    public boolean isCellCorrectPosition(int row, int col) {
+        return correctPosition[row][col];
+    }
+
+    public boolean isCellCorrectLetter(int row, int col) {
+        return correctLetter[row][col];
     }
 }
