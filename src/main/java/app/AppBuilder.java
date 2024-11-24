@@ -4,6 +4,7 @@ package app;
 import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
+import entity.DifficultyState;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
 import interface_adapter.instructions.InstructionsController;
@@ -114,7 +115,8 @@ public class AppBuilder {
      */
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel);
+        final DifficultyState difficultyState = new DifficultyState();
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState);
         cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
         return this;
     }
@@ -177,6 +179,7 @@ public class AppBuilder {
 
         final InstructionsController controller = new InstructionsController(instructionsInteractor);
         wordleInstructionsGUI.setInstructionsController(controller);
+
         return this;
     }
 

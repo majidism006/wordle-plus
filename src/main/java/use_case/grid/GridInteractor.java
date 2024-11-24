@@ -34,4 +34,5 @@ public class GridInteractor implements GridInputBoundary {
 
         return result;
     }
+
 }
