@@ -12,9 +12,9 @@ import use_case.logout.LogoutOutputData;
 
 public class LogoutPresenter implements LogoutOutputBoundary {
 
-    private ViewManagerModel viewManagerModel;
-    private LoginViewModel loginViewModel;
-    private GridViewModel gridViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final LoginViewModel loginViewModel;
+    private final GridViewModel gridViewModel;
 
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                            LoginViewModel loginViewModel,
