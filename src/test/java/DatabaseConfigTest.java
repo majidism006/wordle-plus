@@ -27,8 +27,8 @@ public class DatabaseConfigTest {
         assertTrue(connection.isValid(2), "Connection should be valid");
     }
 
-    @AfterAll
-    public static void tearDown() {
-        DatabaseConfig.closeConnection();
-    }
+//    @AfterAll
+//    public static void tearDown() {
+//        DatabaseConfig.closeConnection();
+//    }
 }
