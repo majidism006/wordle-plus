@@ -16,4 +16,5 @@ public class GridInteractor implements GridInputBoundary {
     public void execute(GridInputData gridInputData) {
         // TODO: implement this
     }
+
 }

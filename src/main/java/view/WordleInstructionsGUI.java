@@ -7,8 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import interface_adapter.difficulty.DifficultyState;
-import interface_adapter.grid.GridState;
+import entity.DifficultyState;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.instructions.InstructionsController;
@@ -20,20 +19,18 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private InstructionsController instructionsController;
     private DifficultyState difficultyState;
 
-    public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel) {
+    public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
+                                 DifficultyState difficultyState) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
         // Set layout for the main panel
         setLayout(new BorderLayout());
+        this.difficultyState = difficultyState;
         setupComponents();
     }
 
     public void setInstructionsController(InstructionsController instructionsController) {
         this.instructionsController = instructionsController;
-    }
-
-    public void setDifficultyController(DifficultyState difficultyState) {
-        this.difficultyState = difficultyState;
     }
 
     public static String getViewName() {

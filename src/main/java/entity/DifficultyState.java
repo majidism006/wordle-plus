@@ -1,10 +1,10 @@
-package interface_adapter.difficulty;
+package entity;
 
 /**
  * The state for the Login View Model.
  */
 public class DifficultyState {
-    private String difficulty = "easy";
+    private String difficulty = "Easy";
 
     public String getDifficulty() {
         return difficulty;

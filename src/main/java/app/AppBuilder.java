@@ -3,6 +3,7 @@ package app;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.ViewManagerModel;
+import entity.DifficultyState;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
 import interface_adapter.instructions.InstructionsController;
@@ -34,7 +35,6 @@ import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.reset.ResetInputBoundary;
-import use_case.reset.ResetInputData;
 import use_case.reset.ResetInteractor;
 import use_case.reset.ResetOutBoundary;
 import use_case.service.UserService;
@@ -114,7 +114,8 @@ public class AppBuilder {
      */
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel);
+        final DifficultyState difficultyState = new DifficultyState();
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState);
         cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
         return this;
     }
@@ -177,6 +178,7 @@ public class AppBuilder {
 
         final InstructionsController controller = new InstructionsController(instructionsInteractor);
         wordleInstructionsGUI.setInstructionsController(controller);
+
         return this;
     }
 
