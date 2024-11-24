@@ -13,7 +13,7 @@ public class DatabaseConfigTest {
     private static Connection connection;
 
     @BeforeAll
-    public static void setUp() {
+    public static void setUp() throws SQLException {
         connection = DatabaseConfig.getConnection();
     }
 
@@ -29,6 +29,7 @@ public class DatabaseConfigTest {
 
     @AfterAll
     public static void tearDown() {
-        DatabaseConfig.closeConnection();
+        DatabaseConfig.closeDataSource();
     }
 }
+
