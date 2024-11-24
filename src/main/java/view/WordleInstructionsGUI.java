@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import interface_adapter.difficulty.DifficultyState;
 import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
@@ -17,6 +18,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private static final String viewName = "instructions";
     private InstructionsViewModel instructionsViewModel;
     private InstructionsController instructionsController;
+    private DifficultyState difficultyState;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel) {
         this.instructionsViewModel = instructionsViewModel;
@@ -28,6 +30,10 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
 
     public void setInstructionsController(InstructionsController instructionsController) {
         this.instructionsController = instructionsController;
+    }
+
+    public void setDifficultyController(DifficultyState difficultyState) {
+        this.difficultyState = difficultyState;
     }
 
     public static String getViewName() {
@@ -105,7 +111,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
             public void actionPerformed(ActionEvent e) {
                 JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
                 String selectedDifficulty = (String) comboBox.getSelectedItem();
-                // TODO: Handle the selected difficulty level
+                difficultyState.setDifficulty(selectedDifficulty);
                 System.out.println("Selected Difficulty: "+selectedDifficulty);
         }});
 
