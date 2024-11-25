@@ -16,7 +16,8 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final GridViewModel gridViewModel;
 
-    public InstructionsPresenter(ViewManagerModel viewManagerModel, InstructionsViewModel instructionsViewModel, GridViewModel gridViewModel) {
+    public InstructionsPresenter(ViewManagerModel viewManagerModel, InstructionsViewModel instructionsViewModel,
+                                 GridViewModel gridViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.instructionsViewModel = instructionsViewModel;
         this.gridViewModel = gridViewModel;
@@ -24,6 +25,9 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
 
     @Override
     public void prepareSuccessView(InstructionsOutputData response) {
+        // Update the grid view model with the random word
+        String randomWord = response.getTargetWord();
+        gridViewModel.setTargetWord(randomWord);
             // Switch to the grid view in the view manager
             this.viewManagerModel.setState(gridViewModel.getViewName());
             this.viewManagerModel.firePropertyChanged();
@@ -37,8 +41,8 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
 
     @Override
     public void switchToGridView() {
-        // This will switch the view to the grid view
         this.viewManagerModel.setState(gridViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+
     }
 }

@@ -11,11 +11,26 @@ import java.beans.PropertyChangeSupport;
 public class GridViewModel extends ViewModel<GridState> {
 
     private final PropertyChangeSupport support;
+    private String targetWord;
+
+
 
     public GridViewModel() {
         super("grid");
         setState(new GridState());
         this.support = new PropertyChangeSupport(this);
+    }
+
+    public void setTargetWord(String targetWord) {
+        this.targetWord = targetWord;
+    }
+
+    public String getTargetWord() {
+        return targetWord;
+    }
+
+    public String getViewName() {
+        return "grid";
     }
 
     @Override

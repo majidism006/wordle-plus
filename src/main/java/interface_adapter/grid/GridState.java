@@ -8,12 +8,19 @@ public class GridState {
     private final String[][] gridContent = new String[6][5];
     private final boolean[][] correctPosition = new boolean[6][5];
     private final boolean[][] correctLetter = new boolean[6][5];
+
+
+
     private String targetWord;
     // private String gridError = "";
 
     // Getter for grid content
     public String[][] getGridContent() {
         return gridContent;
+    }
+
+    public String getTargetWord() {
+        return targetWord;
     }
 
     // Getter for a specific cell's content

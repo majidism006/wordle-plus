@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import entity.DifficultyState;
+import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.instructions.InstructionsController;
@@ -18,15 +19,17 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private final InstructionsViewModel instructionsViewModel;
     private InstructionsController instructionsController;
     private DifficultyState difficultyState;
+    private GridState gridState;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
-                                 DifficultyState difficultyState) {
+                                 DifficultyState difficultyState, GridState gridState) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
         // Set layout for the main panel
         setLayout(new BorderLayout());
         this.difficultyState = difficultyState;
         setupComponents();
+        this.gridState = gridState;
     }
 
     public void setInstructionsController(InstructionsController instructionsController) {
@@ -80,7 +83,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         bottomPanel.setLayout(new BorderLayout());
 
         // Add difficulty dropdown
-        String[] difficulties = { "Easy", "Medium", "Hard" };
+        String[] difficulties = { "easy", "medium", "hard" };
         JComboBox<String> difficultyDropdown = new JComboBox<>(difficulties);
         difficultyDropdown.setFont(new Font("Serif", Font.PLAIN, 14));
         bottomPanel.add(difficultyDropdown, BorderLayout.NORTH);
@@ -95,11 +98,15 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
 
 
         // Button ActionListener
-        // If onComplete.run() is doing something else, make sure it's not triggering a view switch
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    instructionsController.switchToGridView();
+                // Retrieve the selected difficulty from DifficultyState
+                String selectedDifficulty = difficultyState.getDifficulty();
+
+                // Pass the difficulty to the controller to fetch the word and switch views
+                instructionsController.switchToGridView(selectedDifficulty);
+                System.out.println(gridState.getTargetWord());
 
         }});
 
