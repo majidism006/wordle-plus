@@ -18,4 +18,9 @@ public class DiscussionPostController {
     public void getAllPosts() {
         interactor.getAllPosts();
     }
+    public void switchToInstructionView() {
+        interactor.switchToInstructionView();
+    }
+
+
 }

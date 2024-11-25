@@ -31,5 +31,8 @@ public class DiscussionPostViewModel {
         this.posts = posts;
         support.firePropertyChange("posts", oldPosts, posts);
     }
+    public String getViewName() {
+        return "discussion";
+    }
 }
 
