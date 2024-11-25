@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import entity.DifficultyState;
+import entity.User;
 import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
@@ -20,15 +21,21 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private InstructionsController instructionsController;
     private DifficultyState difficultyState;
     private GridState gridState;
+    private final User user;
+    private final double winRate;
+    private final double lossRate;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
-                                 DifficultyState difficultyState, GridState gridState) {
+                                 DifficultyState difficultyState, GridState gridState, User user, double winRate, double lossRate) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
         // Set layout for the main panel
         setLayout(new BorderLayout());
         this.difficultyState = difficultyState;
         setupComponents();
+        this.user = user;
+        this.winRate = 45;
+        this.lossRate = 55;
         this.gridState = gridState;
     }
 
@@ -44,7 +51,18 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         // Title label
         JLabel titleLabel = new JLabel("How To Play", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        add(titleLabel, BorderLayout.NORTH);
+
+        // Top panel with title and profile button
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(titleLabel, BorderLayout.CENTER);
+
+        // Profile button
+        JButton profilebutton = new JButton("View Profile");
+        profilebutton.setFont(new Font("Serif", Font.BOLD, 16));
+        topPanel.add(profilebutton, BorderLayout.SOUTH);
+        profilebutton.addActionListener(e -> openProfileDialog());
+
+        add(topPanel, BorderLayout.NORTH);
 
         // Main instructions panel
         JPanel instructionsPanel = new JPanel();
@@ -137,6 +155,43 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         difficultyDropdown.setSelectedIndex(0);
         difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent.ACTION_PERFORMED, null));
     }
+
+    private void openProfileDialog() {
+        JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Profile", true);
+        profileDialog.setSize(300, 200);
+        profileDialog.setLayout(new BorderLayout());
+
+        // User information
+        JLabel usernameLabel = new JLabel("Username: " + user.getUsername(), SwingConstants.CENTER);
+        JLabel winRateLabel = new JLabel("Win Rate: " + winRate + "%", SwingConstants.CENTER);
+        JLabel lossRateLabel = new JLabel("Loss Rate: " + lossRate + "%", SwingConstants.CENTER);
+
+        // Status field
+        JPanel statusPanel = new JPanel(new BorderLayout());
+        JTextField statusField = new JTextField(user.getStatus() != null ? user.getStatus() : "Set your status here!");
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(e -> {
+            user.setStatus(statusField.getText());
+            JOptionPane.showMessageDialog(profileDialog, "Status updated!");
+        });
+
+        statusPanel.add(new JLabel("Status:"), BorderLayout.WEST);
+        statusPanel.add(statusField, BorderLayout.CENTER);
+        statusPanel.add(saveButton, BorderLayout.EAST);
+
+        // Add components to the dialog
+        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
+        infoPanel.add(usernameLabel);
+        infoPanel.add(winRateLabel);
+        infoPanel.add(lossRateLabel);
+
+        profileDialog.add(infoPanel, BorderLayout.CENTER);
+        profileDialog.add(statusPanel, BorderLayout.SOUTH);
+
+        profileDialog.setLocationRelativeTo(this);
+        profileDialog.setVisible(true);
+    }
+
 
     private JPanel createExample(String word, int highlightedIndex) {
         JPanel examplePanel = new JPanel();

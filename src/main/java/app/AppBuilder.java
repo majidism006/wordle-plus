@@ -4,6 +4,7 @@ package app;
 import data_access.repository.DiscussionPostRepository;
 import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
+import entity.User;
 import interface_adapter.ViewManagerModel;
 import entity.DifficultyState;
 import interface_adapter.discussion.DiscussionPostController;
@@ -109,9 +110,15 @@ public class AppBuilder {
 
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
-        DifficultyState difficultyState = new DifficultyState();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState);
-        return addView(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
+        final DifficultyState difficultyState = new DifficultyState();
+        // Example values for User, win rate, and loss rate
+        User user = new User("player1", "password123"); // Replace with actual User object from your app logic
+        double winRate = 75.0;  // Replace with actual win rate
+        double lossRate = 25.0; // Replace with actual loss rate
+
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState, user, winRate, lossRate);
+        cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
+        return this;
     }
 
     public AppBuilder addGridView() {
