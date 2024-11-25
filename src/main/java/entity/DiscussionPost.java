@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class DiscussionPost {
     private int id;
-    private int userId;
+    private String userId;
     private String content;
     private Timestamp createdAt;
 
@@ -17,11 +17,11 @@ public class DiscussionPost {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
