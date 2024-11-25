@@ -4,6 +4,9 @@ import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
 import interface_adapter.logout.LogoutController;
+import entity.GuessResult;
+import entity.CellResult;
+import use_case.WordleInstructions.InstructionsOutputData;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
@@ -180,11 +183,49 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     private void handleEnterKey(int row) {
         if (isRowComplete(row)) {
-//            logoutController.getUserHistory();
-            gridController.switchToLogoutView();
-            // Switch to logout view when row is complete
+            StringBuilder guessedWord = new StringBuilder();
+
+            // Collect the guessed word from the current row
+            for (int col = 0; col < gridCells[row].length; col++) {
+                guessedWord.append(gridCells[row][col].getText());
+            }
+
+            // Get the feedback for the guessed word
+            GuessResult guessResult = gridController.checkWord(guessedWord.toString());
+
+            // Update cell backgrounds based on feedback
+            for (int col = 0; col < guessResult.getCellResults().size(); col++) {
+                CellResult cellResult = guessResult.getCellResults().get(col);
+
+                if (cellResult.isCorrectPosition()) {
+                    gridCells[row][col].setBackground(Color.GREEN);
+                } else if (cellResult.isCorrectLetter()) {
+                    gridCells[row][col].setBackground(Color.YELLOW);
+                } else {
+                    gridCells[row][col].setBackground(Color.GRAY);
+                }
+            }
+
+            // Display success or failure messages
+//            if (guessResult.isCorrect()) {
+//                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
+//            } else if (row == gridCells.length - 1) {
+//                GridState gridState;
+//                JOptionPane.showMessageDialog(this, "Game Over! The word was: " +
+//                        gridState.getTargetWord());
+//            }
         }
     }
+
+
+    private String getRowWord(int row) {
+        StringBuilder word = new StringBuilder();
+        for (int col = 0; col < gridCells[row].length; col++) {
+            word.append(gridCells[row][col].getText());
+        }
+        return word.toString();
+    }
+
 
     private boolean isRowComplete(int row) {
         // Check if all cells in the row are filled

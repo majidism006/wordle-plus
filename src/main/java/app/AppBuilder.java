@@ -201,7 +201,7 @@ public class AppBuilder {
         final GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
         final GameRepositoryImpl gameRepository = new GameRepositoryImpl();
         final GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository);
-        final GridController gridController = new GridController(gridInteractor);
+        final GridController gridController = new GridController(gridInteractor, gridState);
         gridView.setGridController(gridController);
         return this;
     }
