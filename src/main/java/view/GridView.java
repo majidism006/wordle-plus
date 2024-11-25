@@ -206,17 +206,24 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 }
             }
 
-            // Display success or failure messages
-//            if (guessResult.isCorrect()) {
-//                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
-//            } else if (row == gridCells.length - 1) {
-//                GridState gridState;
-//                JOptionPane.showMessageDialog(this, "Game Over! The word was: " +
-//                        gridState.getTargetWord());
-//            }
+            if (guessResult.isCorrect()) {
+                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
+                gridController.switchToLogoutView();
+            } else if (row == gridCells.length - 1) {
+                JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
+                gridController.switchToLogoutView();
+            } else {
+                foccusNextRow(row + 1);
+            }
+
         }
     }
 
+    private void foccusNextRow(int nextRow) {
+        if (nextRow < gridCells.length) {
+            gridCells[nextRow][0].requestFocus();
+        }
+    }
 
     private String getRowWord(int row) {
         StringBuilder word = new StringBuilder();
