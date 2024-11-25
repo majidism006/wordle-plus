@@ -10,4 +10,6 @@ public interface LogoutInputBoundary {
     void execute(LogoutInputData LogoutInputData);
 
     void switchToInstructionView();
+
+    void loadUserHistory();
 }

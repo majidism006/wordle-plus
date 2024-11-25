@@ -185,7 +185,9 @@ public class AppBuilder {
         final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(
                 viewManagerModel,
                 loginViewModel,
-                instructionsViewModel);
+                instructionsViewModel,
+                logoutViewModel,
+                gridViewModel);
 
         final LogoutInputBoundary logoutInteractor =
                 new LogoutInteractor(userService, logoutOutputBoundary);

@@ -11,4 +11,6 @@ public interface LogoutOutputBoundary {
     void prepareSuccessView(LogoutOutputData outputData);
   
     void switchToInstructionView();
+
+    void loadUserHistory(int win, int loss);
 }

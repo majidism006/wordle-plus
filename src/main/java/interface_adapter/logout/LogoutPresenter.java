@@ -3,7 +3,6 @@ package interface_adapter.logout;
 import interface_adapter.ViewManagerModel;
 
 import interface_adapter.grid.GridViewModel;
-
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -16,13 +15,19 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final LoginViewModel loginViewModel;
     private final InstructionsViewModel instructionsViewModel;
+    private final LogoutViewModel logoutViewModel;
+    private final GridViewModel gridViewModel;
 
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                            LoginViewModel loginViewModel,
-                           InstructionsViewModel instructionsViewModel) {
+                           InstructionsViewModel instructionsViewModel,
+                           LogoutViewModel logoutViewModel,
+                           GridViewModel gridViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.instructionsViewModel = instructionsViewModel;
+        this.logoutViewModel = logoutViewModel;
+        this.gridViewModel = gridViewModel;
 
     }
 
@@ -36,8 +41,19 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         this.loginViewModel.firePropertyChanged();
     }
 
+    @Override
     public void switchToInstructionView() {
+        gridViewModel.resetGrid();
         viewManagerModel.setState(instructionsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void loadUserHistory(int win, int loss) {
+//        final LogoutState logoutState = logoutViewModel.getState();
+////        final LoginState loginState = loginViewModel.getState();
+//        String name = logoutState.getUsername();
+////        logoutState.setUsername(name);
+        this.logoutViewModel.getUserHistory(win, loss);
     }
 }

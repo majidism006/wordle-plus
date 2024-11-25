@@ -3,6 +3,7 @@ package view;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
+import interface_adapter.logout.LogoutController;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
@@ -22,6 +23,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
+//    private LogoutController logoutController;
 
     public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
@@ -124,7 +126,8 @@ public class GridView extends JPanel implements PropertyChangeListener {
     public void clear() {
         for (int row = 0; row < gridCells.length; row++) {
             for (int col = 0; col < gridCells[row].length; col++) {
-                gridCells[row][col].setText(""); // Reset each cell to an empty string
+                gridCells[row][col].setText("");
+                gridCells[row][col].setBackground(Color.BLACK);
             }
         }
     }
@@ -177,7 +180,9 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     private void handleEnterKey(int row) {
         if (isRowComplete(row)) {
-            gridController.switchToLogoutView(); // Switch to logout view when row is complete
+//            logoutController.getUserHistory();
+            gridController.switchToLogoutView();
+            // Switch to logout view when row is complete
         }
     }
 

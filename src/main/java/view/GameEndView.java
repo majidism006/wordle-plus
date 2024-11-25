@@ -27,6 +27,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
 
 
 
+
     private LogoutController logoutController;
 
 
@@ -35,6 +36,16 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
         this.logoutViewModel = logoutViewModel;
         this.userService = userService;
         this.logoutViewModel.addPropertyChangeListener(this);
+
+
+//        final JPanel stats = new JPanel();
+//        stats.setLayout(new GridLayout(4, 1));
+//        JLabel titleLabel = new JLabel("User's History", SwingConstants.CENTER);
+//        stats.add(titleLabel);
+
+        // Call a method to update the view
+//        updateUserHistoryDisplay();
+
 
         final JPanel stats = new JPanel();
         stats.setLayout(new GridLayout(4, 1));
@@ -111,5 +122,12 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
+
+//    public void updateUserHistoryDisplay() {
+//        logoutViewModel.getUserHistory();
+//        if (userHistory != null) {
+//            userHistoryLabel.setText("User History: " + userHistory.getHistory());
+//        }
+//    }
 
 }
