@@ -91,13 +91,17 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         // Play button
         JButton playButton = new JButton("Play");
         playButton.setFont(new Font("Serif", Font.BOLD, 16));
-        bottomPanel.add(playButton, BorderLayout.SOUTH);
+        bottomPanel.add(playButton, BorderLayout.WEST);
+
+        // Discussion board button
+        JButton discussionBoardButton = new JButton("Discussion Board");
+        discussionBoardButton.setFont(new Font("Serif", Font.BOLD, 16));
+        bottomPanel.add(discussionBoardButton, BorderLayout.EAST);
 
         // Add the bottom panel to the main frame
         add(bottomPanel, BorderLayout.SOUTH);
 
-
-        // Button ActionListener
+        // Button ActionListener for play button
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,8 +111,17 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
                 // Pass the difficulty to the controller to fetch the word and switch views
                 instructionsController.switchToGridView(selectedDifficulty);
                 System.out.println(gridState.getTargetWord());
+            }
+        });
 
-        }});
+        // Button ActionListener for discussion board button
+        discussionBoardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Navigate to the discussion board
+                instructionsController.switchToDiscussionBoardView();
+            }
+        });
 
         difficultyDropdown.addActionListener(new ActionListener() {
             @Override
@@ -116,14 +129,13 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
                 JComboBox<String> comboBox = (JComboBox<String>) e.getSource();
                 String selectedDifficulty = (String) comboBox.getSelectedItem();
                 difficultyState.setDifficulty(selectedDifficulty);
-                System.out.println("Selected Difficulty: "+selectedDifficulty);
-        }});
+                System.out.println("Selected Difficulty: " + selectedDifficulty);
+            }
+        });
 
         // Sets initial state to easy
         difficultyDropdown.setSelectedIndex(0);
-        difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent
-                .ACTION_PERFORMED, null));
-
+        difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent.ACTION_PERFORMED, null));
     }
 
     private JPanel createExample(String word, int highlightedIndex) {
@@ -168,5 +180,5 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final InstructionsState state = (InstructionsState) evt.getNewValue();
-        }
+    }
 }

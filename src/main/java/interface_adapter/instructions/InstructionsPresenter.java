@@ -1,6 +1,7 @@
 package interface_adapter.instructions;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.discussion.DiscussionPostViewModel;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
@@ -15,12 +16,14 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     private final InstructionsViewModel instructionsViewModel;
     private final ViewManagerModel viewManagerModel;
     private final GridViewModel gridViewModel;
+    private final DiscussionPostViewModel discussionPostViewModel;
 
     public InstructionsPresenter(ViewManagerModel viewManagerModel, InstructionsViewModel instructionsViewModel,
-                                 GridViewModel gridViewModel) {
+                                 GridViewModel gridViewModel, DiscussionPostViewModel discussionPostViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.instructionsViewModel = instructionsViewModel;
         this.gridViewModel = gridViewModel;
+        this.discussionPostViewModel = discussionPostViewModel;
     }
 
     @Override
@@ -42,6 +45,15 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     @Override
     public void switchToGridView() {
         this.viewManagerModel.setState(gridViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    /**
+     * Switches to Discussion Board
+     */
+    @Override
+    public void switchToDiscussionBoardView() {
+        this.viewManagerModel.setState(discussionPostViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 }

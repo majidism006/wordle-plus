@@ -41,4 +41,8 @@ public class InstructionsController {
         // Use the interactor to update the state and switch to the grid view
         instructionsUseCaseInteractor.switchToGridView(randomWord);
     }
+
+    public void switchToDiscussionBoardView() {
+        instructionsUseCaseInteractor.switchToDiscussionBoardView();
+    }
 }
