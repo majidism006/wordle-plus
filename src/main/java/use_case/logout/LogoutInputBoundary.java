@@ -9,6 +9,5 @@ public interface LogoutInputBoundary {
      */
     void execute(LogoutInputData LogoutInputData);
 
-    void switchToGridView();
-
+    void switchToInstructionView();
 }

@@ -25,6 +25,9 @@ public class LogoutInteractor implements LogoutInputBoundary {
     }
 
     @Override
-    public void switchToGridView() { logoutPresenter.switchTogridView();}
+    public void switchToInstructionView() {
+        logoutPresenter.switchToInstructionView();
+
+    }
 }
 

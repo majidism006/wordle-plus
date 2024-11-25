@@ -1,10 +1,13 @@
 package interface_adapter.logout;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInputData;
 
 public class LogoutController {
+    private static final Logger log = LoggerFactory.getLogger(LogoutController.class);
     private final LogoutInputBoundary logoutUseCaseInteractor;
 
 
@@ -22,8 +25,8 @@ public class LogoutController {
         logoutUseCaseInteractor.execute(logoutInputData);
     }
 
-    public void switchToGridView() {
 
-        logoutUseCaseInteractor.switchToGridView();
+    public void switchToInstructionView() {
+        logoutUseCaseInteractor.switchToInstructionView();
     }
 }

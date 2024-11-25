@@ -43,6 +43,7 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     public void switchToGridView() {
         this.viewManagerModel.setState(gridViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+        gridViewModel.resetGrid();
 
     }
 }

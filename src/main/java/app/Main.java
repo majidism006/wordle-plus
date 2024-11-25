@@ -7,7 +7,7 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
-                .addLogoutView()
+                .addGameEndView()
                 .addSignupView()
                 .addGridView()
                 .addWordleInstructionsGUI()
@@ -16,7 +16,6 @@ public class Main {
                 .addLogoutUseCase()
                 .addInstructionsUseCase()
                 .addGridUseCase()
-                .addResetUseCase()
                 .build();
 
         application.pack();
