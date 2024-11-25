@@ -130,7 +130,7 @@ public class AppBuilder {
         discussionPostViewModel = new DiscussionPostViewModel();
 
         DiscussionPostOutputBoundary discussionPostOutputBoundary = new DiscussionPostPresenter(
-                discussionPostViewModel);
+                discussionPostViewModel, viewManagerModel);
         DiscussionPostRepository discussionPostRepository = new DiscussionPostRepository();
         DiscussionPostInputBoundary discussionPostInputBoundary = new DiscussionPostInteractor(
                 discussionPostRepository,
