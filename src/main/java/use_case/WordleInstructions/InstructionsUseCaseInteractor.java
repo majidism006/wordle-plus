@@ -1,11 +1,8 @@
 package use_case.WordleInstructions;
 
 import interface_adapter.grid.GridState;
-import interface_adapter.instructions.InstructionsController;
-import interface_adapter.instructions.InstructionsViewModel;
-import use_case.login.LoginOutputBoundary;
 import use_case.service.UserService;
-import data_access.repository.wordRepository;
+import data_access.repository.WordRepository;
 
 /**
  * This is the Interactor for the Instructions Use Case.
@@ -15,12 +12,12 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
 
     private final UserService userService;
     private final InstructionsOutputBoundary instructionsPresenter;
-    private final wordRepository wordRepository;
+    private final WordRepository wordRepository;
     private final GridState gridState;
 
     public InstructionsUseCaseInteractor(UserService userService,
                                          InstructionsOutputBoundary instructionsPresenter,
-                                         wordRepository wordRepository, GridState gridState) {
+                                         WordRepository wordRepository, GridState gridState) {
         this.userService = userService;
         this.instructionsPresenter = instructionsPresenter;
         this.wordRepository = wordRepository;
@@ -53,6 +50,14 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
     @Override
     public String getRandomWord(String difficulty) {
         return wordRepository.getRandomWord(difficulty);
+    }
+
+    /**
+     * Switches to Discussion Board
+     */
+    @Override
+    public void switchToDiscussionBoardView() {
+        instructionsPresenter.switchToDiscussionBoardView();
     }
 
 
