@@ -60,6 +60,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         JButton profilebutton = new JButton("View Profile");
         profilebutton.setFont(new Font("Serif", Font.BOLD, 16));
         topPanel.add(profilebutton, BorderLayout.SOUTH);
+        profilebutton.addActionListener(e -> openProfileDialog());
 
         add(topPanel, BorderLayout.NORTH);
 
