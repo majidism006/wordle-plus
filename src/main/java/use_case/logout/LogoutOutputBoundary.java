@@ -10,5 +10,5 @@ public interface LogoutOutputBoundary {
      */
     void prepareSuccessView(LogoutOutputData outputData);
   
-    void switchTogridView();
+    void switchToInstructionView();
 }

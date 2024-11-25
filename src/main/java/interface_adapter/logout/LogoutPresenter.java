@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 
 import interface_adapter.grid.GridViewModel;
 
+import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 
@@ -14,14 +15,14 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
     private final LoginViewModel loginViewModel;
-    private final GridViewModel gridViewModel;
+    private final InstructionsViewModel instructionsViewModel;
 
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                            LoginViewModel loginViewModel,
-                           GridViewModel gridViewModel) {
+                           InstructionsViewModel instructionsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
-        this.gridViewModel = gridViewModel;
+        this.instructionsViewModel = instructionsViewModel;
 
     }
 
@@ -35,8 +36,8 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         this.loginViewModel.firePropertyChanged();
     }
 
-    public void switchTogridView(){
-        viewManagerModel.setState(gridViewModel.getViewName());
+    public void switchToInstructionView() {
+        viewManagerModel.setState(instructionsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

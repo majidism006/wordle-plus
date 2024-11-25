@@ -71,4 +71,9 @@ public class GridViewModel extends ViewModel<GridState> {
     public void setGameOver(boolean isGameOver) {
         // TODO: to be implemented
     }
+
+    public void resetGrid() {
+        setState(new GridState());
+        support.firePropertyChange("reset", null, getState());
+    }
 }
