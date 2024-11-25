@@ -4,7 +4,7 @@ package entity;
  * The state for the Login View Model.
  */
 public class DifficultyState {
-    private String difficulty = "Easy";
+    private String difficulty = "easy";
 
     public String getDifficulty() {
         return difficulty;

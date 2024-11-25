@@ -43,6 +43,8 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.*;
+import data_access.repository.wordRepository;
+import interface_adapter.grid.GridState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,6 +76,9 @@ public class AppBuilder {
     private GridView gridView;
     private InstructionsViewModel instructionsViewModel;
     private WordleInstructionsGUI wordleInstructionsGUI;
+    private final wordRepository wordRepository = new wordRepository();
+    private final GridState gridState = new GridState();
+
 
 
 
@@ -116,7 +121,7 @@ public class AppBuilder {
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState);
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState);
         cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
         return this;
     }
@@ -175,7 +180,7 @@ public class AppBuilder {
         final InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
                 instructionsViewModel, gridViewModel);
         final InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(
-                userService,instructionsOutputBoundary);
+                userService,instructionsOutputBoundary, wordRepository, gridState);
 
         final InstructionsController controller = new InstructionsController(instructionsInteractor);
         wordleInstructionsGUI.setInstructionsController(controller);

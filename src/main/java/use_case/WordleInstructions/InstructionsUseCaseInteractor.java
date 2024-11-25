@@ -1,9 +1,11 @@
 package use_case.WordleInstructions;
 
+import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsController;
 import interface_adapter.instructions.InstructionsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.service.UserService;
+import data_access.repository.wordRepository;
 
 /**
  * This is the Interactor for the Instructions Use Case.
@@ -13,11 +15,16 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
 
     private final UserService userService;
     private final InstructionsOutputBoundary instructionsPresenter;
+    private final wordRepository wordRepository;
+    private final GridState gridState;
 
     public InstructionsUseCaseInteractor(UserService userService,
-                           InstructionsOutputBoundary instructionsPresenter) {
+                                         InstructionsOutputBoundary instructionsPresenter,
+                                         wordRepository wordRepository, GridState gridState) {
         this.userService = userService;
         this.instructionsPresenter = instructionsPresenter;
+        this.wordRepository = wordRepository;
+        this.gridState = gridState;
     }
 
     /**
@@ -36,8 +43,17 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
      * Switches from the instructions view to the game grid view.
      */
     @Override
-    public void switchToGridView() {
+    public void switchToGridView(String randomWord) {
+        // Update the game state with the selected word
+        gridState.setTargetWord(randomWord);
         instructionsPresenter.switchToGridView();
+
     }
+
+    @Override
+    public String getRandomWord(String difficulty) {
+        return wordRepository.getRandomWord(difficulty);
+    }
+
 
 }
