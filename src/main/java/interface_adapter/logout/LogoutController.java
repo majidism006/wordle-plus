@@ -29,4 +29,8 @@ public class LogoutController {
     public void switchToInstructionView() {
         logoutUseCaseInteractor.switchToInstructionView();
     }
+
+    public void getUserHistory() {
+        logoutUseCaseInteractor.loadUserHistory();
+    }
 }

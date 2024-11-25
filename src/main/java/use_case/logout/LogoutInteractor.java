@@ -29,5 +29,13 @@ public class LogoutInteractor implements LogoutInputBoundary {
         logoutPresenter.switchToInstructionView();
 
     }
+
+    @Override
+    public void loadUserHistory() {
+        String name = userService.getCurrentUsername();
+        int win = userService.getUserWins(name);
+        int loss = userService.getUserLosses(name);
+        logoutPresenter.loadUserHistory(win, loss);
+    }
 }
 
