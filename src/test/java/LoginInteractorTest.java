@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class LoginInteractorTest {
 
-    public static final String USERNAME = "Paul";
+    public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String WRONG = "wrong";
 

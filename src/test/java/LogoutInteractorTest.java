@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LogoutInteractorTest {
 
-    public static final String USERNAME = "Paul";
+    public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
 
     @Test
