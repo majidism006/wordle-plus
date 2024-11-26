@@ -1,5 +1,6 @@
 package view;
 
+import entity.GameState;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
@@ -24,11 +25,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
+    private GameState gameState;
 //    private LogoutController logoutController;
 
-    public GridView(GridViewModel gridViewModel) {
+    public GridView(GridViewModel gridViewModel, GameState gameState) {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
+        this.gameState = gameState;
 
         int rows = 6;
         int cols = 5;
@@ -205,11 +208,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
             }
 
             if (guessResult.isCorrect()) {
+                gridController.recordGameResult(true);
                 JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
-                gridController.switchToLogoutView();
+                gridController.switchToGameEndView();
             } else if (row == gridCells.length - 1) {
+                gridController.recordGameResult(false);
                 JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
-                gridController.switchToLogoutView();
+                gridController.switchToGameEndView();
             } else {
                 focusNextRow(row + 1);
             }
