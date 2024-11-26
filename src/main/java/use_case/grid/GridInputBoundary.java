@@ -10,7 +10,7 @@ public interface GridInputBoundary {
      * @param gridInputData the input data
      */
     void execute(GridInputData gridInputData);
-    void switchToLogoutView();
+    void switchToGameEndView();
 
     GuessResult checkGuess(String guessedWord);
 

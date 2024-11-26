@@ -32,8 +32,8 @@ public class GridController {
     /**
      * Requests a transition to signout view when implemented.
      */
-    public void switchToLogoutView() {
-        gridInteractor.switchToLogoutView();
+    public void switchToGameEndView() {
+        gridInteractor.switchToGameEndView();
     }
 
     /**

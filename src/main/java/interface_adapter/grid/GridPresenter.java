@@ -25,7 +25,7 @@ public class GridPresenter implements GridOutputBoundary {
     }
 
     @Override
-    public void switchToLogoutView() {
+    public void switchToGameEndView() {
         viewManagerModel.setState(gameEndViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -16,8 +16,8 @@ public class GridInteractor implements GridInputBoundary {
     }
 
     @Override
-    public void switchToLogoutView() {
-        gridPresenter.switchToLogoutView();
+    public void switchToGameEndView() {
+        gridPresenter.switchToGameEndView();
     }
 
     @Override
