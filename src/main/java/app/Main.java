@@ -7,16 +7,16 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addLoginView()
-                .addGameEndView()
                 .addSignupView()
                 .addGridView()
+                .addGameEndView()
                 .addWordleInstructionsGUI()
                 .addDiscussionPostView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-                .addLogoutUseCase()
                 .addInstructionsUseCase()
                 .addGridUseCase()
+                .addGameEndUseCase()
                 .build();
 
         application.pack();
