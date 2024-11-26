@@ -10,22 +10,26 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class LoginInteractorTest {
 
+    public static final String USERNAME = "Paul";
+    public static final String PASSWORD = "password";
+    public static final String WRONG = "wrong";
+
     @Test
     void successTest() {
-        LoginInputData inputData = new LoginInputData("Paul", "password");
+        LoginInputData inputData = new LoginInputData(USERNAME, PASSWORD);
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
-        User user = new User("Paul", "password");
-        userService.setCurrentUsername("Paul");
+        // For the success test, we need to add username to the data access repository before we log in.
+        User user = new User(USERNAME, PASSWORD);
+        userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                assertEquals("Paul", user.getUsername());
+                assertEquals(USERNAME, user.getUsername());
             }
 
             @Override
@@ -49,20 +53,20 @@ class LoginInteractorTest {
 
     @Test
     void successUserLoggedInTest() {
-        LoginInputData inputData = new LoginInputData("Paul", "password");
+        LoginInputData inputData = new LoginInputData(USERNAME, PASSWORD);
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
         // For the success test, we need to add Paul to the data access repository before we log in.
-        User user = new User("Paul", "password");
-        userService.setCurrentUsername("Paul");
+        User user = new User(USERNAME, PASSWORD);
+        userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                assertEquals("Paul", userService.getCurrentUsername());
+                assertEquals(USERNAME, userService.getCurrentUsername());
             }
 
             @Override
@@ -81,22 +85,22 @@ class LoginInteractorTest {
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userService, successPresenter);
-        assertEquals("Paul", userService.getCurrentUsername());
+        assertEquals(USERNAME, userService.getCurrentUsername());
 
         interactor.execute(inputData);
     }
 
     @Test
     void failurePasswordMismatchTest() {
-        LoginInputData inputData = new LoginInputData("Paul", "wrong");
+        LoginInputData inputData = new LoginInputData(USERNAME, WRONG);
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
         // For this failure test, we need to add Paul to the data access repository before we log in, and
         // the passwords should not match.
-        User user = new User("Paul", "password");
-        userService.setCurrentUsername("Paul");
+        User user = new User(USERNAME, PASSWORD);
+        userService.setCurrentUsername(USERNAME);
 
         // This creates a presenter that tests whether the test case is as we expect.
         LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {

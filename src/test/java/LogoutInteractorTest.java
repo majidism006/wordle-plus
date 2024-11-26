@@ -9,25 +9,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LogoutInteractorTest {
 
+    public static final String USERNAME = "Paul";
+    public static final String PASSWORD = "password";
+
     @Test
     void successTest() {
-        String testLogOut = "TestLogOut";
-        String tempPassword = "tempPassword";
-        LogoutInputData inputData = new LogoutInputData(testLogOut);
+        LogoutInputData inputData = new LogoutInputData(USERNAME);
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
         // For the success test, we need to add Paul to the data access repository before we log in.
-        User user = new User(testLogOut, tempPassword);
-        userService.setCurrentUsername(testLogOut);
+        User user = new User(USERNAME, PASSWORD);
+        userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         LogoutOutputBoundary successPresenter = new LogoutOutputBoundary() {
             @Override
             public void prepareSuccessView(LogoutOutputData user) {
                 // check that the output data contains the username of who logged out
-                assertEquals(testLogOut, user.getUsername());
+                assertEquals(USERNAME, user.getUsername());
             }
 
             @Override
