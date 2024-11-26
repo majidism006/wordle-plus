@@ -1,6 +1,8 @@
 package use_case.grid;
 
 
+import entity.GuessResult;
+
 public interface GridInputBoundary {
 
     /**
@@ -9,6 +11,10 @@ public interface GridInputBoundary {
      */
     void execute(GridInputData gridInputData);
     void switchToLogoutView();
+
+    GuessResult checkGuess(String guessedWord);
+
+    void recordGameResult(boolean userWon);
 }
 
 
