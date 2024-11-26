@@ -40,8 +40,23 @@ public class UserService {
 
     public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}
 
-    public int getUserWins(String username) {return 5;}
+    public int getUserWins(String username) {return userRepository.getUserWins(username);}
 
-    public int getUserLosses(String username) {return 10;}
+    public int getUserLosses(String username) {return userRepository.getUserLosses(username);}
+
+    public void setUserWins(String username, int i) {
+        userRepository.setUserWins(username, i);
+    }
+    public void setUserLosses(String username, int i) {
+        userRepository.setUserLosses(username, i);
+    }
+
+    public void setStatus(String username, String text) {
+        userRepository.setUserStatus(username, text);
+    }
+
+    public String getStatus(String username) {
+        return userRepository.getUserStatus(username);
+    }
 }
 
