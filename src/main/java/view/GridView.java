@@ -3,10 +3,8 @@ package view;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
-import interface_adapter.logout.LogoutController;
 import entity.GuessResult;
 import entity.CellResult;
-import use_case.WordleInstructions.InstructionsOutputData;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
@@ -213,13 +211,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
                 gridController.switchToLogoutView();
             } else {
-                foccusNextRow(row + 1);
+                focusNextRow(row + 1);
             }
 
         }
     }
 
-    private void foccusNextRow(int nextRow) {
+    private void focusNextRow(int nextRow) {
         if (nextRow < gridCells.length) {
             gridCells[nextRow][0].requestFocus();
         }
