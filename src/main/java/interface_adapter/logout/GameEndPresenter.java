@@ -7,32 +7,32 @@ import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 
-import use_case.logout.LogoutOutputBoundary;
-import use_case.logout.LogoutOutputData;
+import use_case.logout.GameEndOutputBoundary;
+import use_case.logout.GameEndOutputData;
 
-public class LogoutPresenter implements LogoutOutputBoundary {
+public class GameEndPresenter implements GameEndOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
     private final LoginViewModel loginViewModel;
     private final InstructionsViewModel instructionsViewModel;
-    private final LogoutViewModel logoutViewModel;
+    private final GameEndViewModel gameEndViewModel;
     private final GridViewModel gridViewModel;
 
-    public LogoutPresenter(ViewManagerModel viewManagerModel,
-                           LoginViewModel loginViewModel,
-                           InstructionsViewModel instructionsViewModel,
-                           LogoutViewModel logoutViewModel,
-                           GridViewModel gridViewModel) {
+    public GameEndPresenter(ViewManagerModel viewManagerModel,
+                            LoginViewModel loginViewModel,
+                            InstructionsViewModel instructionsViewModel,
+                            GameEndViewModel gameEndViewModel,
+                            GridViewModel gridViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.instructionsViewModel = instructionsViewModel;
-        this.logoutViewModel = logoutViewModel;
+        this.gameEndViewModel = gameEndViewModel;
         this.gridViewModel = gridViewModel;
 
     }
 
     @Override
-    public void prepareSuccessView(LogoutOutputData response) {
+    public void prepareSuccessView(GameEndOutputData response) {
 
         final LoginState loginState = loginViewModel.getState();
         loginState.setUsername("");
@@ -54,6 +54,6 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 ////        final LoginState loginState = loginViewModel.getState();
 //        String name = logoutState.getUsername();
 ////        logoutState.setUsername(name);
-        this.logoutViewModel.getUserHistory(win, loss);
+        this.gameEndViewModel.getUserHistory(win, loss);
     }
 }

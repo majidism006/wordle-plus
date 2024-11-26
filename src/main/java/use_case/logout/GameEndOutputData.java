@@ -3,12 +3,12 @@ package use_case.logout;
 /**
  * Output Data for the Logout Use Case.
  */
-public class LogoutOutputData {
+public class GameEndOutputData {
 
     private final String username;
     private final boolean useCaseFailed;
 
-    public LogoutOutputData(String username, boolean useCaseFailed) {
+    public GameEndOutputData(String username, boolean useCaseFailed) {
         this.username = username;
         this.useCaseFailed = useCaseFailed;
     }

@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class LogoutViewModel extends ViewModel<LogoutState> {
-    public LogoutViewModel() {
+public class GameEndViewModel extends ViewModel<GameEndState> {
+    public GameEndViewModel() {
             super("game end");
-            setState(new LogoutState());
+            setState(new GameEndState());
         }
 
     public Map<String, Integer> getUserHistory(int win, int loss) {
