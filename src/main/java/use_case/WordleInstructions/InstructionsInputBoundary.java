@@ -9,4 +9,6 @@ public interface InstructionsInputBoundary {
     void execute(InstructionsInputData instructionsInputData);
 
     String getRandomWord(String difficulty);
+
+    void switchToDiscussionBoardView();
 }

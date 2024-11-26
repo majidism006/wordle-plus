@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class wordRepository {
+public class WordRepository {
     private final List<String> easyWords;
     private final List<String> mediumWords;
     private final List<String> hardWords;
 
-    public wordRepository()  {
+    public WordRepository()  {
         try {
             this.easyWords = loadWords("src/main/resources/easy_words");
         } catch (IOException e) {

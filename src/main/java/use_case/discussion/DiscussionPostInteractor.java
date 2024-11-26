@@ -39,4 +39,12 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
             // Handle error
         }
     }
+
+    /**
+     * Switches to Instructions
+     */
+    @Override
+    public void switchToInstructionView() {
+        outputBoundary.switchToInstructionView();
+    }
 }

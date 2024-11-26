@@ -11,6 +11,7 @@ public class Main {
                 .addSignupView()
                 .addGridView()
                 .addWordleInstructionsGUI()
+                .addDiscussionPostView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addLogoutUseCase()
