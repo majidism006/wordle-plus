@@ -4,7 +4,7 @@ package app;
 import data_access.repository.DiscussionPostRepository;
 import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
-import entity.User;
+import entity.GameState;
 import interface_adapter.ViewManagerModel;
 import entity.DifficultyState;
 import interface_adapter.discussion.DiscussionPostController;
@@ -18,9 +18,9 @@ import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.logout.LogoutViewModel;
+import interface_adapter.logout.GameEndController;
+import interface_adapter.logout.GameEndPresenter;
+import interface_adapter.logout.GameEndViewModel;
 
 import interface_adapter.security.PasswordHasher;
 import interface_adapter.signup.SignupController;
@@ -39,9 +39,9 @@ import use_case.grid.GridOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
+import use_case.logout.GameEndInputBoundary;
+import use_case.logout.GameEndInteractor;
+import use_case.logout.GameEndOutputBoundary;
 import use_case.service.UserService;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
@@ -66,22 +66,23 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     private final UserRepositoryImpl userRepository = new UserRepositoryImpl();
     private final PasswordHasher passwordHasher = new PasswordHasher();
-    private final UserService userService = new UserService(userRepository, passwordHasher);
+    private UserService userService = new UserService(userRepository, passwordHasher);
     private final WordRepository wordRepository = new WordRepository();
     private final GridState gridState = new GridState();
+    private GameState gameState = new GameState(gridState);
 
     // View Models
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private GridViewModel gridViewModel;
-    private LogoutViewModel logoutViewModel;
+    private GameEndViewModel gameEndViewModel;
     private DiscussionPostViewModel discussionPostViewModel;
     private InstructionsViewModel instructionsViewModel;
 
     // Views
     private LoginView loginView;
     private SignupView signupView;
-    private GameEndView logoutView;
+    private GameEndView gameEndView;
     private GridView gridView;
     private DiscussionPostView discussionPostView;
     private WordleInstructionsGUI wordleInstructionsGUI;
@@ -111,26 +112,21 @@ public class AppBuilder {
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        // Example values for User, win rate, and loss rate
-        User user = new User("player1", "password123"); // Replace with actual User object from your app logic
-        double winRate = 75.0;  // Replace with actual win rate
-        double lossRate = 25.0; // Replace with actual loss rate
-
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState, user, winRate, lossRate);
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState, userService);
         cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
         return this;
     }
 
     public AppBuilder addGridView() {
         gridViewModel = new GridViewModel();
-        gridView = new GridView(gridViewModel);
+        gridView = new GridView(gridViewModel, gameState);
         return addView(gridView, gridView.getViewName());
     }
 
     public AppBuilder addGameEndView() {
-        logoutViewModel = new LogoutViewModel();
-        logoutView = new GameEndView(logoutViewModel, userService);
-        return addView(logoutView, logoutView.getViewName());
+        gameEndViewModel = new GameEndViewModel();
+        gameEndView = new GameEndView(gameEndViewModel, userService);
+        return addView(gameEndView, gameEndView.getViewName());
     }
 
     public AppBuilder addDiscussionPostView() {
@@ -179,20 +175,21 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addLogoutUseCase() {
-        LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel, loginViewModel,
-                instructionsViewModel, logoutViewModel, gridViewModel);
-        LogoutInputBoundary logoutInteractor = new LogoutInteractor(userService, logoutOutputBoundary);
-        LogoutController logoutController = new LogoutController(logoutInteractor);
+    public AppBuilder addGameEndUseCase() {
+        GameEndOutputBoundary gameEndOutputBoundary = new GameEndPresenter(viewManagerModel, loginViewModel,
+                instructionsViewModel, gameEndViewModel, gridViewModel);
+        GameEndInputBoundary logoutInteractor = new GameEndInteractor(userService, gameEndOutputBoundary);
+        GameEndController gameEndController = new GameEndController(logoutInteractor);
 
-        logoutView.setLogoutController(logoutController);
+        gameEndView.setLogoutController(gameEndController);
         return this;
     }
 
     public AppBuilder addGridUseCase() {
-        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, logoutViewModel);
+        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
         GameRepositoryImpl gameRepository = new GameRepositoryImpl();
-        GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository);
+        gameRepository.saveGameState(gameState);
+        GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
         GridController gridController = new GridController(gridInteractor, gridState);
 
         gridView.setGridController(gridController);

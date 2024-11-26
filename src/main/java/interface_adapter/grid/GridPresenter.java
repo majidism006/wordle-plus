@@ -4,7 +4,7 @@ import entity.CellResult;
 import entity.GuessResult;
 import interface_adapter.ViewManagerModel;
 import use_case.grid.GridOutputBoundary;
-import interface_adapter.logout.LogoutViewModel;
+import interface_adapter.logout.GameEndViewModel;
 import java.beans.PropertyChangeSupport;
 
 /**
@@ -14,19 +14,20 @@ public class GridPresenter implements GridOutputBoundary {
 
     private final GridViewModel gridViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final LogoutViewModel logoutViewModel;
+    private final GameEndViewModel gameEndViewModel;
     private final PropertyChangeSupport support;
     public GridPresenter(ViewManagerModel viewManagerModel,
-                         GridViewModel gridViewModel, LogoutViewModel logoutViewModel) {
+                         GridViewModel gridViewModel, GameEndViewModel gameEndViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.gridViewModel = gridViewModel;
-        this.logoutViewModel = logoutViewModel;
+        this.gameEndViewModel = gameEndViewModel;
         this.support = new PropertyChangeSupport(this);
     }
 
     @Override
-    public void switchToLogoutView() {
-        viewManagerModel.setState(logoutViewModel.getViewName());
+    public void switchToGameEndView() {
+        gameEndViewModel.firePropertyChange("viewDisplayed", false, true);
+        viewManagerModel.setState(gameEndViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 

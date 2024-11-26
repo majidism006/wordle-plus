@@ -1,6 +1,6 @@
 package interface_adapter.logout;
 
-public class LogoutState {
+public class GameEndState {
     private String username = "";
     private String loginError;
     private String password = "";

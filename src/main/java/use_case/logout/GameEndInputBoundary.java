@@ -1,13 +1,13 @@
 package use_case.logout;
 
 
-public interface LogoutInputBoundary {
+public interface GameEndInputBoundary {
 
     /**
      * Executes the Logout use case.
-     * @param LogoutInputData the input data
+     * @param gameEndInputData the input data
      */
-    void execute(LogoutInputData LogoutInputData);
+    void execute(GameEndInputData gameEndInputData);
 
     void switchToInstructionView();
 

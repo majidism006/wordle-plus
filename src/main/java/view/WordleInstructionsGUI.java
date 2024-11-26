@@ -8,34 +8,31 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import entity.DifficultyState;
-import entity.User;
 import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.instructions.InstructionsController;
+import use_case.service.UserService;
 
 public class WordleInstructionsGUI extends JPanel implements PropertyChangeListener {
 
+    public static final String SERIF = "Serif";
     private static final String viewName = "instructions";
     private final InstructionsViewModel instructionsViewModel;
     private InstructionsController instructionsController;
     private DifficultyState difficultyState;
     private GridState gridState;
-    private final User user;
-    private final double winRate;
-    private final double lossRate;
+    private final UserService userService;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
-                                 DifficultyState difficultyState, GridState gridState, User user, double winRate, double lossRate) {
+                                 DifficultyState difficultyState, GridState gridState, UserService userService) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
         // Set layout for the main panel
         setLayout(new BorderLayout());
         this.difficultyState = difficultyState;
         setupComponents();
-        this.user = user;
-        this.winRate = 45;
-        this.lossRate = 55;
+        this.userService = userService;
         this.gridState = gridState;
     }
 
@@ -50,7 +47,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private void setupComponents() {
         // Title label
         JLabel titleLabel = new JLabel("How To Play", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        titleLabel.setFont(new Font(SERIF, Font.BOLD, 24));
 
         // Top panel with title and profile button
         JPanel topPanel = new JPanel(new BorderLayout());
@@ -58,7 +55,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
 
         // Profile button
         JButton profilebutton = new JButton("View Profile");
-        profilebutton.setFont(new Font("Serif", Font.BOLD, 16));
+        profilebutton.setFont(new Font(SERIF, Font.BOLD, 16));
         topPanel.add(profilebutton, BorderLayout.SOUTH);
         profilebutton.addActionListener(e -> openProfileDialog());
 
@@ -73,7 +70,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
                 + "Each guess must be a valid 5-letter word.<br>"
                 + "The color of the tiles will change to show<br>"
                 + "how close your guess was to the word.</center></html>", SwingConstants.CENTER);
-        generalInstructions.setFont(new Font("Serif", Font.PLAIN, 14));
+        generalInstructions.setFont(new Font(SERIF, Font.PLAIN, 14));
         generalInstructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         instructionsPanel.add(generalInstructions);
 
@@ -103,17 +100,17 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         // Add difficulty dropdown
         String[] difficulties = { "easy", "medium", "hard" };
         JComboBox<String> difficultyDropdown = new JComboBox<>(difficulties);
-        difficultyDropdown.setFont(new Font("Serif", Font.PLAIN, 14));
+        difficultyDropdown.setFont(new Font(SERIF, Font.PLAIN, 14));
         bottomPanel.add(difficultyDropdown, BorderLayout.NORTH);
 
         // Play button
         JButton playButton = new JButton("Play");
-        playButton.setFont(new Font("Serif", Font.BOLD, 16));
+        playButton.setFont(new Font(SERIF, Font.BOLD, 16));
         bottomPanel.add(playButton, BorderLayout.WEST);
 
         // Discussion board button
         JButton discussionBoardButton = new JButton("Discussion Board");
-        discussionBoardButton.setFont(new Font("Serif", Font.BOLD, 16));
+        discussionBoardButton.setFont(new Font(SERIF, Font.BOLD, 16));
         bottomPanel.add(discussionBoardButton, BorderLayout.EAST);
 
         // Add the bottom panel to the main frame
@@ -157,21 +154,22 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     }
 
     private void openProfileDialog() {
+        String username = userService.getCurrentUsername();
         JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Profile", true);
         profileDialog.setSize(300, 200);
         profileDialog.setLayout(new BorderLayout());
 
         // User information
-        JLabel usernameLabel = new JLabel("Username: " + user.getUsername(), SwingConstants.CENTER);
-        JLabel winRateLabel = new JLabel("Win Rate: " + winRate + "%", SwingConstants.CENTER);
-        JLabel lossRateLabel = new JLabel("Loss Rate: " + lossRate + "%", SwingConstants.CENTER);
+        JLabel usernameLabel = new JLabel("Username: " + username, SwingConstants.CENTER);
+        JLabel winRateLabel = new JLabel("Wins: " + userService.getUserWins(username), SwingConstants.CENTER);
+        JLabel lossRateLabel = new JLabel("Losses: " + userService.getUserLosses(username), SwingConstants.CENTER);
 
         // Status field
         JPanel statusPanel = new JPanel(new BorderLayout());
-        JTextField statusField = new JTextField(user.getStatus() != null ? user.getStatus() : "Set your status here!");
+        JTextField statusField = new JTextField(userService.getStatus(username) != null ? userService.getStatus(username) : "Set your status here!");
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
-            user.setStatus(statusField.getText());
+            userService.setStatus(username, statusField.getText());
             JOptionPane.showMessageDialog(profileDialog, "Status updated!");
         });
 

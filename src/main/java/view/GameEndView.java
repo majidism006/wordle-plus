@@ -1,113 +1,84 @@
 package view;
 
 
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutState;
-import interface_adapter.logout.LogoutViewModel;
+import interface_adapter.logout.GameEndController;
+import interface_adapter.logout.GameEndState;
+import interface_adapter.logout.GameEndViewModel;
 import use_case.service.UserService;
 
 import javax.swing.*;
 import java.awt.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class GameEndView extends JPanel implements PropertyChangeListener {
 
-
     private static final String viewName = "game end";
-
-    private final LogoutViewModel logoutViewModel;
-
-    private final JButton logout;
-    private final JButton playagain;
+    private final GameEndViewModel gameEndViewModel;
     private final UserService userService;
+    private GameEndController gameEndController;
 
+    private JLabel winsLabel;
+    private JLabel lossesLabel;
+    private JLabel winRateLabel;
 
-
-
-    private LogoutController logoutController;
-
-
-    public GameEndView(LogoutViewModel logoutViewModel, UserService userService) {
-
-        this.logoutViewModel = logoutViewModel;
+    public GameEndView(GameEndViewModel gameEndViewModel, UserService userService) {
+        this.gameEndViewModel = gameEndViewModel;
         this.userService = userService;
-        this.logoutViewModel.addPropertyChangeListener(this);
+        this.gameEndViewModel.addPropertyChangeListener(this);
+        setupComponents();
+    }
 
-
-//        final JPanel stats = new JPanel();
-//        stats.setLayout(new GridLayout(4, 1));
-//        JLabel titleLabel = new JLabel("User's History", SwingConstants.CENTER);
-//        stats.add(titleLabel);
-
-        // Call a method to update the view
-//        updateUserHistoryDisplay();
-
-
+    private void setupComponents() {
         final JPanel stats = new JPanel();
         stats.setLayout(new GridLayout(4, 1));
         JLabel titleLabel = new JLabel("User's History", SwingConstants.CENTER);
         stats.add(titleLabel);
-        int wins = userService.getUserWins(userService.getCurrentUsername());
-        int losses = userService.getUserLosses(userService.getCurrentUsername());
 
-        // Calculate the winning rate
-        double winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
+        winsLabel = new JLabel("Wins: ", SwingConstants.CENTER);
+        lossesLabel = new JLabel("Losses: ", SwingConstants.CENTER);
+        winRateLabel = new JLabel("Winning Rate: ", SwingConstants.CENTER);
 
-        // Create labels to display the stats
-        JLabel winsLabel = new JLabel("Wins: " + wins, SwingConstants.CENTER);
-        JLabel lossesLabel = new JLabel("Losses: " + losses, SwingConstants.CENTER);
-        JLabel winRateLabel = new JLabel("Winning Rate: " + String.format("%.2f", winRate) + "%", SwingConstants.CENTER);
-
-        // Set layout and add labels to the panel
-        setLayout(new GridLayout(3, 1)); // Display stats in a vertical column
         stats.add(winsLabel);
         stats.add(lossesLabel);
         stats.add(winRateLabel);
 
-
-
         final JPanel buttons = new JPanel();
-        playagain = new JButton("Play Again?");
-        buttons.add(playagain);
-        logout = new JButton("Log Out");
+        JButton playAgain = new JButton("Play Again?");
+        buttons.add(playAgain);
+        JButton logout = new JButton("Log Out");
         buttons.add(logout);
 
-        playagain.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(playagain)) {
+        playAgain.addActionListener(evt -> gameEndController.switchToInstructionView());
 
-                            logoutController.switchToInstructionView();
-                    }
-                }
-        );
-      
-        logout.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logout)) {
-                            final LogoutState currentState = logoutViewModel.getState();
-
-                            logoutController.execute(
-                                    currentState.getUsername()
-                            );
-
-                            System.exit(0);
-
-                        }
-                    }
-                }
-        );
-
+        logout.addActionListener(evt -> {
+            final GameEndState currentState = gameEndViewModel.getState();
+            gameEndController.execute(currentState.getUsername());
+            System.exit(0);
+        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(stats);
-      
         this.add(buttons);
+    }
+
+    private void updateUserStats() {
+        String username = userService.getCurrentUsername();
+        System.out.println("Fetching stats for user: " + username);
+
+        int wins = userService.getUserWins(username);
+        int losses = userService.getUserLosses(username);
+
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
+
+        double winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
+
+        winsLabel.setText("Wins: " + wins);
+        lossesLabel.setText("Losses: " + losses);
+        winRateLabel.setText("Winning Rate: " + String.format("%.2f", winRate) + "%");
+
+        System.out.println("Updated labels with stats.");
     }
 
     public String getViewName() {
@@ -116,18 +87,12 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO: implement this
+        if ("viewDisplayed".equals(evt.getPropertyName())) {
+            updateUserStats();
+        }
     }
 
-    public void setLogoutController(LogoutController logoutController) {
-        this.logoutController = logoutController;
+    public void setLogoutController(GameEndController gameEndController) {
+        this.gameEndController = gameEndController;
     }
-
-//    public void updateUserHistoryDisplay() {
-//        logoutViewModel.getUserHistory();
-//        if (userHistory != null) {
-//            userHistoryLabel.setText("User History: " + userHistory.getHistory());
-//        }
-//    }
-
 }

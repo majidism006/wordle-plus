@@ -5,23 +5,23 @@ import use_case.service.UserService;
 /**
  * The Logout Interactor.
  */
-public class LogoutInteractor implements LogoutInputBoundary {
+public class GameEndInteractor implements GameEndInputBoundary {
     private final UserService userService;
-    private final LogoutOutputBoundary logoutPresenter;
+    private final GameEndOutputBoundary logoutPresenter;
 
-    public LogoutInteractor(UserService userService,
-                            LogoutOutputBoundary logoutOutputBoundary) {
+    public GameEndInteractor(UserService userService,
+                             GameEndOutputBoundary gameEndOutputBoundary) {
         this.userService = userService;
-        this.logoutPresenter = logoutOutputBoundary;
+        this.logoutPresenter = gameEndOutputBoundary;
     }
 
     @Override
-    public void execute(LogoutInputData logoutInputData) {
+    public void execute(GameEndInputData gameEndInputData) {
 
-        final String name = logoutInputData.getUsername();
+        final String name = gameEndInputData.getUsername();
         userService.setCurrentUsername(null);
-        final LogoutOutputData logoutOutputData = new LogoutOutputData(name, false);
-        logoutPresenter.prepareSuccessView(logoutOutputData);
+        final GameEndOutputData gameEndOutputData = new GameEndOutputData(name, false);
+        logoutPresenter.prepareSuccessView(gameEndOutputData);
     }
 
     @Override

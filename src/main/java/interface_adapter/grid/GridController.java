@@ -32,8 +32,8 @@ public class GridController {
     /**
      * Requests a transition to signout view when implemented.
      */
-    public void switchToLogoutView() {
-        gridInteractor.switchToLogoutView();
+    public void switchToGameEndView() {
+        gridInteractor.switchToGameEndView();
     }
 
     /**
@@ -50,6 +50,14 @@ public class GridController {
      * @return the GuessResult object containing feedback
      */
     public GuessResult checkWord(String guessedWord) {
-        return gridState.checkGuess(guessedWord);
+        return gridInteractor.checkGuess(guessedWord);
+    }
+
+    /**
+     * Records win/loss for the user
+     * @param userWon whether the user won or not
+     */
+    public void recordGameResult(boolean userWon){
+        gridInteractor.recordGameResult(userWon);
     }
 }
