@@ -125,7 +125,7 @@ public class AppBuilder {
 
     public AppBuilder addGameEndView() {
         gameEndViewModel = new GameEndViewModel();
-        gameEndView = new GameEndView(gameEndViewModel, userService);
+        gameEndView = new GameEndView(gameEndViewModel);
         return addView(gameEndView, gameEndView.getViewName());
     }
 

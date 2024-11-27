@@ -2,14 +2,14 @@ package interface_adapter.logout;
 
 import interface_adapter.ViewModel;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class GameEndViewModel extends ViewModel<GameEndState> {
     private final PropertyChangeSupport support;
+    private int wins;
+    private int losses;
+    private double winRate;
 
     public GameEndViewModel() {
         super("game end");
@@ -28,10 +28,13 @@ public class GameEndViewModel extends ViewModel<GameEndState> {
         support.firePropertyChange(propertyName, oldValue, newValue);
     }
 
-    public Map<String, Integer> getUserHistory(int win, int loss) {
-        Map<String, Integer> history = new HashMap<>();
-        history.put("Win", win);
-        history.put("Loss", loss);
-        return history;
+    public void loadUserHistory(int wins, int losses) {
+        this.wins = wins;
+        this.losses = losses;
+        this.winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
+
+        firePropertyChange("wins", null, this.wins);
+        firePropertyChange("losses", null, this.losses);
+        firePropertyChange("winRate", null, this.winRate);
     }
 }

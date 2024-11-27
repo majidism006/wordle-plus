@@ -50,10 +50,6 @@ public class GameEndPresenter implements GameEndOutputBoundary {
 
     @Override
     public void loadUserHistory(int win, int loss) {
-//        final LogoutState logoutState = logoutViewModel.getState();
-////        final LoginState loginState = loginViewModel.getState();
-//        String name = logoutState.getUsername();
-////        logoutState.setUsername(name);
-        this.gameEndViewModel.getUserHistory(win, loss);
+        gameEndViewModel.loadUserHistory(win, loss);
     }
 }

@@ -26,7 +26,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final JTextField[][] gridCells;
     private GridController gridController;
     private GameState gameState;
-//    private LogoutController logoutController;
 
     public GridView(GridViewModel gridViewModel, GameState gameState) {
         this.gridViewModel = gridViewModel;
