@@ -119,7 +119,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 if (state.isCellCorrectPosition(row, col)) {
                     gridCells[row][col].setBackground(Color.GREEN); // Correct letter, correct position
                 } else if (state.isCellCorrectLetter(row, col)) {
-                    gridCells[row][col].setBackground(Color.YELLOW); // Correct letter, incorrect position
+                    gridCells[row][col].setBackground(Color.ORANGE); // Correct letter, incorrect position
                 } else {
                     gridCells[row][col].setBackground(Color.GRAY); // Incorrect letter
                 }
@@ -201,7 +201,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 if (cellResult.isCorrectPosition()) {
                     gridCells[row][col].setBackground(Color.GREEN);
                 } else if (cellResult.isCorrectLetter()) {
-                    gridCells[row][col].setBackground(Color.YELLOW);
+                    gridCells[row][col].setBackground(Color.ORANGE);
                 } else {
                     gridCells[row][col].setBackground(Color.GRAY);
                 }
