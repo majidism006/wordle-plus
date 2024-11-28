@@ -27,16 +27,5 @@ Clone of the iconic Wordle, made for the CSC207 group project.
 ![User Profile](img/user_profile_wireframe.jpg)
 
 
-## To-Do
-- Step 1
-  - Ice Cream Break
-- Step 2
-  - [x] Log-In UI
-  - [x] Sign-Up UI
-  - [x] Instructions UI
-  - [x] Wordle grid UI
-  - [x] API Auth implementation
-- Step 3
-  - Ice Cream Break
 
 
