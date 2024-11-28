@@ -1,8 +1,9 @@
+package use_case;
+
 import data_access.repository.UserRepositoryImpl;
 import entity.User;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
-import use_case.logout.*;
 import use_case.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
