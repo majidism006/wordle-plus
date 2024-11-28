@@ -15,4 +15,5 @@ public class GameEndInputData {
     public String getUsername() {
         return username;
     }
+
 }
