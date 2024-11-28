@@ -5,11 +5,6 @@ public class DiscussionPostState {
     private String content = "";
     private String username = "";
 
-    public DiscussionPostState() {
-//        this.userId = userId;
-//        this.content = content;
-    }
-
     public String getUsername() {
         return this.username;
     }
