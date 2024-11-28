@@ -1,17 +1,21 @@
 package interface_adapter.discussion;
 
 import entity.DiscussionPost;
+import interface_adapter.ViewModel;
+import interface_adapter.logout.GameEndState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
-public class DiscussionPostViewModel {
+public class DiscussionPostViewModel extends ViewModel<DiscussionPostState> {
     private final PropertyChangeSupport support;
     private List<DiscussionPost> posts;
 
     public DiscussionPostViewModel() {
+        super("discussion");
         this.support = new PropertyChangeSupport(this);
+        setState(new DiscussionPostState());
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
