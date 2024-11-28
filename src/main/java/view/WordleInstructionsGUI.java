@@ -23,6 +23,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private DifficultyState difficultyState;
     private GridState gridState;
     private final UserService userService;
+    private final ProfileView profileView;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
                                  DifficultyState difficultyState, GridState gridState, UserService userService) {
@@ -34,6 +35,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         setupComponents();
         this.userService = userService;
         this.gridState = gridState;
+        this.profileView = new ProfileView(userService);
     }
 
     public void setInstructionsController(InstructionsController instructionsController) {
@@ -57,7 +59,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         JButton profilebutton = new JButton("View Profile");
         profilebutton.setFont(new Font(SERIF, Font.BOLD, 16));
         topPanel.add(profilebutton, BorderLayout.SOUTH);
-        profilebutton.addActionListener(e -> openProfileDialog());
+        profilebutton.addActionListener(e -> profileView.displayProfileDialog(this));
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -151,43 +153,6 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         // Sets initial state to easy
         difficultyDropdown.setSelectedIndex(0);
         difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent.ACTION_PERFORMED, null));
-    }
-
-    private void openProfileDialog() {
-        String username = userService.getCurrentUsername();
-        JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Profile", true);
-        profileDialog.setSize(300, 200);
-        profileDialog.setLayout(new BorderLayout());
-
-        // User information
-        JLabel usernameLabel = new JLabel("Username: " + username, SwingConstants.CENTER);
-        JLabel winRateLabel = new JLabel("Wins: " + userService.getUserWins(username), SwingConstants.CENTER);
-        JLabel lossRateLabel = new JLabel("Losses: " + userService.getUserLosses(username), SwingConstants.CENTER);
-
-        // Status field
-        JPanel statusPanel = new JPanel(new BorderLayout());
-        JTextField statusField = new JTextField(userService.getStatus(username) != null ? userService.getStatus(username) : "Set your status here!");
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> {
-            userService.setStatus(username, statusField.getText());
-            JOptionPane.showMessageDialog(profileDialog, "Status updated!");
-        });
-
-        statusPanel.add(new JLabel("Status:"), BorderLayout.WEST);
-        statusPanel.add(statusField, BorderLayout.CENTER);
-        statusPanel.add(saveButton, BorderLayout.EAST);
-
-        // Add components to the dialog
-        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
-        infoPanel.add(usernameLabel);
-        infoPanel.add(winRateLabel);
-        infoPanel.add(lossRateLabel);
-
-        profileDialog.add(infoPanel, BorderLayout.CENTER);
-        profileDialog.add(statusPanel, BorderLayout.SOUTH);
-
-        profileDialog.setLocationRelativeTo(this);
-        profileDialog.setVisible(true);
     }
 
 
