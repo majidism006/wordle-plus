@@ -17,12 +17,11 @@ public class GameState {
     public void setRemainingAttempts(int remainingAttempts) {
         this.remainingAttempts = remainingAttempts;
     }
+
     public int getRemainingAttempts() {
         return remainingAttempts;
     }
-    public String getTargetWord() {
-        return targetWord;
-    }
+
     public GuessResult checkGuess(String guess) {
         // Delegate the guess checking to GridState
         return gridState.checkGuess(guess);
