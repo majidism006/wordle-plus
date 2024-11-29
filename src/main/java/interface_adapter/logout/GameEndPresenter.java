@@ -47,9 +47,4 @@ public class GameEndPresenter implements GameEndOutputBoundary {
         viewManagerModel.setState(instructionsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
-
-    @Override
-    public void loadUserHistory(int win, int loss) {
-        gameEndViewModel.loadUserHistory(win, loss);
-    }
 }

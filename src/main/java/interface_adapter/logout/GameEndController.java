@@ -30,7 +30,4 @@ public class GameEndController {
         gameEndInteractor.switchToInstructionView();
     }
 
-    public void getUserHistory() {
-        gameEndInteractor.loadUserHistory();
-    }
 }

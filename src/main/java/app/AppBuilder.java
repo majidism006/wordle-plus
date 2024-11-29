@@ -24,6 +24,7 @@ import interface_adapter.logout.GameEndController;
 import interface_adapter.logout.GameEndPresenter;
 import interface_adapter.logout.GameEndViewModel;
 
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -81,6 +82,7 @@ public class AppBuilder {
     private GameEndViewModel gameEndViewModel;
     private DiscussionPostViewModel discussionPostViewModel;
     private InstructionsViewModel instructionsViewModel;
+    private ProfileViewModel profileViewModel;
 
     // Views
     private LoginView loginView;
@@ -89,6 +91,7 @@ public class AppBuilder {
     private GridView gridView;
     private DiscussionPostView discussionPostView;
     private WordleInstructionsGUI wordleInstructionsGUI;
+    private ProfileView profileView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -111,6 +114,12 @@ public class AppBuilder {
         loginView = new LoginView(loginViewModel);
         return addView(loginView, loginView.getViewName());
     }
+
+//    public AppBuilder addProfileView() {
+//        profileViewModel = new ProfileViewModel();
+//        profileView = new ProfileView(profileViewModel);
+//        return addView(profileView, profileView.getViewName());
+//    }
 
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();

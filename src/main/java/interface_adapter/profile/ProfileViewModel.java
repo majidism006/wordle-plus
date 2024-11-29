@@ -1,22 +1,23 @@
-package interface_adapter.logout;
+package interface_adapter.profile;
 
 import interface_adapter.ViewModel;
+import interface_adapter.logout.GameEndState;
 import use_case.History.HistoryOutputData;
+import view.ProfileView;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class GameEndViewModel extends ViewModel<GameEndState> {
+public class ProfileViewModel extends ViewModel<ProfileState> {
     private final PropertyChangeSupport support;
     private int wins;
     private int losses;
-    private double winRate;
-
-    public GameEndViewModel() {
-        super("game end");
+    public ProfileViewModel() {
+        super("profile");
         this.support = new PropertyChangeSupport(this);
-        setState(new GameEndState());
+        setState(new ProfileState());
     }
+
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
@@ -32,10 +33,8 @@ public class GameEndViewModel extends ViewModel<GameEndState> {
     public void loadUserHistory(HistoryOutputData historyOutputData) {
         this.wins = historyOutputData.getWin();
         this.losses = historyOutputData.getLoss();
-        this.winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
 
         firePropertyChange("wins", null, this.wins);
         firePropertyChange("losses", null, this.losses);
-        firePropertyChange("winRate", null, this.winRate);
     }
 }
