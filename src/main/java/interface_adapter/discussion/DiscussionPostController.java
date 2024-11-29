@@ -18,6 +18,9 @@ public class DiscussionPostController {
     public void getAllPosts() {
         interactor.getAllPosts();
     }
+    public void fetchRandomQuote(String userId) {
+        interactor.fetchRandomQuote(userId);
+    }
     public void switchToInstructionView() {
         interactor.switchToInstructionView();
     }

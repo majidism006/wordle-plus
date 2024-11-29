@@ -16,7 +16,6 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class DiscussionPostView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "discussion";
 
     private final JTextArea discussionArea;
     private final JTextField textEntryField;
@@ -69,7 +68,6 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
         exitButton.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(exitButton)) {
-
                         controller.switchToInstructionView();
                     }
                 }
@@ -100,28 +98,25 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
         controller.getAllPosts();
 
         // Set up a timer to fetch new posts every 5 seconds
-        timer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.getAllPosts();
-            }
-        });
+        timer = new Timer(5000, e -> controller.getAllPosts());
         timer.start();
     }
 
     private void updatePostButtonState() {
-        postButton.setEnabled(!textEntryField.getText().trim().isEmpty());
+        postButton.setEnabled(true); // Always enable the post button
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == postButton) {
             String text = textEntryField.getText().trim();
-            if (!text.isEmpty()) {
-                String currentUserId = userService.getCurrentUsername();
+            String currentUserId = userService.getCurrentUsername();
+            if (text.isEmpty()) {
+                controller.fetchRandomQuote(currentUserId);
+            } else {
                 controller.addPost(currentUserId, text);
-                textEntryField.setText("");
             }
+            textEntryField.setText("");
         }
     }
 
@@ -141,6 +136,6 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     }
 
     public String getViewName() {
-        return viewName;
+        return "discussion";
     }
 }
