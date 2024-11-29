@@ -8,9 +8,6 @@ import java.beans.PropertyChangeSupport;
 
 public class GameEndViewModel extends ViewModel<GameEndState> {
     private final PropertyChangeSupport support;
-    private int wins;
-    private int losses;
-    private double winRate;
 
     public GameEndViewModel() {
         super("game end");
@@ -27,15 +24,5 @@ public class GameEndViewModel extends ViewModel<GameEndState> {
 
     public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         support.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
-    public void loadUserHistory(HistoryOutputData historyOutputData) {
-        this.wins = historyOutputData.getWin();
-        this.losses = historyOutputData.getLoss();
-        this.winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
-
-        firePropertyChange("wins", null, this.wins);
-        firePropertyChange("losses", null, this.losses);
-        firePropertyChange("winRate", null, this.winRate);
     }
 }

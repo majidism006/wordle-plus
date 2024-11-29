@@ -14,9 +14,13 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         this.gameEndViewModel = gameEndViewModel;
     }
 
-
     @Override
     public void prepareSuccessView(HistoryOutputData historyOutputData) {
-        gameEndViewModel.loadUserHistory(historyOutputData);
+        int win = historyOutputData.getWin();
+        int loss = historyOutputData.getLoss();
+        double winrates = (win + loss > 0) ? ((double) win / (win + loss)) * 100 : 0;
+        gameEndViewModel.firePropertyChange("wins", null, win);
+        gameEndViewModel.firePropertyChange("losses", null, loss);
+        gameEndViewModel.firePropertyChange("winRate", null, winrates);
     }
 }
