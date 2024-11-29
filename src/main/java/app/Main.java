@@ -17,6 +17,7 @@ public class Main {
                 .addInstructionsUseCase()
                 .addGridUseCase()
                 .addGameEndUseCase()
+                .addHistoryUseCase()
                 .build();
 
         application.pack();

@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.discussion.DiscussionPostController;
+import interface_adapter.discussion.DiscussionPostState;
 import interface_adapter.discussion.DiscussionPostViewModel;
 import entity.DiscussionPost;
 import use_case.service.UserService;
@@ -22,14 +23,14 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     private final JButton postButton;
     private final JButton exitButton;
     private final DiscussionPostViewModel viewModel;
-    private final UserService userService;
+//    private final UserService userService;
     private final DiscussionPostController controller;
     private final Timer timer;
 
-    public DiscussionPostView(DiscussionPostViewModel viewModel, UserService userService,
+    public DiscussionPostView(DiscussionPostViewModel viewModel,
                               DiscussionPostController controller) {
         this.viewModel = viewModel;
-        this.userService = userService;
+//        this.userService = userService;
         this.controller = controller;
         this.viewModel.addPropertyChangeListener(this);
 

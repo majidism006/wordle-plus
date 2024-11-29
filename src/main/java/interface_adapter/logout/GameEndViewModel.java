@@ -1,6 +1,7 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewModel;
+import use_case.History.HistoryOutputData;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -31,6 +32,16 @@ public class GameEndViewModel extends ViewModel<GameEndState> {
     public void loadUserHistory(int wins, int losses) {
         this.wins = wins;
         this.losses = losses;
+        this.winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
+
+        firePropertyChange("wins", null, this.wins);
+        firePropertyChange("losses", null, this.losses);
+        firePropertyChange("winRate", null, this.winRate);
+    }
+
+    public void loadUserHistory(HistoryOutputData historyOutputData) {
+        this.wins = historyOutputData.getWin();
+        this.losses = historyOutputData.getLoss();
         this.winRate = (wins + losses > 0) ? ((double) wins / (wins + losses)) * 100 : 0;
 
         firePropertyChange("wins", null, this.wins);
