@@ -10,6 +10,4 @@ public interface GameEndInputBoundary {
     void execute(GameEndInputData gameEndInputData);
 
     void switchToInstructionView();
-
-    void loadUserHistory();
 }

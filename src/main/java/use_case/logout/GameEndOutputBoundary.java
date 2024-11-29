@@ -11,6 +11,4 @@ public interface GameEndOutputBoundary {
     void prepareSuccessView(GameEndOutputData outputData);
   
     void switchToInstructionView();
-
-    void loadUserHistory(int win, int loss);
 }
