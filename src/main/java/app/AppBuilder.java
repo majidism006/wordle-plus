@@ -12,6 +12,8 @@ import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
+import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryPresenter;
 import interface_adapter.instructions.InstructionsController;
 import interface_adapter.instructions.InstructionsPresenter;
 import interface_adapter.instructions.InstructionsViewModel;
@@ -27,6 +29,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
+import use_case.History.*;
 import use_case.WordleInstructions.InstructionsInputBoundary;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
 import use_case.WordleInstructions.InstructionsUseCaseInteractor;
@@ -140,13 +143,13 @@ public class AppBuilder {
                 discussionPostOutputBoundary);
         DiscussionPostController discussionPostController = new DiscussionPostController(discussionPostInputBoundary);
 
-        discussionPostView = new DiscussionPostView(discussionPostViewModel, userService, discussionPostController);
+        discussionPostView = new DiscussionPostView(discussionPostViewModel, discussionPostController);
         return addView(discussionPostView, discussionPostView.getViewName());
     }
 
     public AppBuilder addLoginUseCase() {
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel,
-                gridViewModel, instructionsViewModel);
+                instructionsViewModel, gameEndViewModel, discussionPostViewModel);
         LoginInputBoundary loginInteractor = new LoginInteractor(userService, loginOutputBoundary);
         LoginController loginController = new LoginController(loginInteractor);
 
@@ -182,6 +185,15 @@ public class AppBuilder {
         GameEndController gameEndController = new GameEndController(logoutInteractor);
 
         gameEndView.setLogoutController(gameEndController);
+        return this;
+    }
+
+    public AppBuilder addHistoryUseCase() {
+        HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel);
+        HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
+        HistoryController historyController = new HistoryController(historyInteractor);
+
+        gameEndView.setHistoryController(historyController);
         return this;
     }
 

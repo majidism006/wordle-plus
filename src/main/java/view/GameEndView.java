@@ -1,9 +1,11 @@
 package view;
 
 
+import interface_adapter.history.HistoryController;
 import interface_adapter.logout.GameEndController;
 import interface_adapter.logout.GameEndState;
 import interface_adapter.logout.GameEndViewModel;
+import use_case.History.HistoryInputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
     private static final String viewName = "game end";
     private final GameEndViewModel gameEndViewModel;
     private GameEndController gameEndController;
+    private HistoryController historyController;
 
     private JLabel winsLabel;
     private JLabel lossesLabel;
@@ -67,7 +70,9 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
             @Override
             public void componentShown(ComponentEvent e) {
                 // Trigger user history retrieval when the view is shown
-                gameEndController.getUserHistory();
+                final GameEndState currentState = gameEndViewModel.getState();
+                historyController.execute(currentState.getUsername());
+//                gameEndController.getUserHistory();
             }
         });
     }
@@ -89,5 +94,9 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(GameEndController gameEndController) {
         this.gameEndController = gameEndController;
+    }
+
+    public void setHistoryController(HistoryController historyController) {
+        this.historyController = historyController;
     }
 }
