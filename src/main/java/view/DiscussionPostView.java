@@ -108,11 +108,15 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == postButton) {
+            final DiscussionPostState currentState = viewModel.getState();
+            String currentUserId = currentState.getUsername();
             String text = textEntryField.getText().trim();
             if (!text.isEmpty()) {
-                final DiscussionPostState currentState = viewModel.getState();
-                String currentUserId = currentState.getUsername();
                 controller.addPost(currentUserId, text);
+                textEntryField.setText("");
+            }
+            else{
+                controller.fetchRandomQuote(currentUserId);
                 textEntryField.setText("");
             }
         }
