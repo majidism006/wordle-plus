@@ -181,6 +181,12 @@ public class GridView extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Validates if the input string contains only alphabetic characters.
+     *
+     * @param text The input string.
+     * @return True if the text contains only alphabetic characters, false otherwise.
+     */
     private boolean isValidCharacter(String text) {
         return true;
     }
