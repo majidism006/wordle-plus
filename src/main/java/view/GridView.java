@@ -188,7 +188,12 @@ public class GridView extends JPanel implements PropertyChangeListener {
      * @return True if the text contains only alphabetic characters, false otherwise.
      */
     private boolean isValidCharacter(String text) {
-        for (char c : text.toCharArray()) {}
+        for (char c : text.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                Toolkit.getDefaultToolkit().beep(); // Provide feedback for invalid input
+                return false;
+            }
+        }
         return true;
     }
 
