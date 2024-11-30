@@ -4,8 +4,10 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostViewModel;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
 import use_case.WordleInstructions.InstructionsOutputData;
+import view.ProfileView;
 import view.WordleInstructionsGUI;
 
 /**
@@ -17,13 +19,16 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final GridViewModel gridViewModel;
     private final DiscussionPostViewModel discussionPostViewModel;
+    private final ProfileViewModel profileViewModel;
 
     public InstructionsPresenter(ViewManagerModel viewManagerModel, InstructionsViewModel instructionsViewModel,
-                                 GridViewModel gridViewModel, DiscussionPostViewModel discussionPostViewModel) {
+                                 GridViewModel gridViewModel, DiscussionPostViewModel discussionPostViewModel,
+                                 ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.instructionsViewModel = instructionsViewModel;
         this.gridViewModel = gridViewModel;
         this.discussionPostViewModel = discussionPostViewModel;
+        this.profileViewModel = profileViewModel;
     }
 
     @Override
@@ -54,6 +59,12 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
     @Override
     public void switchToDiscussionBoardView() {
         this.viewManagerModel.setState(discussionPostViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToProfileView() {
+        this.viewManagerModel.setState(profileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 }

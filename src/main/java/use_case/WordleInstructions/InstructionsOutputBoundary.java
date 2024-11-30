@@ -10,4 +10,6 @@ public interface InstructionsOutputBoundary {
     void prepareFailView(String errorMessage);
     void switchToGridView();
     void switchToDiscussionBoardView();
+
+    void switchToProfileView();
 }

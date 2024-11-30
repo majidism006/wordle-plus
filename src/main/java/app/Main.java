@@ -12,6 +12,7 @@ public class Main {
                 .addGameEndView()
                 .addWordleInstructionsGUI()
                 .addDiscussionPostView()
+                .addProfileView()
                 .addSignupUseCase()
                 .addLoginUseCase()
                 .addInstructionsUseCase()

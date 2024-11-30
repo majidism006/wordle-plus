@@ -115,16 +115,16 @@ public class AppBuilder {
         return addView(loginView, loginView.getViewName());
     }
 
-//    public AppBuilder addProfileView() {
-//        profileViewModel = new ProfileViewModel();
-//        profileView = new ProfileView(profileViewModel);
-//        return addView(profileView, profileView.getViewName());
-//    }
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel);
+        return addView(profileView, profileView.getViewName());
+    }
 
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState, userService);
+        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, profileViewModel, difficultyState, gridState, userService);
         cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
         return this;
     }
@@ -158,7 +158,7 @@ public class AppBuilder {
 
     public AppBuilder addLoginUseCase() {
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel,
-                instructionsViewModel, gameEndViewModel, discussionPostViewModel);
+                instructionsViewModel, gameEndViewModel, discussionPostViewModel,profileViewModel);
         LoginInputBoundary loginInteractor = new LoginInteractor(userService, loginOutputBoundary);
         LoginController loginController = new LoginController(loginInteractor);
 
@@ -178,7 +178,7 @@ public class AppBuilder {
 
     public AppBuilder addInstructionsUseCase() {
         InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
-                instructionsViewModel, gridViewModel, discussionPostViewModel);
+                instructionsViewModel, gridViewModel, discussionPostViewModel, profileViewModel);
         InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(userService,
                 instructionsOutputBoundary, wordRepository, gridState);
         InstructionsController controller = new InstructionsController(instructionsInteractor);
@@ -203,6 +203,7 @@ public class AppBuilder {
         HistoryController historyController = new HistoryController(historyInteractor);
 
         gameEndView.setHistoryController(historyController);
+        wordleInstructionsGUI.setHistoryController(historyController);
         return this;
     }
 

@@ -9,9 +9,13 @@ import java.beans.PropertyChangeListener;
 
 import entity.DifficultyState;
 import interface_adapter.grid.GridState;
+import interface_adapter.history.HistoryController;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.instructions.InstructionsController;
+import interface_adapter.logout.GameEndState;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.service.UserService;
 
 public class WordleInstructionsGUI extends JPanel implements PropertyChangeListener {
@@ -20,12 +24,15 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private static final String viewName = "instructions";
     private final InstructionsViewModel instructionsViewModel;
     private InstructionsController instructionsController;
+    private HistoryController historyController;
     private DifficultyState difficultyState;
     private GridState gridState;
+    private ProfileViewModel profileViewModel;
     private final UserService userService;
     private final ProfileView profileView;
 
     public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
+                                 ProfileViewModel profileViewModel,
                                  DifficultyState difficultyState, GridState gridState, UserService userService) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
@@ -35,7 +42,9 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         setupComponents();
         this.userService = userService;
         this.gridState = gridState;
-        this.profileView = new ProfileView(userService);
+        this.profileView = new ProfileView(new ProfileViewModel());
+        this.profileViewModel = profileViewModel;
+//        this.profileViewModel.addPropertyChangeListener(this);
     }
 
     public void setInstructionsController(InstructionsController instructionsController) {
@@ -43,7 +52,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     }
 
     public static String getViewName() {
-        return "instructions";
+        return viewName;
     }
 
     private void setupComponents() {
@@ -59,7 +68,13 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
         JButton profilebutton = new JButton("View Profile");
         profilebutton.setFont(new Font(SERIF, Font.BOLD, 16));
         topPanel.add(profilebutton, BorderLayout.SOUTH);
-        profilebutton.addActionListener(e -> profileView.displayProfileDialog(this));
+
+        profilebutton.addActionListener(e ->{
+                final ProfileState currentState = profileViewModel.getState();
+                instructionsController.switchToProfileView();
+                historyController.execute(currentState.getUsername());});
+
+//                profileView.displayProfileDialog(this));
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -198,5 +213,9 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final InstructionsState state = (InstructionsState) evt.getNewValue();
+    }
+
+    public void setHistoryController(HistoryController historyController) {
+        this.historyController = historyController;
     }
 }
