@@ -181,7 +181,11 @@ public class GridView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void handleEnterKey(int row) {
+    private boolean isValidCharacter(String text) {
+        return true;
+    }
+
+        private void handleEnterKey(int row) {
         if (isRowComplete(row)) {
             StringBuilder guessedWord = new StringBuilder();
 
