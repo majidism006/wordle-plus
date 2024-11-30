@@ -151,7 +151,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (string != null) {
                 string = string.toUpperCase();
-                if (fb.getDocument().getLength() + string.length() <= 1) {
+                if (isValidCharacter(string) && fb.getDocument().getLength() + string.length() <= 1) {
                     super.insertString(fb, offset, string, attr);
                     shiftFocus();
                 }
