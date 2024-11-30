@@ -23,14 +23,12 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     private final JButton postButton;
     private final JButton exitButton;
     private final DiscussionPostViewModel viewModel;
-    private final UserService userService;
     private final DiscussionPostController controller;
     private final Timer timer;
 
-    public DiscussionPostView(DiscussionPostViewModel viewModel, UserService userService,
+    public DiscussionPostView(DiscussionPostViewModel viewModel,
                               DiscussionPostController controller) {
         this.viewModel = viewModel;
-        this.userService = userService;
         this.controller = controller;
         this.viewModel.addPropertyChangeListener(this);
 
@@ -111,13 +109,12 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == postButton) {
             String text = textEntryField.getText().trim();
-            String currentUserId = userService.getCurrentUsername();
-            if (text.isEmpty()) {
-                controller.fetchRandomQuote(currentUserId);
-            } else {
+            if (!text.isEmpty()) {
+                final DiscussionPostState currentState = viewModel.getState();
+                String currentUserId = currentState.getUsername();
                 controller.addPost(currentUserId, text);
+                textEntryField.setText("");
             }
-            textEntryField.setText("");
         }
     }
 
