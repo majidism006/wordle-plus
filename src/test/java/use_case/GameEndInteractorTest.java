@@ -21,8 +21,8 @@ class GameEndInteractorTest {
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
-        User user = new User(USERNAME, PASSWORD);
+        // For the success test, we need to add user to the data access repository before we log in.
+        userService.registerUser(USERNAME, PASSWORD);
         userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.

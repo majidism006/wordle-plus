@@ -16,15 +16,15 @@ class LoginInteractorTest {
     public static final String PASSWORD = "password";
     public static final String WRONG = "wrong";
 
+    LoginInputData inputData = new LoginInputData(USERNAME, PASSWORD);
+    UserRepositoryImpl userRepository = new UserRepositoryImpl();
+    PasswordHasher passwordHasher = new PasswordHasher();
+    UserService userService = new UserService(userRepository, passwordHasher);
+
     @Test
     void successTest() {
-        LoginInputData inputData = new LoginInputData(USERNAME, PASSWORD);
-        UserRepositoryImpl userRepository = new UserRepositoryImpl();
-        PasswordHasher passwordHasher = new PasswordHasher();
-        UserService userService = new UserService(userRepository, passwordHasher);
-
         // For the success test, we need to add username to the data access repository before we log in.
-        User user = new User(USERNAME, PASSWORD);
+        userService.registerUser(USERNAME, PASSWORD);
         userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
@@ -60,8 +60,7 @@ class LoginInteractorTest {
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
-        // For the success test, we need to add Paul to the data access repository before we log in.
-        User user = new User(USERNAME, PASSWORD);
+        userService.registerUser(USERNAME, PASSWORD);
         userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
@@ -99,9 +98,9 @@ class LoginInteractorTest {
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
 
-        // For this failure test, we need to add Paul to the data access repository before we log in, and
+        // For this failure test, we need to add user to the data access repository before we log in, and
         // the passwords should not match.
-        User user = new User(USERNAME, PASSWORD);
+        userService.registerUser(USERNAME, PASSWORD);
         userService.setCurrentUsername(USERNAME);
 
         // This creates a presenter that tests whether the test case is as we expect.
