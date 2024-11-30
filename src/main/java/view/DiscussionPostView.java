@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class DiscussionPostView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -38,6 +40,8 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
         // Create the discussion area (scrollable)
         discussionArea = new JTextArea();
         discussionArea.setEditable(false);
+        discussionArea.setLineWrap(true); // Enable line wrapping
+        discussionArea.setWrapStyleWord(true); // Wrap at word boundaries
         JScrollPane scrollPane = new JScrollPane(discussionArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -108,11 +112,15 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == postButton) {
+            final DiscussionPostState currentState = viewModel.getState();
+            String currentUserId = currentState.getUsername();
             String text = textEntryField.getText().trim();
             if (!text.isEmpty()) {
-                final DiscussionPostState currentState = viewModel.getState();
-                String currentUserId = currentState.getUsername();
                 controller.addPost(currentUserId, text);
+                textEntryField.setText("");
+            }
+            else{
+                controller.fetchRandomQuote(currentUserId);
                 textEntryField.setText("");
             }
         }
@@ -128,8 +136,11 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
 
     private void displayPosts(List<DiscussionPost> posts) {
         discussionArea.setText("");
+        SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
         for (DiscussionPost post : posts) {
+            String timestamp = formatter.format(post.getCreatedAt()); // Format the date
             discussionArea.append(post.getUserId() + ": " + post.getContent() + "\n");
+            discussionArea.append("Posted at: " + timestamp + "\n\n");
         }
     }
 
