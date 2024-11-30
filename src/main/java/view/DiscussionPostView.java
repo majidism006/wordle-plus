@@ -23,14 +23,14 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     private final JButton postButton;
     private final JButton exitButton;
     private final DiscussionPostViewModel viewModel;
-//    private final UserService userService;
+    private final UserService userService;
     private final DiscussionPostController controller;
     private final Timer timer;
 
-    public DiscussionPostView(DiscussionPostViewModel viewModel,
+    public DiscussionPostView(DiscussionPostViewModel viewModel, UserService userService,
                               DiscussionPostController controller) {
         this.viewModel = viewModel;
-//        this.userService = userService;
+        this.userService = userService;
         this.controller = controller;
         this.viewModel.addPropertyChangeListener(this);
 

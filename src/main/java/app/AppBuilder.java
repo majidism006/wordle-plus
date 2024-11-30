@@ -152,7 +152,7 @@ public class AppBuilder {
                 discussionPostOutputBoundary);
         DiscussionPostController discussionPostController = new DiscussionPostController(discussionPostInputBoundary);
 
-        discussionPostView = new DiscussionPostView(discussionPostViewModel, discussionPostController);
+        discussionPostView = new DiscussionPostView(discussionPostViewModel, userService, discussionPostController);
         return addView(discussionPostView, discussionPostView.getViewName());
     }
 
