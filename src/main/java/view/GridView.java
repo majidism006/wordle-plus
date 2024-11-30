@@ -151,7 +151,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if (string != null) {
                 string = string.toUpperCase();
-                if (fb.getDocument().getLength() + string.length() <= 1) {
+                if (isValidCharacter(string) && fb.getDocument().getLength() + string.length() <= 1) {
                     super.insertString(fb, offset, string, attr);
                     shiftFocus();
                 }
@@ -162,7 +162,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
         public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
             if (text != null) {
                 text = text.toUpperCase();
-                if (fb.getDocument().getLength() - length + text.length() <= 1) {
+                if (isValidCharacter(text) && fb.getDocument().getLength() - length + text.length() <= 1) {
                     super.replace(fb, offset, length, text, attrs);
                     shiftFocus();
                 }
@@ -181,7 +181,23 @@ public class GridView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void handleEnterKey(int row) {
+    /**
+     * Validates if the input string contains only alphabetic characters.
+     *
+     * @param text The input string.
+     * @return True if the text contains only alphabetic characters, false otherwise.
+     */
+    private boolean isValidCharacter(String text) {
+        for (char c : text.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                Toolkit.getDefaultToolkit().beep(); // Provide feedback for invalid input
+                return false;
+            }
+        }
+        return true;
+    }
+
+        private void handleEnterKey(int row) {
         if (isRowComplete(row)) {
             StringBuilder guessedWord = new StringBuilder();
 
