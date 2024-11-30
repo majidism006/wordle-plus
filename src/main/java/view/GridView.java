@@ -162,7 +162,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
         public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
             if (text != null) {
                 text = text.toUpperCase();
-                if (fb.getDocument().getLength() - length + text.length() <= 1) {
+                if (isValidCharacter(text) && fb.getDocument().getLength() - length + text.length() <= 1) {
                     super.replace(fb, offset, length, text, attrs);
                     shiftFocus();
                 }
