@@ -92,9 +92,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
             case "losses" -> lossRateLabel.setText("Losses: " + evt.getNewValue());
             case "status" -> statusField.setText((String) evt.getNewValue());
         }
-        profileDialog.repaint();
         displayProfileDialog();
     }
+
 
     public String getViewName() {
         return this.viewName;

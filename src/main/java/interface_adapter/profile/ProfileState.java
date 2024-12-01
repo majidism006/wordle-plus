@@ -6,7 +6,7 @@ public class ProfileState {
     private String password = "";
     private int win;
     private int loss;
-    private String state = "";
+    private String status = "";
 
     public int getLoss() {
         return loss;
@@ -49,10 +49,10 @@ public class ProfileState {
     }
 
     public String getStatus() {
-        return this.state;
+        return this.status;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStatus(String state) {
+        this.status = state;
     }
 }

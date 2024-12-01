@@ -70,10 +70,7 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
 
         profilebutton.addActionListener(e ->{
                 final ProfileState currentState = profileViewModel.getState();
-//                instructionsController.switchToProfileView();
-                historyController.execute(currentState.getUsername());});
-
-//                profileView.displayProfileDialog(this));
+                historyController.execute(currentState.getUsername(),currentState.getStatus());});
 
         add(topPanel, BorderLayout.NORTH);
 

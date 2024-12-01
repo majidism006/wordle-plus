@@ -1,6 +1,4 @@
-package use_case.History;
-
-import use_case.logout.GameEndInputData;
+package use_case.history;
 
 public interface HistoryInputBoundary {
 
@@ -10,4 +8,5 @@ public interface HistoryInputBoundary {
      */
     void execute(HistoryInputData historyInputData);
 
+    void updateStatus(HistoryInputData historyInputData);
 }
