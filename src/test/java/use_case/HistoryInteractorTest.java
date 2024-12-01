@@ -27,11 +27,6 @@ public class HistoryInteractorTest {
     ProfileViewModel profileViewModel = new ProfileViewModel();
 
     @Test
-    void executeTest() {
-        //No need for testing
-    }
-
-    @Test
     void updateStatusTest() {
         HistoryInputData historyInputData = new HistoryInputData(USERNAME,TEXT);
         HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
