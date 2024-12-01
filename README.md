@@ -116,13 +116,13 @@ The purpose of this project is twofold:
 ### Login
 ![Login](img/login_wireframe.jpg)
 ### Instructions and Pre-game
-![Instructions](img/instructions_wireframe.jpg)
+![Instructions](img/instructiions_image.jpg)
 ### Player Discussion Board
 ![Discussion Board](img/discussion_board_wireframe.jpg)
 ### Wordle Grid
 ![Wordle Grid](img/grid_wireframe.jpg)
 ### Game End and Player Statistics
-![Game End](img/game_end_wireframe.jpg)
+![Game End](img/end_view_without_leaderboard.jpg)
 ### User Profile and Status Settings
 ![User Profile](img/user_profile_wireframe.jpg)
 ---
