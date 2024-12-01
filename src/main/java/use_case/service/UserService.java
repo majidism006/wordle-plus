@@ -38,7 +38,8 @@ public class UserService {
   
     public void setCurrentUsername(String name) {this.currentUsername = name;}
 
-    public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}
+    // This line seems unused. I keep it for safe.
+//    public User getUserByUsername(String username) {return userRepository.findUserByUsername(username);}
 
     public int getUserWins(String username) {return userRepository.getUserWins(username);}
 
