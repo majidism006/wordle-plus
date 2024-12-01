@@ -1,24 +1,16 @@
 package use_case;
 
 import data_access.repository.DiscussionPostRepository;
-import data_access.repository.UserRepositoryImpl;
 import entity.DiscussionPost;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import org.junit.jupiter.api.Test;
 import use_case.discussion.DiscussionPostInputData;
 import use_case.discussion.DiscussionPostInteractor;
 import use_case.discussion.DiscussionPostOutputBoundary;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiscussionInteractorTest {
 
-    public static final String USERNAME = "111";
+    public static final String USERNAME = "username";
     public static final String TEXT = "OnlyForTesting";
 
     DiscussionPostRepository repository = new DiscussionPostRepository();
