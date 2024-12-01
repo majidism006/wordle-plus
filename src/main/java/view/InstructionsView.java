@@ -13,12 +13,11 @@ import interface_adapter.history.HistoryController;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.instructions.InstructionsController;
-import interface_adapter.logout.GameEndState;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.service.UserService;
 
-public class WordleInstructionsGUI extends JPanel implements PropertyChangeListener {
+public class InstructionsView extends JPanel implements PropertyChangeListener {
 
     public static final String SERIF = "Serif";
     private static final String viewName = "instructions";
@@ -31,9 +30,9 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
     private final UserService userService;
     private final ProfileView profileView;
 
-    public WordleInstructionsGUI(InstructionsViewModel instructionsViewModel,
-                                 ProfileViewModel profileViewModel,
-                                 DifficultyState difficultyState, GridState gridState, UserService userService) {
+    public InstructionsView(InstructionsViewModel instructionsViewModel,
+                            ProfileViewModel profileViewModel,
+                            DifficultyState difficultyState, GridState gridState, UserService userService) {
         this.instructionsViewModel = instructionsViewModel;
         this.instructionsViewModel.addPropertyChangeListener(this);
         // Set layout for the main panel

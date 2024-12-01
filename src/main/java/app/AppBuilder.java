@@ -90,7 +90,7 @@ public class AppBuilder {
     private GameEndView gameEndView;
     private GridView gridView;
     private DiscussionPostView discussionPostView;
-    private WordleInstructionsGUI wordleInstructionsGUI;
+    private InstructionsView instructionsView;
     private ProfileView profileView;
 
     public AppBuilder() {
@@ -124,8 +124,8 @@ public class AppBuilder {
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, profileViewModel, difficultyState, gridState, userService);
-        cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
+        instructionsView = new InstructionsView(instructionsViewModel, profileViewModel, difficultyState, gridState, userService);
+        cardPanel.add(instructionsView, InstructionsView.getViewName());
         return this;
     }
 
@@ -183,7 +183,7 @@ public class AppBuilder {
                 instructionsOutputBoundary, wordRepository, gridState);
         InstructionsController controller = new InstructionsController(instructionsInteractor);
 
-        wordleInstructionsGUI.setInstructionsController(controller);
+        instructionsView.setInstructionsController(controller);
         return this;
     }
 
@@ -203,7 +203,7 @@ public class AppBuilder {
         HistoryController historyController = new HistoryController(historyInteractor);
 
         gameEndView.setHistoryController(historyController);
-        wordleInstructionsGUI.setHistoryController(historyController);
+        instructionsView.setHistoryController(historyController);
         profileView.setHistoryController(historyController);
         return this;
     }
