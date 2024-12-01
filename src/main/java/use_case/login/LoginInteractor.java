@@ -21,8 +21,11 @@ public class LoginInteractor implements LoginInputBoundary {
         final String username = loginInputData.getUsername();
         final String password = loginInputData.getPassword();
         User user = userService.loginUser(username, password);
-        if (user == null) {
-            loginPresenter.prepareFailView("Invalid Credentials.");
+        if (user == null && userService.getUserByUsername(username) != null) {
+            loginPresenter.prepareFailView("Invalid password.");
+        }
+        else if (user == null) {
+            loginPresenter.prepareFailView("Invalid username.");
         }
         else {
             final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), false);
