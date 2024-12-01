@@ -28,15 +28,26 @@ public class InstructionsPresenter implements InstructionsOutputBoundary {
         this.profileViewModel = profileViewModel;
     }
 
+    /**
+     * Handles the output data from the use case interactor.
+     * @param outputData The output data containing the target word.
+     */
+    @Override
+    public void present(InstructionsOutputData outputData) {
+        // Update the grid view model with the target word
+        String targetWord = outputData.getTargetWord();
+        gridViewModel.setTargetWord(targetWord);
+
+        // Notify the view manager to update the view
+        viewManagerModel.setState(gridViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
     @Override
     public void prepareSuccessView(InstructionsOutputData response) {
-        // Update the grid view model with the random word
-        String randomWord = response.getTargetWord();
-        gridViewModel.setTargetWord(randomWord);
-            // Switch to the grid view in the view manager
-            this.viewManagerModel.setState(gridViewModel.getViewName());
-            this.viewManagerModel.firePropertyChanged();
-        }
+        // This method can be used to handle successful execution if needed
+        present(response);
+    }
 
     @Override
     public void prepareFailView(String error) {

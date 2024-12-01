@@ -27,13 +27,21 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
     /**
      * Executes the instructions use case.
      * This method could be used to set up any necessary data or state for the instructions view.
-     * For simplicity, we assume it just sets the initial state or prepares the UI.
      */
     @Override
     public void execute(InstructionsInputData inputData) {
-        // You could initialize or update the state for the Instructions ViewModel here.
-        // For now, we don't have specific logic, but you can set any state if needed.
-        System.out.println("Instructions Use Case executed!");
+        // Use the inputData to perform any necessary logic
+        String difficulty = inputData.getDifficulty();
+        String randomWord = wordRepository.getRandomWord(difficulty);
+
+        // Prepare the output data
+        InstructionsOutputData outputData = new InstructionsOutputData("Instructions Use Case executed with difficulty: " + difficulty);
+
+        // Update the game state with the selected word
+        gridState.setTargetWord(randomWord);
+
+        // Pass the output data to the presenter
+        instructionsPresenter.present(outputData);
     }
 
     /**
@@ -44,7 +52,6 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
         // Update the game state with the selected word
         gridState.setTargetWord(randomWord);
         instructionsPresenter.switchToGridView();
-
     }
 
     @Override
@@ -61,9 +68,7 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
     }
 
     @Override
-    public void switchToProfileView() {instructionsPresenter.switchToProfileView();
-
+    public void switchToProfileView() {
+        instructionsPresenter.switchToProfileView();
     }
-
-
 }
