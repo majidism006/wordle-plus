@@ -1,8 +1,7 @@
 package interface_adapter.history;
 
-import use_case.History.HistoryInputBoundary;
-import use_case.History.HistoryInputData;
-import use_case.logout.GameEndInputData;
+import use_case.history.HistoryInputBoundary;
+import use_case.history.HistoryInputData;
 
 public class HistoryController {
     private final HistoryInputBoundary historyInteractor;
@@ -19,5 +18,10 @@ public class HistoryController {
     public void execute(String username) {
         final HistoryInputData historyInputData = new HistoryInputData(username);
         historyInteractor.execute(historyInputData);
+    }
+
+    public void execute(String username, String state) {
+        final HistoryInputData historyInputData = new HistoryInputData(username, state);
+        historyInteractor.updateStatus(historyInputData);
     }
 }

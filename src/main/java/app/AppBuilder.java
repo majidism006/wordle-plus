@@ -30,7 +30,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
-import use_case.History.*;
+import use_case.history.*;
 import use_case.WordleInstructions.InstructionsInputBoundary;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
 import use_case.WordleInstructions.InstructionsUseCaseInteractor;
@@ -90,7 +90,7 @@ public class AppBuilder {
     private GameEndView gameEndView;
     private GridView gridView;
     private DiscussionPostView discussionPostView;
-    private WordleInstructionsGUI wordleInstructionsGUI;
+    private InstructionsView instructionsView;
     private ProfileView profileView;
 
     public AppBuilder() {
@@ -115,17 +115,17 @@ public class AppBuilder {
         return addView(loginView, loginView.getViewName());
     }
 
-//    public AppBuilder addProfileView() {
-//        profileViewModel = new ProfileViewModel();
-//        profileView = new ProfileView(profileViewModel);
-//        return addView(profileView, profileView.getViewName());
-//    }
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel);
+        return addView(profileView, profileView.getViewName());
+    }
 
     public AppBuilder addWordleInstructionsGUI() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        wordleInstructionsGUI = new WordleInstructionsGUI(instructionsViewModel, difficultyState, gridState, userService);
-        cardPanel.add(wordleInstructionsGUI, WordleInstructionsGUI.getViewName());
+        instructionsView = new InstructionsView(instructionsViewModel, profileViewModel, difficultyState, gridState, userService);
+        cardPanel.add(instructionsView, InstructionsView.getViewName());
         return this;
     }
 
@@ -158,7 +158,7 @@ public class AppBuilder {
 
     public AppBuilder addLoginUseCase() {
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel,
-                instructionsViewModel, gameEndViewModel, discussionPostViewModel);
+                instructionsViewModel, gameEndViewModel, discussionPostViewModel,profileViewModel);
         LoginInputBoundary loginInteractor = new LoginInteractor(userService, loginOutputBoundary);
         LoginController loginController = new LoginController(loginInteractor);
 
@@ -178,12 +178,12 @@ public class AppBuilder {
 
     public AppBuilder addInstructionsUseCase() {
         InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
-                instructionsViewModel, gridViewModel, discussionPostViewModel);
+                instructionsViewModel, gridViewModel, discussionPostViewModel, profileViewModel);
         InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(userService,
                 instructionsOutputBoundary, wordRepository, gridState);
         InstructionsController controller = new InstructionsController(instructionsInteractor);
 
-        wordleInstructionsGUI.setInstructionsController(controller);
+        instructionsView.setInstructionsController(controller);
         return this;
     }
 
@@ -198,11 +198,13 @@ public class AppBuilder {
     }
 
     public AppBuilder addHistoryUseCase() {
-        HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel);
+        HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
         HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
         HistoryController historyController = new HistoryController(historyInteractor);
 
         gameEndView.setHistoryController(historyController);
+        instructionsView.setHistoryController(historyController);
+        profileView.setHistoryController(historyController);
         return this;
     }
 

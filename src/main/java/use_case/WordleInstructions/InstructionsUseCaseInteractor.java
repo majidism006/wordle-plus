@@ -60,5 +60,10 @@ public class InstructionsUseCaseInteractor implements InstructionsInputBoundary 
         instructionsPresenter.switchToDiscussionBoardView();
     }
 
+    @Override
+    public void switchToProfileView() {instructionsPresenter.switchToProfileView();
+
+    }
+
 
 }

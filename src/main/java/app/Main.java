@@ -10,6 +10,7 @@ public class Main {
                 .addSignupView()
                 .addGridView()
                 .addGameEndView()
+                .addProfileView()
                 .addWordleInstructionsGUI()
                 .addDiscussionPostView()
                 .addSignupUseCase()

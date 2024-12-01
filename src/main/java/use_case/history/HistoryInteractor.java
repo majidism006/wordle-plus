@@ -1,4 +1,4 @@
-package use_case.History;
+package use_case.history;
 
 import use_case.service.UserService;
 
@@ -17,8 +17,25 @@ public class HistoryInteractor implements HistoryInputBoundary {
         String name = historyInputData.getUsername();
         int win = userService.getUserWins(name);
         int loss = userService.getUserLosses(name);
-        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, false) {
+        String state = userService.getStatus(name);
+        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss,state, false) {
         };
         historyPresenter.prepareSuccessView(historyOutputData);
+    }
+
+
+    @Override
+    public void updateStatus(HistoryInputData historyInputData) {
+
+        String name = historyInputData.getUsername();
+        int win = userService.getUserWins(name);
+        int loss = userService.getUserLosses(name);
+        String status = historyInputData.getStatus();
+
+        userService.setStatus(name, status);
+
+        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, status, false) {
+        };
+        historyPresenter.updateStatus(historyOutputData);
     }
 }

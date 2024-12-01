@@ -2,50 +2,105 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import interface_adapter.history.HistoryController;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.service.UserService;
 
-public class ProfileView {
+public class ProfileView extends JPanel implements PropertyChangeListener {
 
-    private final UserService userService;
+    private final String viewName = "profile";
+    private final ProfileViewModel profileViewModel;
 
-    public ProfileView(UserService userService) {
-        this.userService = userService;
-    }
+    private JDialog profileDialog;
+    private JLabel usernameLabel;
+    private JLabel winRateLabel;
+    private JLabel lossRateLabel;
+    private JTextField statusField;
+    private HistoryController historyController;
 
-    public void displayProfileDialog(Component parentComponent) {
-        String username = userService.getCurrentUsername();
-        JDialog profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parentComponent), "Profile", true);
+    public ProfileView(ProfileViewModel profileViewModel) {
+
+        this.profileViewModel = profileViewModel;
+        this.profileViewModel.addPropertyChangeListener(this);
+
+        usernameLabel = new JLabel("", SwingConstants.CENTER);
+        winRateLabel = new JLabel("Wins: 0", SwingConstants.CENTER);
+        lossRateLabel = new JLabel("Losses: 0", SwingConstants.CENTER);
+
+        // Create dialog
+        profileDialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Profile", true);
         profileDialog.setSize(300, 200);
         profileDialog.setLayout(new BorderLayout());
 
-        // User information
-        JLabel usernameLabel = new JLabel("Username: " + username, SwingConstants.CENTER);
-        JLabel winRateLabel = new JLabel("Wins: " + userService.getUserWins(username), SwingConstants.CENTER);
-        JLabel lossRateLabel = new JLabel("Losses: " + userService.getUserLosses(username), SwingConstants.CENTER);
-
-        // Status field
-        JPanel statusPanel = new JPanel(new BorderLayout());
-        JTextField statusField = new JTextField(userService.getStatus(username) != null ? userService.getStatus(username) : "Set your status here!");
+        JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        statusField = new JTextField(10);
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
-            userService.setStatus(username, statusField.getText());
+
+            final ProfileState currentstate = profileViewModel.getState();
+
+            historyController.execute(currentstate.getUsername(), statusField.getText());
             JOptionPane.showMessageDialog(profileDialog, "Status updated!");
         });
 
-        statusPanel.add(new JLabel("Status:"), BorderLayout.WEST);
-        statusPanel.add(statusField, BorderLayout.CENTER);
-        statusPanel.add(saveButton, BorderLayout.EAST);
+        statusPanel.add(new JLabel("Status:"));
+        statusPanel.add(statusField);
+        statusPanel.add(saveButton);
 
-        // Add components to the dialog
-        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
-        infoPanel.add(usernameLabel);
-        infoPanel.add(winRateLabel);
-        infoPanel.add(lossRateLabel);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Stack vertically
 
-        profileDialog.add(infoPanel, BorderLayout.CENTER);
-        profileDialog.add(statusPanel, BorderLayout.SOUTH);
+        usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        winRateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lossRateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        profileDialog.setLocationRelativeTo(parentComponent);
+        mainPanel.add(usernameLabel);
+        mainPanel.add(Box.createVerticalStrut(10)); // Add spacing
+        mainPanel.add(winRateLabel);
+        mainPanel.add(Box.createVerticalStrut(10)); // Add spacing
+        mainPanel.add(lossRateLabel);
+        mainPanel.add(Box.createVerticalStrut(20)); // Add larger spacing
+        mainPanel.add(statusPanel);
+
+        profileDialog.add(mainPanel, BorderLayout.CENTER);
+        profileDialog.setLocationRelativeTo(null);
+    }
+
+    public void displayProfileDialog() {
+        updateProfileData();
         profileDialog.setVisible(true);
+    }
+
+    private void updateProfileData() {
+        ProfileState currentState = profileViewModel.getState();
+        usernameLabel.setText("Username: " + currentState.getUsername());
+        winRateLabel.setText("Wins: " + currentState.getWin());
+        lossRateLabel.setText("Losses: " + currentState.getLoss());
+        statusField.setText(currentState.getStatus() != null ? currentState.getStatus() : "Set your status here!");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "username" -> usernameLabel.setText("Username: " + evt.getNewValue());
+            case "wins" -> winRateLabel.setText("Wins: " + evt.getNewValue());
+            case "losses" -> lossRateLabel.setText("Losses: " + evt.getNewValue());
+            case "status" -> statusField.setText((String) evt.getNewValue());
+        }
+        displayProfileDialog();
+    }
+
+
+    public String getViewName() {
+        return this.viewName;
+    }
+
+    public void setHistoryController(HistoryController historyController) {
+        this.historyController = historyController;
     }
 }
