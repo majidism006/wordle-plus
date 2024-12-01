@@ -86,7 +86,7 @@ class SignupInteractorTest {
         UserService userService = new UserService(userRepository, passwordHasher);
 
         // Add Paul to the repo so that when we check later they already exist
-        User user = new User(USERNAME, WRONG);
+        userService.registerUser(USERNAME, WRONG);
         userService.setCurrentUsername(USERNAME);
 
         // This creates a presenter that tests whether the test case is as we expect.

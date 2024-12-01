@@ -48,6 +48,7 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
             // Handle error
         }
     }
+
     @Override
     public void fetchRandomQuote(String userId) {
         try {
