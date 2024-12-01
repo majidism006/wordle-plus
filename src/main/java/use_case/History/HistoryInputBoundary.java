@@ -10,4 +10,6 @@ public interface HistoryInputBoundary {
      */
     void execute(HistoryInputData historyInputData);
 
+    void updatestatus(HistoryInputData historyInputData);
+
 }

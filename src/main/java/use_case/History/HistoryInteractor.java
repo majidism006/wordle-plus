@@ -17,10 +17,25 @@ public class HistoryInteractor implements HistoryInputBoundary {
         String name = historyInputData.getUsername();
         int win = userService.getUserWins(name);
         int loss = userService.getUserLosses(name);
-        String state = historyInputData.getState();
-        userService.getStatus(state);
-        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, state, false) {
+        String state = userService.getStatus(name);
+        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss,state, false) {
         };
         historyPresenter.prepareSuccessView(historyOutputData);
+    }
+
+
+    @Override
+    public void updatestatus(HistoryInputData historyInputData) {
+
+        String name = historyInputData.getUsername();
+        int win = userService.getUserWins(name);
+        int loss = userService.getUserLosses(name);
+        String state = historyInputData.getState();
+
+        userService.setStatus(name, state);
+
+        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, state, false) {
+        };
+        historyPresenter.updatestatus(historyOutputData);
     }
 }

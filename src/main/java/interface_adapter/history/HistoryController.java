@@ -23,6 +23,6 @@ public class HistoryController {
 
     public void execute(String username, String state) {
         final HistoryInputData historyInputData = new HistoryInputData(username, state);
-        historyInteractor.execute(historyInputData);
+        historyInteractor.updatestatus(historyInputData);
     }
 }
