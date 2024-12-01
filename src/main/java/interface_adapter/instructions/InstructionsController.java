@@ -2,7 +2,6 @@ package interface_adapter.instructions;
 
 import use_case.WordleInstructions.InstructionsInputBoundary;
 import use_case.WordleInstructions.InstructionsInputData;
-import use_case.WordleInstructions.InstructionsOutputData;
 
 /**
  * The controller for the Instructions Use Case.
@@ -10,24 +9,20 @@ import use_case.WordleInstructions.InstructionsOutputData;
 public class InstructionsController {
 
     private final InstructionsInputBoundary instructionsUseCaseInteractor;
-    private InstructionsInputBoundary instructionsInputBoundary;
 
     public InstructionsController(InstructionsInputBoundary instructionsUseCaseInteractor) {
         this.instructionsUseCaseInteractor = instructionsUseCaseInteractor;
     }
 
-    // Setter for InstructionsInputBoundary
-    public void setInstructionsInputBoundary(InstructionsInputBoundary instructionsInputBoundary) {
-        this.instructionsInputBoundary = instructionsInputBoundary;
-    }
-    
     /**
      * Executes the Instructions Use Case.
      * This could involve initializing or setting up the instructions state.
      */
-    public void execute() {
-        final InstructionsInputData instructionsInputData = new InstructionsInputData();
+    public void execute(String difficulty) {
+        // Create InstructionsInputData with the necessary data
+        InstructionsInputData instructionsInputData = new InstructionsInputData(difficulty);
 
+        // Execute the use case with the input data
         instructionsUseCaseInteractor.execute(instructionsInputData);
     }
 
@@ -42,10 +37,16 @@ public class InstructionsController {
         instructionsUseCaseInteractor.switchToGridView(randomWord);
     }
 
+    /**
+     * Switches from instructions view to profile view.
+     */
     public void switchToProfileView() {
         instructionsUseCaseInteractor.switchToProfileView();
     }
 
+    /**
+     * Switches from instructions view to discussion board view.
+     */
     public void switchToDiscussionBoardView() {
         instructionsUseCaseInteractor.switchToDiscussionBoardView();
     }

@@ -4,13 +4,18 @@ package use_case.WordleInstructions;
  * Data transfer object that holds the necessary information for the Instructions Use Case.
  */
 public class InstructionsInputData {
+    private String difficulty;
 
-    // You can add fields here depending on what data the instructions use case needs.
-    // For now, it's empty, assuming it doesn't need specific input to execute.
-
-    public InstructionsInputData() {
-        // Constructor: you can initialize fields here if needed
+    public InstructionsInputData(String difficulty) {
+        this.difficulty = difficulty;
     }
 
-    // You can add getter and setter methods for any fields that you decide to include later.
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
 }
+
