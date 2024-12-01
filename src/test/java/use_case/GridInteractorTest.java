@@ -54,11 +54,8 @@ class GridInteractorTest {
             public GuessResult checkGuess(GameState gameState, String guess) {
                 // Reduce number of remaining attempts
                 gameState.setRemainingAttempts(gameState.getRemainingAttempts() - 1);
-                // Logic to check the guess
-                GuessResult result = gameState.checkGuess(guess);
                 // Don't save for the test
-
-                return result;
+                return gameState.checkGuess(guess);
             }
         }
 

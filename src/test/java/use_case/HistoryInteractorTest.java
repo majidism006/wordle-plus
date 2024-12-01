@@ -32,6 +32,6 @@ public class HistoryInteractorTest {
         HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
         HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
         historyInteractor.updateStatus(historyInputData);
-        assertEquals(userService.getStatus(USERNAME), TEXT);
+        assertEquals(TEXT, userService.getStatus(USERNAME));
     }
 }
