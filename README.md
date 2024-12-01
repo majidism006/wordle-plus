@@ -116,7 +116,7 @@ The purpose of this project is twofold:
 ### Login
 ![Login](img/login_wireframe.jpg)
 ### Instructions and Pre-game
-![Instructions](img/instructions_wireframe.jpg)
+![Instructions](img/instructiions_image.jpg)
 ### Player Discussion Board
 ![Discussion Board](img/discussion_board_wireframe.jpg)
 ### Wordle Grid
