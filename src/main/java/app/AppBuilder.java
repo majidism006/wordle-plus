@@ -30,7 +30,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
-import use_case.History.*;
+import use_case.history.*;
 import use_case.WordleInstructions.InstructionsInputBoundary;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
 import use_case.WordleInstructions.InstructionsUseCaseInteractor;

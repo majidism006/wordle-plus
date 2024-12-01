@@ -1,7 +1,6 @@
 package interface_adapter.profile;
 
 import interface_adapter.ViewModel;
-import use_case.History.HistoryOutputData;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

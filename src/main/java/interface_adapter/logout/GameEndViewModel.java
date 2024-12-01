@@ -1,7 +1,6 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewModel;
-import use_case.History.HistoryOutputData;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
