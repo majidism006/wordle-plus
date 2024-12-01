@@ -25,6 +25,7 @@ public class GridInteractor implements GridInputBoundary {
         GuessResult result = checkGuess(gridInputData.getGuess());
         gridPresenter.presentGuessResult(result);
     }
+
     @Override
     public GuessResult checkGuess(String guess) {
         // Retrieve the current game state
