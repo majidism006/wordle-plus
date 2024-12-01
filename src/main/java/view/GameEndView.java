@@ -21,6 +21,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
     private GameEndController gameEndController;
     private HistoryController historyController;
 
+    private JLabel titleLabel;
     private JLabel winsLabel;
     private JLabel lossesLabel;
     private JLabel winRateLabel;
@@ -35,7 +36,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
     private void setupComponents() {
         final JPanel stats = new JPanel();
         stats.setLayout(new GridLayout(4, 1));
-        JLabel titleLabel = new JLabel("User's History", SwingConstants.CENTER);
+        titleLabel = new JLabel("", SwingConstants.CENTER);
         stats.add(titleLabel);
 
         winsLabel = new JLabel("Wins: ", SwingConstants.CENTER);
@@ -72,7 +73,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
                 // Trigger user history retrieval when the view is shown
                 final GameEndState currentState = gameEndViewModel.getState();
                 historyController.execute(currentState.getUsername());
-//                gameEndController.getUserHistory();
+                titleLabel.setText(currentState.getUsername() + "'s History");
             }
         });
     }
