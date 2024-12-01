@@ -1,7 +1,7 @@
 package interface_adapter.instructions;
 
-import use_case.WordleInstructions.InstructionsInputBoundary;
-import use_case.WordleInstructions.InstructionsInputData;
+import use_case.instructions.InstructionsInputBoundary;
+import use_case.instructions.InstructionsInputData;
 
 /**
  * The controller for the Instructions Use Case.

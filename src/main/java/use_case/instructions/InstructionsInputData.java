@@ -1,4 +1,4 @@
-package use_case.WordleInstructions;
+package use_case.instructions;
 
 /**
  * Data transfer object that holds the necessary information for the Instructions Use Case.

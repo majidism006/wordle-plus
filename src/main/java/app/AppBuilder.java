@@ -31,9 +31,9 @@ import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.grid.GridViewModel;
 import use_case.history.*;
-import use_case.WordleInstructions.InstructionsInputBoundary;
-import use_case.WordleInstructions.InstructionsOutputBoundary;
-import use_case.WordleInstructions.InstructionsUseCaseInteractor;
+import use_case.instructions.InstructionsInputBoundary;
+import use_case.instructions.InstructionsOutputBoundary;
+import use_case.instructions.InstructionsInteractor;
 import use_case.discussion.DiscussionPostInputBoundary;
 import use_case.discussion.DiscussionPostInteractor;
 import use_case.discussion.DiscussionPostOutputBoundary;
@@ -179,7 +179,7 @@ public class AppBuilder {
     public AppBuilder addInstructionsUseCase() {
         InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
                 instructionsViewModel, gridViewModel, discussionPostViewModel, profileViewModel);
-        InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(userService,
+        InstructionsInputBoundary instructionsInteractor = new InstructionsInteractor(userService,
                 instructionsOutputBoundary, wordRepository, gridState);
         InstructionsController controller = new InstructionsController(instructionsInteractor);
 

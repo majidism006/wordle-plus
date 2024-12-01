@@ -11,9 +11,9 @@ import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
-import use_case.WordleInstructions.InstructionsInputBoundary;
-import use_case.WordleInstructions.InstructionsOutputBoundary;
-import use_case.WordleInstructions.InstructionsUseCaseInteractor;
+import use_case.instructions.InstructionsInputBoundary;
+import use_case.instructions.InstructionsOutputBoundary;
+import use_case.instructions.InstructionsInteractor;
 import use_case.service.UserService;
 
 import java.io.BufferedReader;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class InstructionsUseCaseInteractorTest {
+public class InstructionsInteractorTest {
 
     public static final String EASY = "easy";
     public static final String MEDIUM = "medium";
@@ -48,7 +48,7 @@ public class InstructionsUseCaseInteractorTest {
     void getRandomWordTest() {
         InstructionsOutputBoundary instructionsOutputBoundary = new InstructionsPresenter(viewManagerModel,
                 instructionsViewModel, gridViewModel, discussionPostViewModel, profileViewModel);
-        InstructionsInputBoundary instructionsInteractor = new InstructionsUseCaseInteractor(userService,
+        InstructionsInputBoundary instructionsInteractor = new InstructionsInteractor(userService,
                 instructionsOutputBoundary, wordRepository, gridState);
         Random rand = new Random();
         List<String> list = new ArrayList<>();
