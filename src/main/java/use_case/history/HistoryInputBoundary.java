@@ -1,4 +1,4 @@
-package use_case.History;
+package use_case.history;
 
 public interface HistoryInputBoundary {
 
@@ -8,5 +8,5 @@ public interface HistoryInputBoundary {
      */
     void execute(HistoryInputData historyInputData);
 
-    void updatestatus(HistoryInputData historyInputData);
+    void updateStatus(HistoryInputData historyInputData);
 }

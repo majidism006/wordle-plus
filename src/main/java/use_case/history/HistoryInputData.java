@@ -1,21 +1,21 @@
-package use_case.History;
+package use_case.history;
 
 public class HistoryInputData {
 
     private final String username;
-    private String state = "";
+    private String status = "";
 
     public HistoryInputData(String username) {
         this.username = username;
     }
 
-    public HistoryInputData(String username, String state) {
+    public HistoryInputData(String username, String status) {
         this.username = username;
-        this.state = state;
+        this.status = status;
     }
 
-    public String getState() {
-        return state;
+    public String getStatus() {
+        return status;
     }
 
     public String getUsername() {
