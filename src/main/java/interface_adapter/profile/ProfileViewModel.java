@@ -37,7 +37,4 @@ public class ProfileViewModel extends ViewModel<ProfileState> {
         firePropertyChange("wins", null, this.wins);
         firePropertyChange("losses", null, this.losses);
     }
-
-    public void updateUserStatus(String text) {
-    }
 }
