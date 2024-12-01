@@ -2,13 +2,10 @@ package interface_adapter.instructions;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostViewModel;
-import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.WordleInstructions.InstructionsOutputBoundary;
 import use_case.WordleInstructions.InstructionsOutputData;
-import view.ProfileView;
-import view.WordleInstructionsGUI;
 
 /**
  * The Presenter for the Instructions Use Case.
