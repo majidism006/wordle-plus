@@ -122,7 +122,7 @@ The purpose of this project is twofold:
 ### Wordle Grid
 ![Wordle Grid](img/grid_wireframe.jpg)
 ### Game End and Player Statistics
-![Game End](img/game_end_wireframe.jpg)
+![Game End](img/end_view_without_leaderboard.jpg)
 ### User Profile and Status Settings
 ![User Profile](img/user_profile_wireframe.jpg)
 ---
