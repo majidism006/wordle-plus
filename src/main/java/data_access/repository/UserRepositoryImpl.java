@@ -17,7 +17,8 @@ public class UserRepositoryImpl {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"));
+                    return new User(rs.getInt("id"),
+                            rs.getString("username"), rs.getString("password"));
                 }
             }
         } catch (SQLException e) {
