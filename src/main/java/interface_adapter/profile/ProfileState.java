@@ -6,6 +6,7 @@ public class ProfileState {
     private String password = "";
     private int win;
     private int loss;
+    private String state = "";
 
     public int getLoss() {
         return loss;
@@ -47,4 +48,11 @@ public class ProfileState {
         this.password = password;
     }
 
+    public String getStatus() {
+        return this.state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

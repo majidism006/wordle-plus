@@ -22,10 +22,15 @@ public class HistoryPresenter implements HistoryOutputBoundary {
     public void prepareSuccessView(HistoryOutputData historyOutputData) {
         int win = historyOutputData.getWin();
         int loss = historyOutputData.getLoss();
+        String state = historyOutputData.getState();
         double winrates = (win + loss > 0) ? ((double) win / (win + loss)) * 100 : 0;
         final ProfileState currentstate = profileViewModel.getState();
+        currentstate.setState(state);
         currentstate.setWin(win);
+        currentstate.setLoss(loss);
         profileViewModel.firePropertyChange("wins", null, win);
+        profileViewModel.firePropertyChange("losses", null, loss);
+        profileViewModel.firePropertyChange("status", null, state);
 
         gameEndViewModel.firePropertyChange("wins", null, win);
         gameEndViewModel.firePropertyChange("losses", null, loss);

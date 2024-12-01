@@ -204,6 +204,7 @@ public class AppBuilder {
 
         gameEndView.setHistoryController(historyController);
         wordleInstructionsGUI.setHistoryController(historyController);
+        profileView.setHistoryController(historyController);
         return this;
     }
 
