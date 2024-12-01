@@ -62,8 +62,8 @@ class DiscussionInteractorTest {
 
     // This test require some access provided by API. It doesn't really matter considering we can test
     // it directly by using application
-    @Test
-    void fetchRandomQuoteTest() throws SQLException {
+//    @Test
+//    void fetchRandomQuoteTest() throws SQLException {
 //        class TempInteractor extends DiscussionPostInteractor {
 //
 //            public TempInteractor(DiscussionPostRepository repository, DiscussionPostOutputBoundary outputBoundary) {
@@ -138,6 +138,6 @@ class DiscussionInteractorTest {
 //        List<DiscussionPost> posts = repository.getAllPosts();
 //        assertEquals(post.getUserId(), posts.get(posts.size() - 1).getUserId());
 //        assertEquals(post.getContent(), posts.get(posts.size() - 1).getContent());
-    }
+//    }
 
 }
