@@ -1,39 +1,29 @@
 package use_case;
 
 import data_access.repository.DiscussionPostRepository;
-import data_access.repository.UserRepositoryImpl;
 import entity.DiscussionPost;
-import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
-import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
 import use_case.discussion.DiscussionPostInputData;
 import use_case.discussion.DiscussionPostInteractor;
 import use_case.discussion.DiscussionPostOutputBoundary;
-import use_case.service.UserService;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class DiscussionInteractorTest {
 
     public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
-    public static final int NUM1 = 11;
-    public static final int NUM2 = 22;
     public static final String TEXT = "OnlyForTesting";
 
     DiscussionPostRepository repository = new DiscussionPostRepository();
     DiscussionPostViewModel viewModel = new DiscussionPostViewModel();
     ViewManagerModel managerModel = new ViewManagerModel();
     DiscussionPostOutputBoundary OutputBoundary = new DiscussionPostPresenter(viewModel, managerModel);
-
-    DiscussionPostInteractor interactor = new DiscussionPostInteractor(repository, OutputBoundary);
 
     @Test
     void addPostTest() throws SQLException {
