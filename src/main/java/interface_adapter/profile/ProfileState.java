@@ -4,6 +4,24 @@ public class ProfileState {
     private String username = "";
     private String loginError;
     private String password = "";
+    private int win;
+    private int loss;
+
+    public int getLoss() {
+        return loss;
+    }
+
+    public void setLoss(int loss) {
+        this.loss = loss;
+    }
+
+    public int getWin() {
+        return win;
+    }
+
+    public void setWin(int win) {
+        this.win = win;
+    }
 
     public String getUsername() {
         return username;

@@ -71,7 +71,7 @@ public class WordleInstructionsGUI extends JPanel implements PropertyChangeListe
 
         profilebutton.addActionListener(e ->{
                 final ProfileState currentState = profileViewModel.getState();
-                instructionsController.switchToProfileView();
+//                instructionsController.switchToProfileView();
                 historyController.execute(currentState.getUsername());});
 
 //                profileView.displayProfileDialog(this));
