@@ -1,7 +1,6 @@
 package use_case;
 
 import data_access.repository.UserRepositoryImpl;
-import entity.User;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
 import use_case.login.*;
