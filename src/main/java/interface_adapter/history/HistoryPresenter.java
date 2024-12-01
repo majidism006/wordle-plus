@@ -44,16 +44,9 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         currentstate.setState(state);
         currentstate.setWin(win);
         currentstate.setLoss(loss);
-        profileViewModel.firePropertyChange("wins", null, win);
-        profileViewModel.firePropertyChange("losses", null, loss);
+
         profileViewModel.firePropertyChange("status", null, state);
 
-//        String state = historyOutputData.getState();
-//        final ProfileState currentstate = profileViewModel.getState();
-//        currentstate.setState(state);
-//        profileViewModel.firePropertyChange("wins", null, currentstate.getWin());
-//        profileViewModel.firePropertyChange("losses", null, currentstate.getLoss());
-//        profileViewModel.firePropertyChange("status", null, state);
     }
 
 }
