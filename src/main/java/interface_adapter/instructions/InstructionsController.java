@@ -42,6 +42,10 @@ public class InstructionsController {
         instructionsUseCaseInteractor.switchToGridView(randomWord);
     }
 
+    public void switchToProfileView() {
+        instructionsUseCaseInteractor.switchToProfileView();
+    }
+
     public void switchToDiscussionBoardView() {
         instructionsUseCaseInteractor.switchToDiscussionBoardView();
     }

@@ -17,7 +17,9 @@ public class HistoryInteractor implements HistoryInputBoundary {
         String name = historyInputData.getUsername();
         int win = userService.getUserWins(name);
         int loss = userService.getUserLosses(name);
-        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, false) {
+        String state = historyInputData.getState();
+        userService.getStatus(state);
+        final HistoryOutputData historyOutputData = new HistoryOutputData(name, win, loss, state, false) {
         };
         historyPresenter.prepareSuccessView(historyOutputData);
     }

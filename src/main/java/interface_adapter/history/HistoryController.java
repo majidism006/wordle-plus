@@ -20,4 +20,9 @@ public class HistoryController {
         final HistoryInputData historyInputData = new HistoryInputData(username);
         historyInteractor.execute(historyInputData);
     }
+
+    public void execute(String username, String state) {
+        final HistoryInputData historyInputData = new HistoryInputData(username, state);
+        historyInteractor.execute(historyInputData);
+    }
 }

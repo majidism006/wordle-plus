@@ -5,13 +5,19 @@ public class HistoryOutputData {
     private final String username;
     private final int win;
     private final int loss;
+    private String state;
     private final boolean useCaseFailed;
 
-    public HistoryOutputData(String name, int win, int loss, boolean useCaseFailed) {
+    public HistoryOutputData(String name, int win, int loss, String state, boolean useCaseFailed) {
         this.username = name;
         this.win = win;
         this.loss = loss;
         this.useCaseFailed = useCaseFailed;
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
     }
 
     public int getWin() {

@@ -8,6 +8,8 @@ import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.logout.GameEndState;
 import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -26,17 +28,19 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final InstructionsViewModel instructionsViewModel;
     private final GameEndViewModel gameEndViewModel;
     private final DiscussionPostViewModel discussionPostViewModel;
+    private final ProfileViewModel profileViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoginViewModel loginViewModel, SignupViewModel signupViewModel, InstructionsViewModel instructionsViewModel,
                           GameEndViewModel gameEndViewModel,
-                          DiscussionPostViewModel discussionPostViewModel) {
+                          DiscussionPostViewModel discussionPostViewModel, ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.signupViewModel = signupViewModel;
         this.instructionsViewModel = instructionsViewModel;
         this.gameEndViewModel = gameEndViewModel;
         this.discussionPostViewModel = discussionPostViewModel;
+        this.profileViewModel = profileViewModel;
     }
 
     @Override
@@ -44,6 +48,8 @@ public class LoginPresenter implements LoginOutputBoundary {
         // On success, switch to the Instructions view.
         final GameEndState gameEndState = gameEndViewModel.getState();
         final DiscussionPostState discussionPostState = discussionPostViewModel.getState();
+        final ProfileState profileState = profileViewModel.getState();
+        profileState.setUsername(response.getUsername());
         gameEndState.setUsername(response.getUsername());
         discussionPostState.setUsername(response.getUsername());
 

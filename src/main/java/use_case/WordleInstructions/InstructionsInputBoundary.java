@@ -11,4 +11,6 @@ public interface InstructionsInputBoundary {
     String getRandomWord(String difficulty);
 
     void switchToDiscussionBoardView();
+
+    void switchToProfileView();
 }

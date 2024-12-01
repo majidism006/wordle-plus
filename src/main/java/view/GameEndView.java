@@ -5,7 +5,6 @@ import interface_adapter.history.HistoryController;
 import interface_adapter.logout.GameEndController;
 import interface_adapter.logout.GameEndState;
 import interface_adapter.logout.GameEndViewModel;
-import use_case.History.HistoryInputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
