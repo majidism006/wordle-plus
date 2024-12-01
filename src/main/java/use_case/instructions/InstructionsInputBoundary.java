@@ -1,4 +1,4 @@
-package use_case.WordleInstructions;
+package use_case.instructions;
 
 public interface InstructionsInputBoundary {
     /**

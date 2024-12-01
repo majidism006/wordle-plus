@@ -4,8 +4,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostViewModel;
 import interface_adapter.grid.GridViewModel;
 import interface_adapter.profile.ProfileViewModel;
-import use_case.WordleInstructions.InstructionsOutputBoundary;
-import use_case.WordleInstructions.InstructionsOutputData;
+import use_case.instructions.InstructionsOutputBoundary;
+import use_case.instructions.InstructionsOutputData;
 
 /**
  * The Presenter for the Instructions Use Case.

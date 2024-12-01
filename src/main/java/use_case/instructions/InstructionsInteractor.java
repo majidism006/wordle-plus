@@ -1,4 +1,4 @@
-package use_case.WordleInstructions;
+package use_case.instructions;
 
 import interface_adapter.grid.GridState;
 import use_case.service.UserService;
@@ -8,16 +8,16 @@ import data_access.repository.WordRepository;
  * This is the Interactor for the Instructions Use Case.
  * It handles the business logic for the instructions page.
  */
-public class InstructionsUseCaseInteractor implements InstructionsInputBoundary {
+public class InstructionsInteractor implements InstructionsInputBoundary {
 
     private final UserService userService;
     private final InstructionsOutputBoundary instructionsPresenter;
     private final WordRepository wordRepository;
     private final GridState gridState;
 
-    public InstructionsUseCaseInteractor(UserService userService,
-                                         InstructionsOutputBoundary instructionsPresenter,
-                                         WordRepository wordRepository, GridState gridState) {
+    public InstructionsInteractor(UserService userService,
+                                  InstructionsOutputBoundary instructionsPresenter,
+                                  WordRepository wordRepository, GridState gridState) {
         this.userService = userService;
         this.instructionsPresenter = instructionsPresenter;
         this.wordRepository = wordRepository;
