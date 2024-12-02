@@ -31,12 +31,15 @@ The purpose of this project is twofold:
 ---
 
 ## **Table of Contents**
-1. [Features](#features)
-2. [Installation Instructions](#installation-instructions)
-3. [Usage Guide](#usage-guide)
-4. [License](#license)
-5. [Feedback](#feedback)
-6. [Contributing](#contributing)
+
+| **Section**       | **Description**                          |
+|--------------------|------------------------------------------|
+| [1. Features](#features)             | Overview of the application's key features.        |
+| [2. Installation Instructions](#installation-instructions) | Step-by-step guide to setting up the project.     |
+| [3. Usage Guide](#usage-guide)       | Instructions on how to use the application.        |
+| [4. License](#license)               | Licensing details for the project.                 |
+| [5. Feedback](#feedback)             | How to provide feedback or report issues.          |
+| [6. Contributing](#contributing)     | Guidelines for contributing to the project.        |
 
 ---
 
