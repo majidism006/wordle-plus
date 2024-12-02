@@ -2,9 +2,9 @@ package view;
 
 
 import interface_adapter.history.HistoryController;
-import interface_adapter.logout.GameEndController;
-import interface_adapter.logout.GameEndState;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.gameend.GameEndState;
+import interface_adapter.gameend.GameEndViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
 
     private static final String viewName = "game end";
     private final GameEndViewModel gameEndViewModel;
-    private GameEndController gameEndController;
+    private LogoutController logoutController;
     private HistoryController historyController;
 
     private JLabel titleLabel;
@@ -52,11 +52,11 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
         JButton logout = new JButton("Log Out");
         buttons.add(logout);
 
-        playAgain.addActionListener(evt -> gameEndController.switchToInstructionView());
+        playAgain.addActionListener(evt -> logoutController.switchToInstructionView());
 
         logout.addActionListener(evt -> {
             final GameEndState currentState = gameEndViewModel.getState();
-            gameEndController.execute(currentState.getUsername());
+            logoutController.execute(currentState.getUsername());
             System.exit(0);
         });
 
@@ -92,8 +92,8 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    public void setLogoutController(GameEndController gameEndController) {
-        this.gameEndController = gameEndController;
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
     }
 
     public void setHistoryController(HistoryController historyController) {

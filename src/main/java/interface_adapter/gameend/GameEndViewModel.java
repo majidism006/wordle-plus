@@ -1,4 +1,4 @@
-package interface_adapter.logout;
+package interface_adapter.gameend;
 
 import interface_adapter.ViewModel;
 

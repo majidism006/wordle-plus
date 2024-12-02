@@ -2,7 +2,7 @@ package use_case;
 
 import data_access.repository.UserRepositoryImpl;
 import interface_adapter.history.HistoryPresenter;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;

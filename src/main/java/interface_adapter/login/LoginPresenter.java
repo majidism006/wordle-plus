@@ -1,21 +1,17 @@
 package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.ViewModel;
 import interface_adapter.discussion.DiscussionPostState;
 import interface_adapter.discussion.DiscussionPostViewModel;
-import interface_adapter.grid.GridState;
 import interface_adapter.instructions.InstructionsViewModel;
-import interface_adapter.logout.GameEndState;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.gameend.GameEndState;
+import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.grid.GridViewModel;
-import view.GameEndView;
 
 /**
  * The Presenter for the Login Use Case.

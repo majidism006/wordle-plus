@@ -20,9 +20,9 @@ import interface_adapter.instructions.InstructionsViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.GameEndController;
-import interface_adapter.logout.GameEndPresenter;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.gameend.GameEndViewModel;
 
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
@@ -43,9 +43,9 @@ import use_case.grid.GridOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.logout.GameEndInputBoundary;
-import use_case.logout.GameEndInteractor;
-import use_case.logout.GameEndOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import use_case.service.UserService;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
@@ -188,12 +188,12 @@ public class AppBuilder {
     }
 
     public AppBuilder addGameEndUseCase() {
-        GameEndOutputBoundary gameEndOutputBoundary = new GameEndPresenter(viewManagerModel, loginViewModel,
+        LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel, loginViewModel,
                 instructionsViewModel, gameEndViewModel, gridViewModel);
-        GameEndInputBoundary logoutInteractor = new GameEndInteractor(userService, gameEndOutputBoundary);
-        GameEndController gameEndController = new GameEndController(logoutInteractor);
+        LogoutInputBoundary logoutInteractor = new LogoutInteractor(userService, logoutOutputBoundary);
+        LogoutController logoutController = new LogoutController(logoutInteractor);
 
-        gameEndView.setLogoutController(gameEndController);
+        gameEndView.setLogoutController(logoutController);
         return this;
     }
 

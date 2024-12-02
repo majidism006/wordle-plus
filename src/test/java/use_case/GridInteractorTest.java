@@ -8,7 +8,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.grid.GridPresenter;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
 import use_case.grid.GameRepository;

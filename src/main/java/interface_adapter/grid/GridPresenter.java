@@ -4,7 +4,7 @@ import entity.CellResult;
 import entity.GuessResult;
 import interface_adapter.ViewManagerModel;
 import use_case.grid.GridOutputBoundary;
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.gameend.GameEndViewModel;
 import java.beans.PropertyChangeSupport;
 
 /**
