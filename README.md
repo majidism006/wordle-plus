@@ -92,7 +92,15 @@ The purpose of this project is twofold:
     - Locate the main class (e.g., `view.WordleInstructionsGUI`).
     - Right-click the file and select **Run** to launch the application.
 
-
+4. **Command-Line Alternative (if IntelliJ is not used)**:
+    - Compile the project:
+      ```bash
+      javac -d bin src/**/*.java
+      ```
+    - Run the application:
+      ```bash
+      java -cp bin view.WordleInstructionsGUI
+      ```
 
     
 ### **Dependencies**
