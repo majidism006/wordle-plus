@@ -1,7 +1,7 @@
 package use_case.login;
 
-import use_case.service.UserService;
 import entity.User;
+import use_case.service.UserService;
 
 /**
  * The Login Interactor.
@@ -32,11 +32,13 @@ public class LoginInteractor implements LoginInputBoundary {
             loginPresenter.prepareSuccessView(loginOutputData);
         }
     }
+
     @Override
     public void switchToSignupView() {
         loginPresenter.switchToSignupView();
 
     }
+
     @Override
     public void switchToInstructionsView() {
         loginPresenter.switchToInstructionsView();

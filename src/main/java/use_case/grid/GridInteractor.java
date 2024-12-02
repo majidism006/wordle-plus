@@ -4,6 +4,9 @@ import entity.GameState;
 import entity.GuessResult;
 import use_case.service.UserService;
 
+/**
+ * Interactor for Grid use case.
+ */
 public class GridInteractor implements GridInputBoundary {
     private final GridOutputBoundary gridPresenter;
     private final GameRepository gameRepository;
@@ -41,18 +44,16 @@ public class GridInteractor implements GridInputBoundary {
     }
 
     @Override
-    public void recordGameResult(boolean userWon){
+    public void recordGameResult(boolean userWon) {
         String currentUser = userService.getCurrentUsername();
-        if(userWon){
+        if (userWon) {
             int currentWins = userService.getUserWins(currentUser);
-            userService.setUserWins(currentUser, currentWins+1);
+            userService.setUserWins(currentUser, currentWins + 1);
         }
-        else{
+        else {
             int currentLosses = userService.getUserLosses(currentUser);
-            userService.setUserLosses(currentUser, currentLosses+1);
+            userService.setUserLosses(currentUser, currentLosses + 1);
         }
     }
-
-
 
 }

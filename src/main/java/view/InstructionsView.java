@@ -1,22 +1,28 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.*;
+
+import org.jetbrains.annotations.NotNull;
+
 import entity.DifficultyState;
 import interface_adapter.grid.GridState;
 import interface_adapter.history.HistoryController;
+import interface_adapter.instructions.InstructionsController;
 import interface_adapter.instructions.InstructionsState;
 import interface_adapter.instructions.InstructionsViewModel;
-import interface_adapter.instructions.InstructionsController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.service.UserService;
 
+/**
+ * Instructions View.
+ */
 public class InstructionsView extends JPanel implements PropertyChangeListener {
 
     public static final String SERIF = "Serif";
@@ -43,7 +49,6 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
         this.gridState = gridState;
         this.profileView = new ProfileView(new ProfileViewModel());
         this.profileViewModel = profileViewModel;
-//        this.profileViewModel.addPropertyChangeListener(this);
     }
 
     public void setInstructionsController(InstructionsController instructionsController) {
@@ -68,9 +73,9 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
         profilebutton.setFont(new Font(SERIF, Font.BOLD, 16));
         topPanel.add(profilebutton, BorderLayout.SOUTH);
 
-        profilebutton.addActionListener(e ->{
-                final ProfileState currentState = profileViewModel.getState();
-                historyController.execute(currentState.getUsername(),currentState.getStatus());});
+        profilebutton.addActionListener(e -> {
+            final ProfileState currentState = profileViewModel.getState();
+            historyController.execute(currentState.getUsername(), currentState.getStatus()); });
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -163,9 +168,9 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
 
         // Sets initial state to easy
         difficultyDropdown.setSelectedIndex(0);
-        difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown, ActionEvent.ACTION_PERFORMED, null));
+        difficultyDropdown.getActionListeners()[0].actionPerformed(new ActionEvent(difficultyDropdown,
+                ActionEvent.ACTION_PERFORMED, null));
     }
-
 
     private JPanel createExample(String word, int highlightedIndex) {
         JPanel examplePanel = new JPanel();
@@ -178,32 +183,42 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
             default -> "U is not in the word in any spot.";
         };
         JLabel explanationLabel = new JLabel(explanation, SwingConstants.CENTER);
-        explanationLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0)); // Add space below the text
+        // Add space below the text
+        explanationLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
         examplePanel.add(explanationLabel, BorderLayout.NORTH);
 
         // Create word tiles
         JPanel wordPanel = new JPanel();
-        wordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5)); // Add horizontal and vertical gaps
+        // Add horizontal and vertical gaps
+        wordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         for (int i = 0; i < word.length(); i++) {
-            JLabel tileLabel = new JLabel(String.valueOf(word.charAt(i)), SwingConstants.CENTER);
-            tileLabel.setPreferredSize(new Dimension(40, 40));
-            tileLabel.setOpaque(true);
-            tileLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-            // Set background color based on the example
-            if (i == highlightedIndex) {
-                tileLabel.setBackground(highlightedIndex == 0 ? Color.GREEN : highlightedIndex == 1 ? Color.ORANGE : Color.DARK_GRAY);
-            } else {
-                tileLabel.setBackground(Color.BLACK);
-            }
-            tileLabel.setForeground(Color.WHITE);
+            JLabel tileLabel = getjLabel(word, highlightedIndex, i);
             wordPanel.add(tileLabel);
         }
 
         examplePanel.add(wordPanel, BorderLayout.CENTER);
 
         return examplePanel;
+    }
+
+    @NotNull
+    private static JLabel getjLabel(String word, int highlightedIndex, int i) {
+        JLabel tileLabel = new JLabel(String.valueOf(word.charAt(i)), SwingConstants.CENTER);
+        tileLabel.setPreferredSize(new Dimension(40, 40));
+        tileLabel.setOpaque(true);
+        tileLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        // Set background color based on the example
+        if (i == highlightedIndex) {
+            tileLabel.setBackground(highlightedIndex == 0 ? Color.GREEN : highlightedIndex == 1 ? Color.ORANGE : Color
+                    .DARK_GRAY);
+        }
+        else {
+            tileLabel.setBackground(Color.BLACK);
+        }
+        tileLabel.setForeground(Color.WHITE);
+        return tileLabel;
     }
 
     @Override

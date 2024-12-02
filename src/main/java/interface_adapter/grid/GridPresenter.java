@@ -1,11 +1,12 @@
 package interface_adapter.grid;
 
+import java.beans.PropertyChangeSupport;
+
 import entity.CellResult;
 import entity.GuessResult;
 import interface_adapter.ViewManagerModel;
-import use_case.grid.GridOutputBoundary;
 import interface_adapter.gameend.GameEndViewModel;
-import java.beans.PropertyChangeSupport;
+import use_case.grid.GridOutputBoundary;
 
 /**
  * The Presenter for the Grid Use Case.
@@ -16,6 +17,7 @@ public class GridPresenter implements GridOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final GameEndViewModel gameEndViewModel;
     private final PropertyChangeSupport support;
+
     public GridPresenter(ViewManagerModel viewManagerModel,
                          GridViewModel gridViewModel, GameEndViewModel gameEndViewModel) {
         this.viewManagerModel = viewManagerModel;

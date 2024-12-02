@@ -1,17 +1,27 @@
 package app;
 
 
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.*;
+
 import data_access.repository.DiscussionPostRepository;
 import data_access.repository.GameRepositoryImpl;
 import data_access.repository.UserRepositoryImpl;
+import data_access.repository.WordRepository;
+import entity.DifficultyState;
 import entity.GameState;
 import interface_adapter.ViewManagerModel;
-import entity.DifficultyState;
 import interface_adapter.discussion.DiscussionPostController;
 import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
+import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridPresenter;
+import interface_adapter.grid.GridState;
+import interface_adapter.grid.GridViewModel;
 import interface_adapter.history.HistoryController;
 import interface_adapter.history.HistoryPresenter;
 import interface_adapter.instructions.InstructionsController;
@@ -22,24 +32,21 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.gameend.GameEndViewModel;
-
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.grid.GridViewModel;
-import use_case.history.*;
-import use_case.instructions.InstructionsInputBoundary;
-import use_case.instructions.InstructionsOutputBoundary;
-import use_case.instructions.InstructionsInteractor;
 import use_case.discussion.DiscussionPostInputBoundary;
 import use_case.discussion.DiscussionPostInteractor;
 import use_case.discussion.DiscussionPostOutputBoundary;
 import use_case.grid.GridInputBoundary;
 import use_case.grid.GridInteractor;
 import use_case.grid.GridOutputBoundary;
+import use_case.history.*;
+import use_case.instructions.InstructionsInputBoundary;
+import use_case.instructions.InstructionsInteractor;
+import use_case.instructions.InstructionsOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -51,11 +58,6 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.*;
-import data_access.repository.WordRepository;
-import interface_adapter.grid.GridState;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -121,17 +123,18 @@ public class AppBuilder {
         return addView(profileView, profileView.getViewName());
     }
 
-    public AppBuilder addWordleInstructionsGUI() {
+    public AppBuilder addInstructionsView() {
         instructionsViewModel = new InstructionsViewModel();
         final DifficultyState difficultyState = new DifficultyState();
-        instructionsView = new InstructionsView(instructionsViewModel, profileViewModel, difficultyState, gridState, userService);
+        instructionsView = new InstructionsView(instructionsViewModel, profileViewModel, difficultyState, gridState,
+                userService);
         cardPanel.add(instructionsView, InstructionsView.getViewName());
         return this;
     }
 
     public AppBuilder addGridView() {
         gridViewModel = new GridViewModel();
-        gridView = new GridView(gridViewModel, gameState);
+        gridView = new GridView(gridViewModel);
         return addView(gridView, gridView.getViewName());
     }
 
@@ -220,18 +223,13 @@ public class AppBuilder {
     }
 
     private String convertStateToTitle(String state) {
-        switch (state) {
-            case "game end":
-                return "Game End";
-            case "log in":
-                return "Login";
-            case "sign up":
-                return "Signup";
-            case "grid":
-                return "Wordle Grid";
-            default:
-                return "Application";
-        }
+        Map<String, String> stateTitleMap = new HashMap<>();
+        stateTitleMap.put("game end", "Game End");
+        stateTitleMap.put("log in", "Login");
+        stateTitleMap.put("sign up", "Signup");
+        stateTitleMap.put("grid", "Wordle Grid");
+
+        return stateTitleMap.getOrDefault(state, "Application");
     }
 
     public JFrame build() {

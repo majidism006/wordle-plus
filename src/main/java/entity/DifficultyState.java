@@ -1,15 +1,25 @@
 package entity;
 
 /**
- * The state for the Login View Model.
+ * The state for the difficulty for the game.
  */
 public class DifficultyState {
     private String difficulty = "easy";
 
+    /**
+     * Returns difficulty.
+     * @return difficulty string.
+     */
     public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {this.difficulty = difficulty;}
+    /**
+     * Sets difficulty.
+     * @param difficulty difficulty level to set.
+     */
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
 
 }

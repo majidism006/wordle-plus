@@ -6,11 +6,13 @@ import interface_adapter.profile.ProfileViewModel;
 import use_case.history.HistoryOutputBoundary;
 import use_case.history.HistoryOutputData;
 
+/**
+ * Presenter for the User History use case.
+ */
 public class HistoryPresenter implements HistoryOutputBoundary {
 
     private final GameEndViewModel gameEndViewModel;
     private final ProfileViewModel profileViewModel;
-
 
     public HistoryPresenter(GameEndViewModel gameEndViewModel, ProfileViewModel profileViewModel) {
 
@@ -23,7 +25,6 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         int win = historyOutputData.getWin();
         int loss = historyOutputData.getLoss();
         String state = historyOutputData.getStatus();
-        double winrates = (win + loss > 0) ? ((double) win / (win + loss)) * 100 : 0;
         final ProfileState currentstate = profileViewModel.getState();
         currentstate.setStatus(state);
         currentstate.setWin(win);
@@ -31,6 +32,8 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
         gameEndViewModel.firePropertyChange("wins", null, win);
         gameEndViewModel.firePropertyChange("losses", null, loss);
+
+        double winrates = (win + loss > 0) ? ((double) win / (win + loss)) * 100 : 0;
         gameEndViewModel.firePropertyChange("winRate", null, winrates);
     }
 

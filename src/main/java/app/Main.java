@@ -2,7 +2,15 @@ package app;
 
 import javax.swing.*;
 
+/**
+ * Main class for the Wordle program.
+ */
 public class Main {
+
+    /**
+     * Main class for the Wordle program.
+     * @param args standard args for psvm.
+     */
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
@@ -11,7 +19,7 @@ public class Main {
                 .addGridView()
                 .addGameEndView()
                 .addProfileView()
-                .addWordleInstructionsGUI()
+                .addInstructionsView()
                 .addDiscussionPostView()
                 .addSignupUseCase()
                 .addLoginUseCase()

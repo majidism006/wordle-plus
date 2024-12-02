@@ -10,7 +10,8 @@ import use_case.grid.GridInputData;
 public class GridController {
 
     private final GridInputBoundary gridInteractor;
-    private final GridState gridState; // Reference to GridState
+    // Reference to GridState
+    private final GridState gridState;
 
     public GridController(GridInputBoundary gridInteractor, GridState gridState) {
         this.gridInteractor = gridInteractor;
@@ -54,10 +55,10 @@ public class GridController {
     }
 
     /**
-     * Records win/loss for the user
+     * Records win/loss for the user.
      * @param userWon whether the user won or not
      */
-    public void recordGameResult(boolean userWon){
+    public void recordGameResult(boolean userWon) {
         gridInteractor.recordGameResult(userWon);
     }
 }

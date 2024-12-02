@@ -1,14 +1,17 @@
 package app.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+/**
+ * Configures database connections for the program.
+ */
 public class DatabaseConfig {
 
     private static final HikariDataSource dataSource;
@@ -32,16 +35,25 @@ public class DatabaseConfig {
 
             dataSource = new HikariDataSource(config);
 
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             ex.printStackTrace();
             throw new RuntimeException("Failed to load database configuration", ex);
         }
     }
 
+    /**
+     * Returns a new connection.
+     * @return new connection.
+     * @throws SQLException if unable to get connection.
+     */
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
+    /**
+     * Closes datasource after use.
+     */
     public static void closeDataSource() {
         if (dataSource != null) {
             dataSource.close();

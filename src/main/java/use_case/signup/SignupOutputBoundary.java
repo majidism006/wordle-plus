@@ -1,5 +1,8 @@
 package use_case.signup;
 
+/**
+ * Output boundary for Signup use case.
+ */
 public interface SignupOutputBoundary {
 
     /**

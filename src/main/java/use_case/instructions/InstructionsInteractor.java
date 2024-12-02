@@ -1,8 +1,8 @@
 package use_case.instructions;
 
+import data_access.repository.WordRepository;
 import interface_adapter.grid.GridState;
 import use_case.service.UserService;
-import data_access.repository.WordRepository;
 
 /**
  * This is the Interactor for the Instructions Use Case.
@@ -35,7 +35,8 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
         String randomWord = wordRepository.getRandomWord(difficulty);
 
         // Prepare the output data
-        InstructionsOutputData outputData = new InstructionsOutputData("Instructions Use Case executed with difficulty: " + difficulty);
+        InstructionsOutputData outputData = new InstructionsOutputData(
+                "Instructions Use Case executed with difficulty: " + difficulty);
 
         // Update the game state with the selected word
         gridState.setTargetWord(randomWord);
@@ -60,7 +61,7 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
     }
 
     /**
-     * Switches to Discussion Board
+     * Switches to Discussion Board.
      */
     @Override
     public void switchToDiscussionBoardView() {

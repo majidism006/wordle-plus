@@ -1,18 +1,21 @@
 package view;
 
-
-import interface_adapter.history.HistoryController;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.gameend.GameEndState;
-import interface_adapter.gameend.GameEndViewModel;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.*;
+
+import interface_adapter.gameend.GameEndState;
+import interface_adapter.gameend.GameEndViewModel;
+import interface_adapter.history.HistoryController;
+import interface_adapter.logout.LogoutController;
+
+/**
+ * Game End View.
+ */
 public class GameEndView extends JPanel implements PropertyChangeListener {
 
     private static final String viewName = "game end";
@@ -77,11 +80,13 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
         });
     }
 
-
+    /**
+     * Returns name of view.
+     * @return string viewName.
+     */
     public String getViewName() {
         return viewName;
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -92,10 +97,20 @@ public class GameEndView extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets the logout controller.
+     *
+     * @param logoutController the logout controller to set
+     */
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
 
+    /**
+     * Sets the history controller.
+     *
+     * @param historyController the history controller to set
+     */
     public void setHistoryController(HistoryController historyController) {
         this.historyController = historyController;
     }
