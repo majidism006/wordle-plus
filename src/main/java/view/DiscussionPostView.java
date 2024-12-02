@@ -1,22 +1,21 @@
 package view;
 
-import interface_adapter.discussion.DiscussionPostController;
-import interface_adapter.discussion.DiscussionPostState;
-import interface_adapter.discussion.DiscussionPostViewModel;
-import entity.DiscussionPost;
-import use_case.service.UserService;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import entity.DiscussionPost;
+import interface_adapter.discussion.DiscussionPostController;
+import interface_adapter.discussion.DiscussionPostState;
+import interface_adapter.discussion.DiscussionPostViewModel;
 
 public class DiscussionPostView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -40,8 +39,10 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
         // Create the discussion area (scrollable)
         discussionArea = new JTextArea();
         discussionArea.setEditable(false);
-        discussionArea.setLineWrap(true); // Enable line wrapping
-        discussionArea.setWrapStyleWord(true); // Wrap at word boundaries
+        // Enable line wrapping
+        discussionArea.setLineWrap(true);
+        // Wrap at word boundaries
+        discussionArea.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(discussionArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
@@ -106,7 +107,8 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
     }
 
     private void updatePostButtonState() {
-        postButton.setEnabled(true); // Always enable the post button
+        // Always enable the post button
+        postButton.setEnabled(true);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
                 controller.addPost(currentUserId, text);
                 textEntryField.setText("");
             }
-            else{
+            else {
                 controller.fetchRandomQuote(currentUserId);
                 textEntryField.setText("");
             }
@@ -138,12 +140,17 @@ public class DiscussionPostView extends JPanel implements ActionListener, Proper
         discussionArea.setText("");
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
         for (DiscussionPost post : posts) {
-            String timestamp = formatter.format(post.getCreatedAt()); // Format the date
+            // Format the date
+            String timestamp = formatter.format(post.getCreatedAt());
             discussionArea.append(post.getUserId() + ": " + post.getContent() + "\n");
             discussionArea.append("Posted at: " + timestamp + "\n\n");
         }
     }
 
+    /**
+     * Returns view name.
+     * @return string view name.
+     */
     public String getViewName() {
         return "discussion";
     }

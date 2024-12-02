@@ -1,11 +1,14 @@
 package interface_adapter.discussion;
 
+import java.util.List;
+
 import entity.DiscussionPost;
 import interface_adapter.ViewManagerModel;
 import use_case.discussion.DiscussionPostOutputBoundary;
 
-import java.util.List;
-
+/**
+ * Presenter for the Discussion Post use case.
+ */
 public class DiscussionPostPresenter implements DiscussionPostOutputBoundary {
     private final DiscussionPostViewModel viewModel;
     private final ViewManagerModel viewManagerModel;
@@ -25,12 +28,10 @@ public class DiscussionPostPresenter implements DiscussionPostOutputBoundary {
         viewModel.setPosts(posts);
     }
 
-    /**
-     *
-     */
     @Override
     public void switchToInstructionView() {
         viewManagerModel.setState("instructions");
         viewManagerModel.firePropertyChanged();
     }
 }
+

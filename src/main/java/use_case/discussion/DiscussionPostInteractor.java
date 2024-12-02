@@ -1,11 +1,5 @@
 package use_case.discussion;
 
-import data_access.repository.DiscussionPostRepository;
-import entity.DiscussionPost;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +9,16 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import data_access.repository.DiscussionPostRepository;
+import entity.DiscussionPost;
+
+/**
+ * Interactor for the Discussion Post use case.
+ */
 public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
     private final DiscussionPostRepository repository;
     private final DiscussionPostOutputBoundary outputBoundary;
@@ -32,7 +36,8 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
             post.setContent(inputData.getContent());
             repository.addPost(post);
             outputBoundary.presentPostAdded();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             // Handle error
         }
@@ -43,7 +48,8 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
         try {
             List<DiscussionPost> posts = repository.getAllPosts();
             outputBoundary.presentAllPosts(posts);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             // Handle error
         }
@@ -63,7 +69,8 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
             // Add post
             addPost(new DiscussionPostInputData(userId, postContent));
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +97,7 @@ public class DiscussionPostInteractor implements DiscussionPostInputBoundary {
     }
 
     /**
-     * Switches to Instructions
+     * Switches to Instructions.
      */
     @Override
     public void switchToInstructionView() {

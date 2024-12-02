@@ -1,15 +1,18 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.*;
+
 import interface_adapter.history.HistoryController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
-import use_case.service.UserService;
 
+/**
+ * Profile view.
+ */
 public class ProfileView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "profile";
@@ -52,7 +55,8 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         statusPanel.add(saveButton);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Stack vertically
+        // Stack vertically
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         winRateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -60,22 +64,31 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         statusPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         mainPanel.add(usernameLabel);
-        mainPanel.add(Box.createVerticalStrut(10)); // Add spacing
+        // Add spacing
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(winRateLabel);
-        mainPanel.add(Box.createVerticalStrut(10)); // Add spacing
+        // Add spacing
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(lossRateLabel);
-        mainPanel.add(Box.createVerticalStrut(20)); // Add larger spacing
+        // Add larger spacing
+        mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(statusPanel);
 
         profileDialog.add(mainPanel, BorderLayout.CENTER);
         profileDialog.setLocationRelativeTo(null);
     }
 
+    /**
+     * Displays the profile dialog.
+     */
     public void displayProfileDialog() {
         updateProfileData();
         profileDialog.setVisible(true);
     }
 
+    /**
+     * Updates the profile data.
+     */
     private void updateProfileData() {
         ProfileState currentState = profileViewModel.getState();
         usernameLabel.setText("Username: " + currentState.getUsername());
@@ -84,6 +97,11 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         statusField.setText(currentState.getStatus() != null ? currentState.getStatus() : "Set your status here!");
     }
 
+    /**
+     * Handles property change events.
+     *
+     * @param evt the property change event
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
@@ -95,11 +113,20 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         displayProfileDialog();
     }
 
-
+    /**
+     * Returns the name of the view.
+     *
+     * @return the view name
+     */
     public String getViewName() {
         return this.viewName;
     }
 
+    /**
+     * Sets the history controller.
+     *
+     * @param historyController the history controller to set
+     */
     public void setHistoryController(HistoryController historyController) {
         this.historyController = historyController;
     }

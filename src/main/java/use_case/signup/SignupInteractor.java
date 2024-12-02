@@ -3,6 +3,9 @@ package use_case.signup;
 import entity.User;
 import use_case.service.UserService;
 
+/**
+ * Interactor for Signup use case.
+ */
 public class SignupInteractor implements SignupInputBoundary {
     private final UserService userService;
     private final SignupOutputBoundary userPresenter;
@@ -18,17 +21,19 @@ public class SignupInteractor implements SignupInputBoundary {
 
         final String username = signupInputData.getUsername();
         final String password = signupInputData.getPassword();
-        if(username == null || password == null) {
+        if (username == null || password == null) {
             userPresenter.prepareFailView("Invalid username or password");
         }
         else {
             if (!password.equals(signupInputData.getRepeatPassword())) {
                 userPresenter.prepareFailView("Passwords don't match.");
-            } else {
+            }
+            else {
                 User user = userService.registerUser(username, password);
                 if (user == null) {
                     userPresenter.prepareFailView("User already exists.");
-                } else {
+                }
+                else {
                     final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
                     userPresenter.prepareSuccessView(signupOutputData);
                 }

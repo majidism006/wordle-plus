@@ -1,14 +1,23 @@
-package data_access.repository;
 
-import app.config.DatabaseConfig;
-import entity.DiscussionPost;
+package data_access.repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.config.DatabaseConfig;
+import entity.DiscussionPost;
+
+/**
+ * Defines CRUD operations for the Discussion Post use case.
+ */
 public class DiscussionPostRepository {
 
+    /**
+     * Adds new post to database.
+     * @param post contains post text and username.
+     * @throws SQLException if error fetching table.
+     */
     public void addPost(DiscussionPost post) throws SQLException {
         String sql = "INSERT INTO discussion_posts (user_id, content) VALUES (?, ?)";
         try (Connection connection = DatabaseConfig.getConnection();
@@ -19,6 +28,11 @@ public class DiscussionPostRepository {
         }
     }
 
+    /**
+     * Returns all posts to render Discussion Board.
+     * @return List of DiscussionPost objects.
+     * @throws SQLException if unable to get table.
+     */
     public List<DiscussionPost> getAllPosts() throws SQLException {
         List<DiscussionPost> posts = new ArrayList<>();
         String sql = "SELECT * FROM discussion_posts ORDER BY created_at ASC";

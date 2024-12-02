@@ -1,19 +1,23 @@
 package view;
 
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupState;
-import interface_adapter.signup.SignupViewModel;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener{
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
+
+/**
+ * Signup view.
+ */
+public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
@@ -46,7 +50,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel panel3 = new JPanel();
         panel3.add(repeatPasswordLabel);
         panel3.add(repeatPasswordInputField);
-
 
         final JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
@@ -179,6 +182,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
+    /**
+     * Handles property change events.
+     *
+     * @param evt the property change event
+     */
     public void propertyChange(PropertyChangeEvent evt) {
         final SignupState state = (SignupState) evt.getNewValue();
         if (state.getUsernameError() != null) {
@@ -186,10 +194,20 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         }
     }
 
+    /**
+     * Returns the name of the view.
+     *
+     * @return the view name
+     */
     public String getViewName() {
         return viewName;
     }
 
+    /**
+     * Sets the signup controller.
+     *
+     * @param controller the signup controller to set
+     */
     public void setSignupController(SignupController controller) {
         this.signupController = controller;
     }

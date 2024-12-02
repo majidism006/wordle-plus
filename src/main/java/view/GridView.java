@@ -1,20 +1,20 @@
 package view;
 
-import entity.GameState;
-import interface_adapter.grid.GridController;
-import interface_adapter.grid.GridState;
-import interface_adapter.grid.GridViewModel;
-import entity.GuessResult;
-import entity.CellResult;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
+import entity.GuessResult;
+import entity.CellResult;
+import interface_adapter.grid.GridController;
+import interface_adapter.grid.GridState;
+import interface_adapter.grid.GridViewModel;
 
 /**
  * The View for the Wordle Grid.
@@ -25,12 +25,10 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
-    private GameState gameState;
 
-    public GridView(GridViewModel gridViewModel, GameState gameState) {
+    public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
-        this.gameState = gameState;
 
         int rows = 6;
         int cols = 5;
@@ -54,7 +52,8 @@ public class GridView extends JPanel implements PropertyChangeListener {
         // Initialize grid cells with DocumentFilters for user input
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                JTextField cell = new JTextField(1); // Each cell holds one letter
+                // Each cell holds one letter
+                JTextField cell = new JTextField(1);
                 cell.setHorizontalAlignment(JTextField.CENTER);
                 cell.setFont(new Font("Arial", Font.BOLD, 18));
 

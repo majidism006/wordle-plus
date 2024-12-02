@@ -3,6 +3,9 @@ package data_access.repository;
 import entity.GameState;
 import use_case.grid.GameRepository;
 
+/**
+ * Contains operations for the game state.
+ */
 public class GameRepositoryImpl implements GameRepository {
     // This could be a database, file system, or in-memory storage
     private GameState gameState;
