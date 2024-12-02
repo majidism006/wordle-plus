@@ -2,7 +2,6 @@ package interface_adapter.discussion;
 
 import entity.DiscussionPost;
 import interface_adapter.ViewModel;
-import interface_adapter.logout.GameEndState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

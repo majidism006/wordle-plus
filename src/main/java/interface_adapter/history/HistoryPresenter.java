@@ -1,6 +1,6 @@
 package interface_adapter.history;
 
-import interface_adapter.logout.GameEndViewModel;
+import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.history.HistoryOutputBoundary;

@@ -15,7 +15,7 @@ class GameEndInteractorTest {
 
     @Test
     void successTest() {
-        GameEndInputData inputData = new GameEndInputData(USERNAME);
+        LogoutInputData inputData = new LogoutInputData(USERNAME);
         UserRepositoryImpl userRepository = new UserRepositoryImpl();
         PasswordHasher passwordHasher = new PasswordHasher();
         UserService userService = new UserService(userRepository, passwordHasher);
@@ -25,9 +25,9 @@ class GameEndInteractorTest {
         userService.setCurrentUsername(USERNAME);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
-        GameEndOutputBoundary successPresenter = new GameEndOutputBoundary() {
+        LogoutOutputBoundary successPresenter = new LogoutOutputBoundary() {
             @Override
-            public void prepareSuccessView(GameEndOutputData user) {
+            public void prepareSuccessView(LogoutOutputData user) {
                 // check that the output data contains the username of who logged out
                 assertEquals(USERNAME, user.getUsername());
             }
@@ -39,7 +39,7 @@ class GameEndInteractorTest {
 
         };
 
-        GameEndInputBoundary interactor = new GameEndInteractor(userService, successPresenter);
+        LogoutInputBoundary interactor = new LogoutInteractor(userService, successPresenter);
         interactor.execute(inputData);
 
         // check that the user was logged out
