@@ -31,12 +31,15 @@ The purpose of this project is twofold:
 ---
 
 ## **Table of Contents**
-1. [Features](#features)
-2. [Installation Instructions](#installation-instructions)
-3. [Usage Guide](#usage-guide)
-4. [License](#license)
-5. [Feedback](#feedback)
-6. [Contributing](#contributing)
+
+| **Section**       | **Description**                          |
+|--------------------|------------------------------------------|
+| [1. Features](#features)             | Overview of the application's key features.        |
+| [2. Installation Instructions](#installation-instructions) | Step-by-step guide to setting up the project.     |
+| [3. Usage Guide](#usage-guide)       | Instructions on how to use the application.        |
+| [4. License](#license)               | Licensing details for the project.                 |
+| [5. Feedback](#feedback)             | How to provide feedback or report issues.          |
+| [6. Contributing](#contributing)     | Guidelines for contributing to the project.        |
 
 ---
 
@@ -70,24 +73,39 @@ The purpose of this project is twofold:
 - **Operating System**: Windows, macOS, or Linux.
 - **Java Version**: JDK 17 or higher.
 
-### **Steps to Install**
-1. Clone this repository:
+### Prerequisites
+- IntelliJ IDEA (or any other Java IDE) is recommended.
+
+### Steps to Install and Run
+
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/your-username/wordle-game.git
    ```
-2. Navigate to the project directory:
+
+2. **Navigate to the Project Directory**:
    ```bash
    cd wordle-game
    ```
-3. Compile the project:
-   ```bash
-   javac -d bin src/**/*.java
-   ```
-4. Run the program:
-   ```bash
-   java -cp bin view.WordleInstructionsGUI
-   ```
 
+3. **Using IntelliJ IDEA**:
+    - Open IntelliJ IDEA.
+    - Select **File > Open** and navigate to the `wordle-game` directory.
+    - IntelliJ will detect the project structure. Ensure the `src/` folder is marked as a source directory under **File > Project Structure**.
+    - Locate the main class (e.g., `view.WordleInstructionsGUI`).
+    - Right-click the file and select **Run** to launch the application.
+
+4. **Command-Line Alternative (if IntelliJ is not used)**:
+    - Compile the project:
+      ```bash
+      javac -d bin src/**/*.java
+      ```
+    - Run the application:
+      ```bash
+      java -cp bin view.WordleInstructionsGUI
+      ```
+
+    
 ### **Dependencies**
 - **JUnit 5** (for unit testing)
   - Install via Maven or Gradle if needed.
