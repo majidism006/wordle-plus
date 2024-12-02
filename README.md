@@ -70,24 +70,31 @@ The purpose of this project is twofold:
 - **Operating System**: Windows, macOS, or Linux.
 - **Java Version**: JDK 17 or higher.
 
-### **Steps to Install**
-1. Clone this repository:
+### Prerequisites
+- IntelliJ IDEA (or any other Java IDE) is recommended.
+
+### Steps to Install and Run
+
+1. **Clone the Repository**:
    ```bash
    git clone https://github.com/your-username/wordle-game.git
    ```
-2. Navigate to the project directory:
+
+2. **Navigate to the Project Directory**:
    ```bash
    cd wordle-game
    ```
-3. Compile the project:
-   ```bash
-   javac -d bin src/**/*.java
-   ```
-4. Run the program:
-   ```bash
-   java -cp bin view.WordleInstructionsGUI
-   ```
 
+3. **Using IntelliJ IDEA**:
+    - Open IntelliJ IDEA.
+    - Select **File > Open** and navigate to the `wordle-game` directory.
+    - IntelliJ will detect the project structure. Ensure the `src/` folder is marked as a source directory under **File > Project Structure**.
+    - Locate the main class (e.g., `view.WordleInstructionsGUI`).
+    - Right-click the file and select **Run** to launch the application.
+
+
+
+    
 ### **Dependencies**
 - **JUnit 5** (for unit testing)
   - Install via Maven or Gradle if needed.
