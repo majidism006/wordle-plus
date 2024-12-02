@@ -16,7 +16,10 @@ class SignupInteractorTest {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String WRONG = "wrong";
-    public static final String UNEXISTED = "unexistedUsername";
+
+    // the value of this constant need to be change each time when you run the test,
+    // so that it will be a username that doesn't exist.
+    public static final String UNEXISTED = "UnexistedOne";
 
     @Test
     void successTest() {

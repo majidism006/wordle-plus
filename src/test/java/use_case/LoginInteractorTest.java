@@ -14,6 +14,7 @@ class LoginInteractorTest {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String WRONG = "wrong";
+    public static final String NONEXIST = "hauefibcjbwilev";
 
     LoginInputData inputData = new LoginInputData(USERNAME, PASSWORD);
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
@@ -112,7 +113,41 @@ class LoginInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals("Invalid Credentials.", error);
+                assertEquals("Invalid password.", error);
+            }
+
+            @Override
+            public void switchToSignupView() {
+                return;
+            }
+
+            @Override
+            public void switchToInstructionsView() {return;}
+
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(userService, failurePresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void failureUserDoesntExistTest() {
+        LoginInputData inputData = new LoginInputData(NONEXIST, PASSWORD);
+        UserRepositoryImpl userRepository = new UserRepositoryImpl();
+        PasswordHasher passwordHasher = new PasswordHasher();
+        UserService userService = new UserService(userRepository, passwordHasher);
+
+        // This creates a presenter that tests whether the test case is as we expect.
+        LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                // this should never be reached since the test case should fail
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Invalid username.", error);
             }
 
             @Override

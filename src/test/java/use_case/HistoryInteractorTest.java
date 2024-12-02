@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class HistoryInteractorTest {
 
     public static final String USERNAME = "username";
-    public static final String TEXT = "Only for tesing";
+    public static final String TEXT = "Only for testing";
 
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
     PasswordHasher passwordHasher = new PasswordHasher();
