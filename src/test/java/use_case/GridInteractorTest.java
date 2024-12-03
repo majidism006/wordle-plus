@@ -80,6 +80,9 @@ class GridInteractorTest {
         assert userService.getUserWins(USERNAME) == wins + 1;
         assert userService.getUserLosses(USERNAME) == losses;
 
+        wins = userService.getUserWins(USERNAME);
+        losses = userService.getUserLosses(USERNAME);
+
         interactor.recordGameResult(false);
         assert userService.getUserWins(USERNAME) == wins;
         assert userService.getUserLosses(USERNAME) == losses + 1;
