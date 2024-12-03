@@ -49,8 +49,4 @@ public class GridInputData {
         return letter;
     }
 
-
-    public String getGuess() {
-        return "";
-    }
 }
