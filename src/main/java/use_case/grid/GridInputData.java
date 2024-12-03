@@ -49,6 +49,11 @@ public class GridInputData {
         return letter;
     }
 
+    /**
+     * Gets the guess placed in the grid.
+     *
+     * @return the letter
+     */
     public String getGuess() {
         return letter;
     }
