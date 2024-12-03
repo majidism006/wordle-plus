@@ -8,7 +8,7 @@ import use_case.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameEndInteractorTest {
+class LogoutInteractorTest {
 
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
