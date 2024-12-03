@@ -23,7 +23,7 @@ class SignupInteractorTest {
 
     // the value of this constant need to be change each time when you run the test,
     // so that it will be a username that doesn't exist.
-    public static final String UNEXISTED = "UnexistedOne";
+    public static final String UNEXISTED = "qhufuiwuehif";
 
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
     PasswordHasher passwordHasher = new PasswordHasher();
@@ -110,31 +110,55 @@ class SignupInteractorTest {
         interactor.execute(inputData);
     }
 
-    //TODO: will empty username or password be executed in any case?
-//    @Test
-//    void failureEmptyUsernameTest() {
-//        SignupInputData inputData = new SignupInputData("", WRONG, WRONG);
-//
-//        // This creates a presenter that tests whether the test case is as we expect.
-//        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
-//            @Override
-//            public void prepareSuccessView(SignupOutputData user) {
-//                // this should never be reached since the test case should fail
-//                fail("Use case success is unexpected.");
-//            }
-//
-//            @Override
-//            public void prepareFailView(String error) {
-//                assertEquals("Invalid username or password.", error);
-//            }
-//
-//            @Override
-//            public void switchToLoginView() {return;}
-//        };
-//
-//        SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
-//        interactor.execute(inputData);
-//    }
+    @Test
+    void failureEmptyUsernameTest() {
+        SignupInputData inputData = new SignupInputData(null, PASSWORD, PASSWORD);
+
+        // This creates a presenter that tests whether the test case is as we expect.
+        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                // this should never be reached since the test case should fail
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Invalid username or password.", error);
+            }
+
+            @Override
+            public void switchToLoginView() {return;}
+        };
+
+        SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void failureEmptyPasswordTest() {
+        SignupInputData inputData = new SignupInputData(UNEXISTED, null, null);
+
+        // This creates a presenter that tests whether the test case is as we expect.
+        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                // this should never be reached since the test case should fail
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Invalid username or password.", error);
+            }
+
+            @Override
+            public void switchToLoginView() {return;}
+        };
+
+        SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
+        interactor.execute(inputData);
+    }
 
     @Test
     void switchToLoginViewTest() {
