@@ -1,7 +1,15 @@
 package use_case;
 
 import data_access.repository.UserRepositoryImpl;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.discussion.DiscussionPostViewModel;
+import interface_adapter.gameend.GameEndViewModel;
+import interface_adapter.instructions.InstructionsViewModel;
+import interface_adapter.login.LoginPresenter;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.security.PasswordHasher;
+import interface_adapter.signup.SignupViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.login.*;
 import use_case.service.UserService;
@@ -162,5 +170,39 @@ class LoginInteractorTest {
 
         LoginInputBoundary interactor = new LoginInteractor(userService, failurePresenter);
         interactor.execute(inputData);
+    }
+
+    @Test
+    void switchToSignupViewTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        DiscussionPostViewModel postViewModel = new DiscussionPostViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
+        LoginPresenter loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel,
+                instructionsViewModel, gameEndViewModel, postViewModel, profileViewModel);
+        LoginInputBoundary interactor = new LoginInteractor(userService, loginPresenter);
+        interactor.switchToSignupView();
+
+        assertEquals("sign up", viewManagerModel.getState());
+    }
+
+    @Test
+    void switchToInstructionsViewTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        SignupViewModel signupViewModel = new SignupViewModel();
+        InstructionsViewModel instructionsViewModel = new InstructionsViewModel();
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        DiscussionPostViewModel postViewModel = new DiscussionPostViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
+        LoginPresenter loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel,
+                instructionsViewModel, gameEndViewModel, postViewModel, profileViewModel);
+        LoginInputBoundary interactor = new LoginInteractor(userService, loginPresenter);
+        interactor.switchToInstructionsView();
+
+        assertEquals("instructions", viewManagerModel.getState());
     }
 }
