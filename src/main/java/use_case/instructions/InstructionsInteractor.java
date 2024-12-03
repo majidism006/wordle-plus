@@ -68,6 +68,9 @@ public class InstructionsInteractor implements InstructionsInputBoundary {
         instructionsPresenter.switchToDiscussionBoardView();
     }
 
+    /**
+     * Switches to Profile View.
+     */
     @Override
     public void switchToProfileView() {
         instructionsPresenter.switchToProfileView();
