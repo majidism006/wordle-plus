@@ -22,7 +22,7 @@ public class SignupInteractor implements SignupInputBoundary {
         final String username = signupInputData.getUsername();
         final String password = signupInputData.getPassword();
         if (username == null || password == null) {
-            userPresenter.prepareFailView("Invalid username or password");
+            userPresenter.prepareFailView("Invalid username or password.");
         }
         else {
             if (!password.equals(signupInputData.getRepeatPassword())) {

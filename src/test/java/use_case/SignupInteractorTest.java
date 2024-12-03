@@ -47,9 +47,7 @@ class SignupInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
-                // This is expected
-            }
+            public void switchToLoginView() {return;}
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userService, successPresenter);
@@ -74,9 +72,7 @@ class SignupInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
-                // This is expected
-            }
+            public void switchToLoginView() {return;}
         };
 
         SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
@@ -87,7 +83,7 @@ class SignupInteractorTest {
     void failureUserExistsTest() {
         SignupInputData inputData = new SignupInputData(USERNAME, WRONG, WRONG);
 
-        // Add Paul to the repo so that when we check later they already exist
+        // Add user to the repo so that when we check later they already exist
         userService.registerUser(USERNAME, WRONG);
         userService.setCurrentUsername(USERNAME);
 
@@ -113,6 +109,32 @@ class SignupInteractorTest {
         SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
         interactor.execute(inputData);
     }
+
+    //TODO: will empty username or password be executed in any case?
+//    @Test
+//    void failureEmptyUsernameTest() {
+//        SignupInputData inputData = new SignupInputData("", WRONG, WRONG);
+//
+//        // This creates a presenter that tests whether the test case is as we expect.
+//        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+//            @Override
+//            public void prepareSuccessView(SignupOutputData user) {
+//                // this should never be reached since the test case should fail
+//                fail("Use case success is unexpected.");
+//            }
+//
+//            @Override
+//            public void prepareFailView(String error) {
+//                assertEquals("Invalid username or password.", error);
+//            }
+//
+//            @Override
+//            public void switchToLoginView() {return;}
+//        };
+//
+//        SignupInputBoundary interactor = new SignupInteractor(userService, failurePresenter);
+//        interactor.execute(inputData);
+//    }
 
     @Test
     void switchToLoginViewTest() {
