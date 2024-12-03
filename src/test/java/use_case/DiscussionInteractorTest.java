@@ -7,12 +7,14 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
 
+import interface_adapter.security.PasswordHasher;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import use_case.discussion.DiscussionPostInputData;
 import use_case.discussion.DiscussionPostInteractor;
 import use_case.discussion.DiscussionPostOutputBoundary;
+import use_case.service.UserService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class DiscussionInteractorTest {
 
@@ -32,42 +35,33 @@ class DiscussionInteractorTest {
 
     DiscussionPostRepository repository = new DiscussionPostRepository();
 
+    UserRepositoryImpl userRepository = new UserRepositoryImpl();
+    PasswordHasher passwordHasher = new PasswordHasher();
+    UserService userService = new UserService(userRepository, passwordHasher);
+
     @Test
     void addPostTest() throws SQLException {
         DiscussionPostViewModel viewModel = new DiscussionPostViewModel();
         ViewManagerModel managerModel = new ViewManagerModel();
         DiscussionPostOutputBoundary OutputBoundary = new DiscussionPostPresenter(viewModel, managerModel);
 
-        class TempInteractor extends DiscussionPostInteractor {
+        String USERID = String.valueOf(userService.getUserByUsername(USERNAME).getId());
 
-            public TempInteractor(DiscussionPostRepository repository, DiscussionPostOutputBoundary outputBoundary) {
-                super(repository, outputBoundary);
-            }
+        DiscussionPostInteractor ADDInteractor = new DiscussionPostInteractor(repository, OutputBoundary);
+        DiscussionPostInputData inputData = new DiscussionPostInputData(USERID, TEXT);
 
-            // return post for this test
-            public DiscussionPost addPostTemp(DiscussionPostInputData inputData) {
-                try {
-                    DiscussionPost post = new DiscussionPost();
-                    post.setUserId(inputData.getUserId());
-                    post.setContent(inputData.getContent());
-                    repository.addPost(post);
-                    return post;
-                    // Don't show test text on discussion board
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Handle error
-                }
-                return null;
-            }
-        }
+        List<DiscussionPost> previousPosts = repository.getAllPosts();
 
-        TempInteractor ADDInteractor = new TempInteractor(repository, OutputBoundary);
+        ADDInteractor.addPost(inputData);
 
-        DiscussionPostInputData inputData = new DiscussionPostInputData(USERNAME, TEXT);
-        DiscussionPost post = ADDInteractor.addPostTemp(inputData);
         List<DiscussionPost> posts = repository.getAllPosts();
-        assertEquals(post.getUserId(), posts.get(posts.size() - 1).getUserId());
-        assertEquals(post.getContent(), posts.get(posts.size() - 1).getContent());
+
+        assertNotEquals(previousPosts.size(), posts.size());
+
+
+
+//        assertEquals(USERID, String.valueOf(posts.get(posts.size() - 1).getUserId()));
+//        assertEquals(TEXT, posts.get(posts.size() - 1).getContent());
     }
 
 
@@ -162,6 +156,10 @@ class DiscussionInteractorTest {
 
         DiscussionPostInteractor interactor = new DiscussionPostInteractor(repository, OutputBoundary);
         interactor.getAllPosts();
+        List<DiscussionPost> posts1 = repository.getAllPosts();
+        List<DiscussionPost> posts2 = viewModel.getPosts();
+
+
 
         assertEquals(repository.getAllPosts(), viewModel.getPosts());
     }

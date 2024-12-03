@@ -26,33 +26,30 @@ public class HistoryInteractorTest {
     UserService userService = new UserService(userRepository, passwordHasher);
 
     @Test
-    void updateStatusTest() {
+    void executeTest() {
         GameEndViewModel gameEndViewModel = new GameEndViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
         HistoryInputData historyInputData = new HistoryInputData(USERNAME,TEXT);
         HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
         HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
 
-        historyInteractor.updateStatus(historyInputData);
+        historyInteractor.execute(historyInputData);
 
-        assertEquals(TEXT, userService.getStatus(USERNAME));
+        assertEquals(userService.getStatus(USERNAME), profileViewModel.getState().getStatus());
+        assertEquals(userService.getUserWins(USERNAME), profileViewModel.getState().getWin());
+        assertEquals(userService.getUserLosses(USERNAME), profileViewModel.getState().getLoss());
     }
 
-    //TODO: check coverage after connection works
     @Test
-    void executeTest() {
+    void updateStatusTest() {
         GameEndViewModel gameEndViewModel = new GameEndViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
         HistoryInputData historyInputData = new HistoryInputData(USERNAME,TEXT2);
         HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
         HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
 
-        historyInteractor.execute(historyInputData);
+        historyInteractor.updateStatus(historyInputData);
 
         assertEquals(TEXT2, userService.getStatus(USERNAME));
-//        int wins = userService.getUserWins(USERNAME);
-//        int losses = userService.getUserLosses(USERNAME);
-//        GameEndState gameEndState = new GameEndState();
-//        assertEquals(gameEndState,gameEndViewModel.getState());
     }
 }
