@@ -12,10 +12,12 @@ public class GridController {
     private final GridInputBoundary gridInteractor;
     // Reference to GridState
     private final GridState gridState;
+    private final GridViewModel gridViewModel;
 
-    public GridController(GridInputBoundary gridInteractor, GridState gridState) {
+    public GridController(GridInputBoundary gridInteractor, GridState gridState, GridViewModel gridViewModel) {
         this.gridInteractor = gridInteractor;
         this.gridState = gridState;
+        this.gridViewModel = gridViewModel;
     }
 
     /**
@@ -26,7 +28,7 @@ public class GridController {
      */
     public void execute(int row, int col, String letter) {
         gridState.setCellContent(row, col, letter);
-        final GridInputData gridInputData = new GridInputData(row, col, letter);
+        final GridInputData gridInputData = new GridInputData(row, letter);
         gridInteractor.execute(gridInputData);
     }
 
@@ -60,5 +62,22 @@ public class GridController {
      */
     public void recordGameResult(boolean userWon) {
         gridInteractor.recordGameResult(userWon);
+    }
+
+    public void submitGuess(int row, String guessedWord) {
+        // Update the current row in the gridState
+        gridState.setCurrentRow(row);
+
+        // Set the content for the specific row and columns, update only the current row
+        for (int col = 0; col < 5; col++) {
+            gridState.setCellContent(row, col, guessedWord.substring(col, col + 1));
+        }
+
+        // Notify listeners of the update to the specific row
+        gridViewModel.notifyListeners("cellUpdate", null, gridState);
+
+        // Handle the guess with the gridInteractor
+        GridInputData inputData = new GridInputData(row, guessedWord);
+        gridInteractor.handleGuess(inputData);
     }
 }

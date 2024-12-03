@@ -216,7 +216,7 @@ public class AppBuilder {
         GameRepositoryImpl gameRepository = new GameRepositoryImpl();
         gameRepository.saveGameState(gameState);
         GridInputBoundary gridInteractor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
-        GridController gridController = new GridController(gridInteractor, gridState);
+        GridController gridController = new GridController(gridInteractor, gridState, gridViewModel);
 
         gridView.setGridController(gridController);
         return this;

@@ -69,72 +69,26 @@ public class GridViewModel extends ViewModel<GridState> {
         support.removePropertyChangeListener(listener);
     }
 
+    public void notifyListeners(String propertyName, Object oldValue, Object newValue) {
+        support.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
     /**
-     * Sets the content of a specific cell in the grid and notifies listeners of the change.
+     * Sets the content and color of a specific cell in the grid and notifies listeners.
      *
      * @param row the row index of the cell
      * @param col the column index of the cell
      * @param content the content to set in the cell
+     * @param isCorrectPosition true if the cell is in the correct position
+     * @param isCorrectLetter true if the cell contains the correct letter
      */
-    public void setCellContent(int row, int col, String content) {
+    public void setCell(int row, int col, String content, boolean isCorrectPosition, boolean isCorrectLetter) {
         getState().setCellContent(row, col, content);
-        support.firePropertyChange("cellContent", null, getState());
-    }
+        getState().setCellCorrectPosition(row, col, isCorrectPosition);
+        getState().setCellCorrectLetter(row, col, isCorrectLetter);
 
-    /**
-     * Sets whether a specific cell is in the correct position and notifies listeners of the change.
-     *
-     * @param row the row index of the cell
-     * @param col the column index of the cell
-     * @param isCorrect true if the cell is in the correct position, false otherwise
-     */
-    public void setCellCorrectPosition(int row, int col, boolean isCorrect) {
-        getState().setCellCorrectPosition(row, col, isCorrect);
-        support.firePropertyChange("cellCorrectPosition", null, getState());
-    }
-
-    /**
-     * Sets whether a specific cell contains the correct letter and notifies listeners of the change.
-     *
-     * @param row the row index of the cell
-     * @param col the column index of the cell
-     * @param isCorrect true if the cell contains the correct letter, false otherwise
-     */
-    public void setCellCorrectLetter(int row, int col, boolean isCorrect) {
-        getState().setCellCorrectLetter(row, col, isCorrect);
-        support.firePropertyChange("cellCorrectLetter", null, getState());
-    }
-
-    /**
-     * Checks if a specific cell is in the correct position.
-     *
-     * @param row the row index of the cell
-     * @param col the column index of the cell
-     * @return true if the cell is in the correct position, false otherwise
-     */
-    public boolean isCellCorrectPosition(int row, int col) {
-        return getState().isCellCorrectPosition(row, col);
-    }
-
-    /**
-     * Checks if a specific cell contains the correct letter.
-     *
-     * @param row the row index of the cell
-     * @param col the column index of the cell
-     * @return true if the cell contains the correct letter, false otherwise
-     */
-    public boolean isCellCorrectLetter(int row, int col) {
-        return getState().isCellCorrectLetter(row, col);
-    }
-
-    /**
-     * Sets the game over state.
-     * (Currently not implemented)
-     *
-     * @param isGameOver true if the game is over, false otherwise
-     */
-    public void setGameOver(boolean isGameOver) {
-        // TODO: to be implemented
+        // Fire change for both content and appearance
+        support.firePropertyChange("cellUpdate", null, getState());
     }
 
     /**
@@ -144,4 +98,24 @@ public class GridViewModel extends ViewModel<GridState> {
         setState(new GridState());
         support.firePropertyChange("reset", null, getState());
     }
+
+    /**
+     * Applies coloring logic based on correctness flags for UI purposes.
+     * This method maps the correctness flags to color values that can
+     * be used by the view layer.
+     *
+     * @param isCorrectPosition true if the cell is in the correct position
+     * @param isCorrectLetter true if the cell contains the correct letter
+     * @return the corresponding color as a string (e.g., "green", "yellow", "grey")
+     */
+    public String getCellColor(boolean isCorrectPosition, boolean isCorrectLetter) {
+        if (isCorrectPosition) {
+            return "green";
+        } else if (isCorrectLetter) {
+            return "yellow";
+        } else {
+            return "grey";
+        }
+    }
+
 }
