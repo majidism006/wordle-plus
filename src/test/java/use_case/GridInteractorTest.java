@@ -12,9 +12,13 @@ import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.security.PasswordHasher;
 import org.junit.jupiter.api.Test;
 import use_case.grid.GameRepository;
+import use_case.grid.GridInputData;
 import use_case.grid.GridInteractor;
 import use_case.grid.GridOutputBoundary;
 import use_case.service.UserService;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 class GridInteractorTest {
 
@@ -22,29 +26,54 @@ class GridInteractorTest {
     public static final String WORD = "WORLD";
     public static final String GUESS = "GUESS";
 
-    ViewManagerModel viewManagerModel = new ViewManagerModel();
-    GridViewModel gridViewModel = new GridViewModel();
-    GameEndViewModel gameEndViewModel = new GameEndViewModel();
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
     PasswordHasher passwordHasher = new PasswordHasher();
-
-    GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
-    GameRepositoryImpl gameRepository = new GameRepositoryImpl();
     UserService userService = new UserService(userRepository, passwordHasher);
-
+    GameRepositoryImpl gameRepository = new GameRepositoryImpl();
 
     @Test
     void switchToGameEndViewTest() {
-        //No need for testing
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        GridViewModel gridViewModel = new GridViewModel();
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
+        GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
+
+        interactor.switchToGameEndView();
+
+        assertEquals("game end", viewManagerModel.getState());
     }
 
+    //TODO: need to be edited
     @Test
     void executeTest() {
-        //No need for testing
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        GridViewModel gridViewModel = new GridViewModel();
+        gridViewModel.setTargetWord("ABBBB");
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
+        GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
+
+        GridState previousState = gridViewModel.getState();
+        GridInputData inputData = new GridInputData(0,0, "A");
+        interactor.execute(inputData);
+        assertEquals(previousState, gridViewModel.getState());
+
+////        for(int i = 0; i < 4; i++) {
+////            inputData = new GridInputData(0, 1, "B");
+////            interactor.execute(inputData);
+////        }
+////
+////        assertNotEquals(previousState, gridViewModel.getState());
     }
 
     @Test
     void checkGuessTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        GridViewModel gridViewModel = new GridViewModel();
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
+
         class TempInteractor extends GridInteractor {
 
             public TempInteractor(GridOutputBoundary outputBoundary, GameRepository gameRepository, UserService userService) {
@@ -71,7 +100,12 @@ class GridInteractorTest {
 
     @Test
     void recordGameResultTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        GridViewModel gridViewModel = new GridViewModel();
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
         GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
+
         userService.setCurrentUsername(USERNAME);
         int wins = userService.getUserWins(USERNAME);
         int losses = userService.getUserLosses(USERNAME);
