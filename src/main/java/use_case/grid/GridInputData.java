@@ -49,12 +49,7 @@ public class GridInputData {
         return letter;
     }
 
-    /**
-     * Gets the guessed word.
-     * (Currently returns an empty string, to be implemented)
-     *
-     * @return the guessed word
-     */
+
     public String getGuess() {
         // TODO: complete method
         return "";
