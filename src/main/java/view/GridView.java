@@ -276,7 +276,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
         return word.toString();
     }
 
-
     private boolean isRowComplete(int row) {
         // Check if all cells in the row are filled
         for (int col = 0; col < gridCells[row].length; col++) {
