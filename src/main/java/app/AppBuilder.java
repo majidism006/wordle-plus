@@ -1,6 +1,5 @@
 package app;
 
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +65,9 @@ import view.*;
  * This is done by adding each View and then adding related Use Cases.
  */
 public class AppBuilder {
+
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 500;
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -97,7 +99,7 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
-        cardPanel.setPreferredSize(new Dimension(600, 500));
+        cardPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     private AppBuilder addView(JPanel view, String viewName) {

@@ -13,7 +13,12 @@ class UserServiceTest {
 
     public static final String USERNAME = "ServiceTest";
     public static final String PASSWORD = "ServiceTestPassword";
-    public static final String UNREGIS = "UnregisteredUser";
+    public static final String WRONG = "Wrong";
+
+    // need to be changed for each time
+    public static final String UNREGIS = "wirgheriogn";
+
+    public static final String UNREGIS4LOGIN = "aoehfiwoehf";
     public static final int NUM1 = 11;
     public static final int NUM2 = 22;
     public static final String TEXT = "OnlyForTesting";
@@ -31,26 +36,6 @@ class UserServiceTest {
 
     @Test
     void registerUserTest_Unregistered() {
-        class TempUserService extends UserService{
-
-            public TempUserService(UserRepositoryImpl userRepository, PasswordHasher passwordHasher) {
-                super(userRepository, passwordHasher);
-            }
-
-            @Override
-            public User registerUser(String username, String password) {
-                if (userRepository.findUserByUsername(username) != null) {
-                    return null; // User already exists
-                }
-                String hashedPassword = passwordHasher.hashPassword(password);
-                User newUser = new User(0, username, hashedPassword);
-                // Don't save user for present test
-                return newUser;
-            }
-
-        }
-
-        TempUserService userService = new TempUserService(userRepository, passwordHasher);
         User user = userService.registerUser(UNREGIS, PASSWORD);
         assertEquals(UNREGIS, user.getUsername());
         assert(passwordHasher.verifyPassword(PASSWORD, user.getPassword()));
@@ -65,8 +50,15 @@ class UserServiceTest {
     }
 
     @Test
+    void loginUserTest_RegisteredWithWrongPassword() {
+        userService.registerUser(USERNAME, PASSWORD);
+        User user = userService.loginUser(USERNAME, WRONG);
+        assertNull(user);
+    }
+
+    @Test
     void loginUserTest_Unregistered() {
-        User user = userService.loginUser(UNREGIS, PASSWORD);
+        User user = userService.loginUser(UNREGIS4LOGIN, PASSWORD);
         assertNull(user);
     }
 
@@ -96,8 +88,8 @@ class UserServiceTest {
 
     @Test
     void getUserLossesTest() {
-        userRepository.setUserWins(USERNAME, NUM1);
-        assert userService.getUserWins(USERNAME) == NUM1;
+        userRepository.setUserLosses(USERNAME, NUM1);
+        assert userService.getUserLosses(USERNAME) == NUM1;
     }
 
     @Test
@@ -115,6 +107,14 @@ class UserServiceTest {
     void setStatusTest() {
         userService.setStatus(USERNAME, TEXT);
         assertEquals(TEXT, userRepository.getUserStatus(USERNAME));
+    }
+
+    @Test
+    void getUserbyUsernameTest() {
+        assertEquals(userRepository.findUserByUsername(USERNAME).getUsername(),
+                userService.getUserByUsername(USERNAME).getUsername());
+        assertEquals(userRepository.findUserByUsername(USERNAME).getPassword(),
+                userService.getUserByUsername(USERNAME).getPassword());
     }
 
 }

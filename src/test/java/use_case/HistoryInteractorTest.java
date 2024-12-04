@@ -1,6 +1,7 @@
 package use_case;
 
 import data_access.repository.UserRepositoryImpl;
+import interface_adapter.gameend.GameEndState;
 import interface_adapter.history.HistoryPresenter;
 import interface_adapter.gameend.GameEndViewModel;
 import interface_adapter.profile.ProfileViewModel;
@@ -17,21 +18,38 @@ import static org.junit.Assert.assertEquals;
 public class HistoryInteractorTest {
 
     public static final String USERNAME = "username";
-    public static final String TEXT = "Only for tesing";
+    public static final String TEXT = "Only for testing";
+    public static final String TEXT2 = "another text for testing";
 
     UserRepositoryImpl userRepository = new UserRepositoryImpl();
     PasswordHasher passwordHasher = new PasswordHasher();
     UserService userService = new UserService(userRepository, passwordHasher);
 
-    GameEndViewModel gameEndViewModel = new GameEndViewModel();
-    ProfileViewModel profileViewModel = new ProfileViewModel();
-
     @Test
-    void updateStatusTest() {
+    void executeTest() {
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
         HistoryInputData historyInputData = new HistoryInputData(USERNAME,TEXT);
         HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
         HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
+
+        historyInteractor.execute(historyInputData);
+
+        assertEquals(userService.getStatus(USERNAME), profileViewModel.getState().getStatus());
+        assertEquals(userService.getUserWins(USERNAME), profileViewModel.getState().getWin());
+        assertEquals(userService.getUserLosses(USERNAME), profileViewModel.getState().getLoss());
+    }
+
+    @Test
+    void updateStatusTest() {
+        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
+        HistoryInputData historyInputData = new HistoryInputData(USERNAME,TEXT2);
+        HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(gameEndViewModel, profileViewModel);
+        HistoryInputBoundary historyInteractor = new HistoryInteractor(userService, historyOutputBoundary);
+
         historyInteractor.updateStatus(historyInputData);
-        assertEquals(TEXT, userService.getStatus(USERNAME));
+
+        assertEquals(TEXT2, userService.getStatus(USERNAME));
     }
 }
