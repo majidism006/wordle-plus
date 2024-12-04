@@ -4,6 +4,9 @@ import entity.GuessResult;
 import use_case.grid.GridInputBoundary;
 import use_case.grid.GridInputData;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * The controller for the Grid Use Case.
  */
@@ -67,7 +70,7 @@ public class GridController {
     public void submitGuess(int row, String guessedWord) {
         // Update the current row in the gridState
         gridState.setCurrentRow(row);
-
+        GuessResult result = checkWord(guessedWord);
         // Set the content for the specific row and columns, update only the current row
         for (int col = 0; col < 5; col++) {
             gridState.setCellContent(row, col, guessedWord.substring(col, col + 1));
@@ -75,7 +78,9 @@ public class GridController {
 
         // Notify listeners of the update to the specific row
         gridViewModel.notifyListeners("cellUpdate", null, gridState);
-
+        if (result.isCorrect()) {
+            gridViewModel.notifyListeners("isCorrect", null, gridState);
+        }
         // Handle the guess with the gridInteractor
         GridInputData inputData = new GridInputData(row, guessedWord);
         gridInteractor.handleGuess(inputData);

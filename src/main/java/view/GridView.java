@@ -83,7 +83,7 @@ public class GridView extends JPanel {
     private Color mapColor(String colorName) {
         return switch (colorName.toLowerCase()) {
             case "green" -> Color.GREEN;
-            case "yellow" -> Color.YELLOW;
+            case "yellow" -> Color.ORANGE;
             case "grey" -> Color.GRAY;
             default -> Color.BLACK;
         };
@@ -113,7 +113,13 @@ public class GridView extends JPanel {
                     Color color = mapColor(colorName);
                     updateCell(currentRow, col, content, color);
                 }
-            } else if ("reset".equals(evt.getPropertyName())) {
+            }
+            else if ("isCorrect".equals(evt.getPropertyName())) {
+                gridController.recordGameResult(true);
+                JOptionPane.showMessageDialog(GridView.this, "Congratulations! You guessed the word!");
+                gridController.switchToGameEndView();
+            }
+            else if ("reset".equals(evt.getPropertyName())) {
                 clear();
             }
         }
@@ -176,17 +182,12 @@ public class GridView extends JPanel {
         if (isRowComplete(row)) {
             String guessedWord = getRowWord(row);
             gridController.submitGuess(row, guessedWord);
-            GuessResult guessResult = gridController.checkWord(guessedWord);
-
-            if (guessResult.isCorrect()) {
-                gridController.recordGameResult(true);
-                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
-                gridController.switchToGameEndView();
-            } else if (row == gridCells.length - 1) {
+            if (row == gridCells.length - 1) {
                 gridController.recordGameResult(false);
                 JOptionPane.showMessageDialog(this, "Game Over! Try again!");
                 gridController.switchToGameEndView();
-            } else {
+            }
+            else {
                 focusNextRow(row + 1);
             }
         }
