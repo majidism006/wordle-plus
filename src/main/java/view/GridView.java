@@ -211,7 +211,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private boolean isValidCharacter(String text) {
         for (char c : text.toCharArray()) {
             if (!Character.isLetter(c)) {
-                Toolkit.getDefaultToolkit().beep(); // Provide feedback for invalid input
+                Toolkit.getDefaultToolkit().beep();
                 return false;
             }
         }
@@ -236,9 +236,11 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
                 if (cellResult.isCorrectPosition()) {
                     gridCells[row][col].setBackground(Color.GREEN);
-                } else if (cellResult.isCorrectLetter()) {
+                }
+                else if (cellResult.isCorrectLetter()) {
                     gridCells[row][col].setBackground(Color.ORANGE);
-                } else {
+                }
+                else {
                     gridCells[row][col].setBackground(Color.GRAY);
                 }
             }
@@ -247,11 +249,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 gridController.recordGameResult(true);
                 JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
                 gridController.switchToGameEndView();
-            } else if (row == gridCells.length - 1) {
+            }
+            else if (row == gridCells.length - 1) {
                 gridController.recordGameResult(false);
                 JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
                 gridController.switchToGameEndView();
-            } else {
+            }
+            else {
                 focusNextRow(row + 1);
             }
 
