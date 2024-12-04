@@ -1,10 +1,19 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -21,7 +30,7 @@ import interface_adapter.grid.GridViewModel;
  */
 public class GridView extends JPanel implements PropertyChangeListener {
 
-    private static final String viewName = "grid";
+    private static final String VIEW_NAME = "grid";
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
@@ -268,7 +277,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return VIEW_NAME;
     }
 
     /**
