@@ -178,4 +178,24 @@ public class InstructionsInteractorTest {
 
         assertEquals("profile",viewManagerModel.getState());
     }
-}
+
+    @Test
+    void testSetDifficulty(){
+            // Create an instance of InstructionsInputData with initial difficulty
+            InstructionsInputData inputData = new InstructionsInputData("Easy");
+
+            // Assert initial difficulty is correctly set
+            assertEquals("Easy", inputData.getDifficulty(),
+                    "Initial difficulty should be 'Easy'.");
+
+            // Change the difficulty using setDifficulty
+            inputData.setDifficulty("Hard");
+
+            // Assert that the difficulty is updated correctly
+            assertEquals("Hard", inputData.getDifficulty(),
+                    "Difficulty should be updated to 'Hard'.");
+        }
+    }
+
+
+
