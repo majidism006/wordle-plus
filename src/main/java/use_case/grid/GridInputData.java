@@ -41,15 +41,6 @@ public class GridInputData {
     }
 
     /**
-     * Gets the letter to be placed in the grid.
-     *
-     * @return the letter
-     */
-    public String getLetter() {
-        return letter;
-    }
-
-    /**
      * Gets the guess placed in the grid.
      *
      * @return the letter
