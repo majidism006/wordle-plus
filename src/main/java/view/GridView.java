@@ -166,6 +166,17 @@ public class GridView extends JPanel implements PropertyChangeListener {
             this.col = col;
         }
 
+        /**
+         *
+         * @param fb FilterBypass that can be used to mutate Document
+         * @param offset  the offset into the document to insert the content &gt;= 0.
+         *    All positions that track change at or after the given location
+         *    will move.
+         * @param thing the string to insert
+         * @param attr      the attributes to associate with the inserted
+         *   content.  This may be null if there are no attributes.
+         * @throws BadLocationException
+         */
         @Override
         public void insertString(FilterBypass fb, int offset, String thing, AttributeSet attr)
                 throws BadLocationException {
