@@ -1,17 +1,26 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import entity.GuessResult;
 import entity.CellResult;
+import entity.GuessResult;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
@@ -21,18 +30,21 @@ import interface_adapter.grid.GridViewModel;
  */
 public class GridView extends JPanel implements PropertyChangeListener {
 
-    private static final String viewName = "grid";
+    private static final String VIEW_NAME = "grid";
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
+    private static final int ROWS = 6;
+    private static final int COLS = 5;
+    private static final int TWENTY = 20;
+    private static final int TEN = 10;
+    private static final int EIGHTEEN = 18;
 
     public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
 
-        int rows = 6;
-        int cols = 5;
-        gridCells = new JTextField[rows][cols];
+        gridCells = new JTextField[ROWS][COLS];
 
         // Main layout with BorderLayout to include the title and grid
         setLayout(new BorderLayout());
@@ -40,22 +52,22 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
         // Title label
         JLabel titleLabel = new JLabel("WORDLE!!!", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(Color.WHITE); // White text for contrast
+        titleLabel.setFont(new Font("Arial", Font.BOLD, TWENTY));
+        titleLabel.setForeground(Color.WHITE);
         add(titleLabel, BorderLayout.NORTH);
 
         // Grid panel
-        JPanel gridPanel = new JPanel(new GridLayout(rows, cols, 10, 10));
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel gridPanel = new JPanel(new GridLayout(ROWS, COLS, TEN, TEN));
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
         gridPanel.setBackground(Color.BLACK);
 
         // Initialize grid cells with DocumentFilters for user input
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
                 // Each cell holds one letter
                 JTextField cell = new JTextField(1);
                 cell.setHorizontalAlignment(JTextField.CENTER);
-                cell.setFont(new Font("Arial", Font.BOLD, 18));
+                cell.setFont(new Font("Arial", Font.BOLD, EIGHTEEN));
 
                 // Set dark mode colors: black background and white text
                 cell.setBackground(Color.BLACK);
@@ -78,7 +90,8 @@ public class GridView extends JPanel implements PropertyChangeListener {
                             if (finalCol > 0) {
                                 gridCells[finalRow][finalCol - 1].requestFocus();
                             }
-                        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        }
+                        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                             // If Enter is pressed after filling the row, switch to the logout view
                             handleEnterKey(finalRow);
                         }
@@ -107,6 +120,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     /**
      * Updates the grid display based on the provided GridState.
+     * @param state of the grid
      */
     private void updateGrid(GridState state) {
         for (int row = 0; row < gridCells.length; row++) {
@@ -115,15 +129,21 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 gridCells[row][col].setText(letter);
 
                 if (state.isCellCorrectPosition(row, col)) {
-                    gridCells[row][col].setBackground(Color.GREEN); // Correct letter, correct position
-                } else if (state.isCellCorrectLetter(row, col)) {
-                    gridCells[row][col].setBackground(Color.ORANGE); // Correct letter, incorrect position
-                } else {
-                    gridCells[row][col].setBackground(Color.GRAY); // Incorrect letter
+                    gridCells[row][col].setBackground(Color.GREEN);
+                }
+                else if (state.isCellCorrectLetter(row, col)) {
+                    gridCells[row][col].setBackground(Color.ORANGE);
+                }
+                else {
+                    gridCells[row][col].setBackground(Color.GRAY);
                 }
             }
         }
     }
+
+    /**
+    * Clears the row s when we play again.
+     **/
 
     public void clear() {
         for (int row = 0; row < gridCells.length; row++) {
@@ -141,24 +161,37 @@ public class GridView extends JPanel implements PropertyChangeListener {
         private final int row;
         private final int col;
 
-        public UppercaseDocumentFilter(int row, int col) {
+        UppercaseDocumentFilter(int row, int col) {
             this.row = row;
             this.col = col;
         }
 
+        /**
+         *
+         * @param fb FilterBypass that can be used to mutate Document
+         * @param offset  the offset into the document to insert the content &gt;= 0.
+         *    All positions that track change at or after the given location
+         *    will move.
+         * @param thing the string to insert
+         * @param attr      the attributes to associate with the inserted
+         *   content.  This may be null if there are no attributes.
+         * @throws BadLocationException
+         */
         @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (string != null) {
-                string = string.toUpperCase();
-                if (isValidCharacter(string) && fb.getDocument().getLength() + string.length() <= 1) {
-                    super.insertString(fb, offset, string, attr);
+        public void insertString(FilterBypass fb, int offset, String thing, AttributeSet attr)
+                throws BadLocationException {
+            if (thing != null) {
+                thing = thing.toUpperCase();
+                if (isValidCharacter(thing) && fb.getDocument().getLength() + thing.length() <= 1) {
+                    super.insertString(fb, offset, thing, attr);
                     shiftFocus();
                 }
             }
         }
 
         @Override
-        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
             if (text != null) {
                 text = text.toUpperCase();
                 if (isValidCharacter(text) && fb.getDocument().getLength() - length + text.length() <= 1) {
@@ -189,7 +222,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private boolean isValidCharacter(String text) {
         for (char c : text.toCharArray()) {
             if (!Character.isLetter(c)) {
-                Toolkit.getDefaultToolkit().beep(); // Provide feedback for invalid input
+                Toolkit.getDefaultToolkit().beep();
                 return false;
             }
         }
@@ -214,9 +247,11 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
                 if (cellResult.isCorrectPosition()) {
                     gridCells[row][col].setBackground(Color.GREEN);
-                } else if (cellResult.isCorrectLetter()) {
+                }
+                else if (cellResult.isCorrectLetter()) {
                     gridCells[row][col].setBackground(Color.ORANGE);
-                } else {
+                }
+                else {
                     gridCells[row][col].setBackground(Color.GRAY);
                 }
             }
@@ -225,11 +260,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 gridController.recordGameResult(true);
                 JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
                 gridController.switchToGameEndView();
-            } else if (row == gridCells.length - 1) {
+            }
+            else if (row == gridCells.length - 1) {
                 gridController.recordGameResult(false);
                 JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
                 gridController.switchToGameEndView();
-            } else {
+            }
+            else {
                 focusNextRow(row + 1);
             }
 
@@ -250,7 +287,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
         return word.toString();
     }
 
-
     private boolean isRowComplete(int row) {
         // Check if all cells in the row are filled
         for (int col = 0; col < gridCells[row].length; col++) {
@@ -262,7 +298,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return VIEW_NAME;
     }
 
     /**
