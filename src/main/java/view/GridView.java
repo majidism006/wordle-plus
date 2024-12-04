@@ -10,8 +10,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import entity.GuessResult;
 import entity.CellResult;
+import entity.GuessResult;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
@@ -25,13 +25,17 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
+    private static final int rows = 6;
+    private static final int cols = 5;
+    private static final int twenty = 20;
+    private static final int ten = 10;
+    private static final int eighteen = 18;
 
     public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
 
-        int rows = 6;
-        int cols = 5;
+
         gridCells = new JTextField[rows][cols];
 
         // Main layout with BorderLayout to include the title and grid
@@ -40,13 +44,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
         // Title label
         JLabel titleLabel = new JLabel("WORDLE!!!", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(Color.WHITE); // White text for contrast
+        titleLabel.setFont(new Font("Arial", Font.BOLD, twenty));
+        titleLabel.setForeground(Color.WHITE);
         add(titleLabel, BorderLayout.NORTH);
 
         // Grid panel
-        JPanel gridPanel = new JPanel(new GridLayout(rows, cols, 10, 10));
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel gridPanel = new JPanel(new GridLayout(rows, cols, ten, ten));
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(twenty, twenty, twenty, twenty));
         gridPanel.setBackground(Color.BLACK);
 
         // Initialize grid cells with DocumentFilters for user input
@@ -55,7 +59,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 // Each cell holds one letter
                 JTextField cell = new JTextField(1);
                 cell.setHorizontalAlignment(JTextField.CENTER);
-                cell.setFont(new Font("Arial", Font.BOLD, 18));
+                cell.setFont(new Font("Arial", Font.BOLD, eighteen));
 
                 // Set dark mode colors: black background and white text
                 cell.setBackground(Color.BLACK);
@@ -78,7 +82,8 @@ public class GridView extends JPanel implements PropertyChangeListener {
                             if (finalCol > 0) {
                                 gridCells[finalRow][finalCol - 1].requestFocus();
                             }
-                        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        }
+                        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                             // If Enter is pressed after filling the row, switch to the logout view
                             handleEnterKey(finalRow);
                         }
@@ -107,6 +112,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     /**
      * Updates the grid display based on the provided GridState.
+     * @param state of the grid
      */
     private void updateGrid(GridState state) {
         for (int row = 0; row < gridCells.length; row++) {
