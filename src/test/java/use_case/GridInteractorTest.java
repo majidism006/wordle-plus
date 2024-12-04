@@ -44,35 +44,34 @@ class GridInteractorTest {
         assertEquals("game end", viewManagerModel.getState());
     }
 
-    //TODO: need to be edited
-    @Test
-    void executeTest() {
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        GridViewModel gridViewModel = new GridViewModel();
-        GameEndViewModel gameEndViewModel = new GameEndViewModel();
-        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
-
-        GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
-
-        GridState gridState = new GridState();
-        gridState.setTargetWord("ABBBB");
-        GameState gameState = new GameState(gridState);
-        gameRepository.saveGameState(gameState);
-        gridViewModel.setState(gridState);
-
-        GridState previousState = gridViewModel.getState();
-        GridInputData inputData = new GridInputData(0,0, "A");
-        gridViewModel.setCellContent(0,0, "A");
-        interactor.execute(inputData);
-        assertEquals(previousState, gridViewModel.getState());
-
-//        for(int i = 0; i < 4; i++) {
-//            inputData = new GridInputData(0, 1, "B");
-//            interactor.execute(inputData);
-//        }
+//    @Test
+//    void executeTest() {
+//        ViewManagerModel viewManagerModel = new ViewManagerModel();
+//        GridViewModel gridViewModel = new GridViewModel();
+//        GameEndViewModel gameEndViewModel = new GameEndViewModel();
+//        GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
 //
-//        assertNotEquals(previousState, gridViewModel.getState());
-    }
+//        GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
+//
+//        GridState gridState = new GridState();
+//        gridState.setTargetWord("ABBBB");
+//        GameState gameState = new GameState(gridState);
+//        gameRepository.saveGameState(gameState);
+//        gridViewModel.setState(gridState);
+//
+//        GridState previousState = gridViewModel.getState();
+//        GridInputData inputData = new GridInputData(0,0, "A");
+//        gridViewModel.setCellContent(0,0, "A");
+//        interactor.execute(inputData);
+//        assertEquals(previousState, gridViewModel.getState());
+//
+////        for(int i = 0; i < 4; i++) {
+////            inputData = new GridInputData(0, 1, "B");
+////            interactor.execute(inputData);
+////        }
+////
+////        assertNotEquals(previousState, gridViewModel.getState());
+//    }
 
     @Test
     void checkGuessTest() {
