@@ -142,7 +142,7 @@ public class GridView extends JPanel implements PropertyChangeListener {
     }
 
     /**
-    * Clears the row s when we play again
+    * Clears the row s when we play again.
      **/
 
     public void clear() {
@@ -161,24 +161,26 @@ public class GridView extends JPanel implements PropertyChangeListener {
         private final int row;
         private final int col;
 
-        public UppercaseDocumentFilter(int row, int col) {
+        UppercaseDocumentFilter(int row, int col) {
             this.row = row;
             this.col = col;
         }
 
         @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (string != null) {
-                string = string.toUpperCase();
-                if (isValidCharacter(string) && fb.getDocument().getLength() + string.length() <= 1) {
-                    super.insertString(fb, offset, string, attr);
+        public void insertString(FilterBypass fb, int offset, String thing, AttributeSet attr)
+                throws BadLocationException {
+            if (thing != null) {
+                thing = thing.toUpperCase();
+                if (isValidCharacter(thing) && fb.getDocument().getLength() + thing.length() <= 1) {
+                    super.insertString(fb, offset, thing, attr);
                     shiftFocus();
                 }
             }
         }
 
         @Override
-        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
             if (text != null) {
                 text = text.toUpperCase();
                 if (isValidCharacter(text) && fb.getDocument().getLength() - length + text.length() <= 1) {
