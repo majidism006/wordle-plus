@@ -34,17 +34,17 @@ public class GridView extends JPanel implements PropertyChangeListener {
     private final GridViewModel gridViewModel;
     private final JTextField[][] gridCells;
     private GridController gridController;
-    private static final int rows = 6;
-    private static final int cols = 5;
-    private static final int twenty = 20;
-    private static final int ten = 10;
-    private static final int eighteen = 18;
+    private static final int ROWS = 6;
+    private static final int COLS = 5;
+    private static final int TWENTY = 20;
+    private static final int TEN = 10;
+    private static final int EIGHTEEN = 18;
 
     public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
 
-        gridCells = new JTextField[rows][cols];
+        gridCells = new JTextField[ROWS][COLS];
 
         // Main layout with BorderLayout to include the title and grid
         setLayout(new BorderLayout());
@@ -52,22 +52,22 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
         // Title label
         JLabel titleLabel = new JLabel("WORDLE!!!", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, twenty));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, TWENTY));
         titleLabel.setForeground(Color.WHITE);
         add(titleLabel, BorderLayout.NORTH);
 
         // Grid panel
-        JPanel gridPanel = new JPanel(new GridLayout(rows, cols, ten, ten));
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(twenty, twenty, twenty, twenty));
+        JPanel gridPanel = new JPanel(new GridLayout(ROWS, COLS, TEN, TEN));
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
         gridPanel.setBackground(Color.BLACK);
 
         // Initialize grid cells with DocumentFilters for user input
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
                 // Each cell holds one letter
                 JTextField cell = new JTextField(1);
                 cell.setHorizontalAlignment(JTextField.CENTER);
-                cell.setFont(new Font("Arial", Font.BOLD, eighteen));
+                cell.setFont(new Font("Arial", Font.BOLD, EIGHTEEN));
 
                 // Set dark mode colors: black background and white text
                 cell.setBackground(Color.BLACK);
@@ -130,17 +130,21 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
                 if (state.isCellCorrectPosition(row, col)) {
                     gridCells[row][col].setBackground(Color.GREEN);
-                } else if (state.isCellCorrectLetter(row, col)) {
+                }
+                else if (state.isCellCorrectLetter(row, col)) {
                     gridCells[row][col].setBackground(Color.ORANGE);
-                } else {
+                }
+                else {
                     gridCells[row][col].setBackground(Color.GRAY);
                 }
             }
         }
     }
+
     /**
-    Clears the row s when we play again
-     */
+    * Clears the row s when we play again
+     **/
+
     public void clear() {
         for (int row = 0; row < gridCells.length; row++) {
             for (int col = 0; col < gridCells[row].length; col++) {
