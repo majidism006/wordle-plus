@@ -172,6 +172,7 @@ public class InstructionsView extends JPanel implements PropertyChangeListener {
                 ActionEvent.ACTION_PERFORMED, null));
     }
 
+    // This creates the visual examples for the user.
     private JPanel createExample(String word, int highlightedIndex) {
         JPanel examplePanel = new JPanel();
         examplePanel.setLayout(new BorderLayout());

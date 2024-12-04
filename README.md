@@ -189,7 +189,7 @@ We value your feedback! To share your thoughts:
 
 ---
 
-### **Thank you for using Wordle Game! Enjoy guessing and learning.**
+### **Thank you for using Wordle Game! Enjoy guessing and learning!**
 
 
 
