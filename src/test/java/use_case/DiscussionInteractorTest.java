@@ -8,6 +8,7 @@ import interface_adapter.discussion.DiscussionPostPresenter;
 import interface_adapter.discussion.DiscussionPostViewModel;
 
 import interface_adapter.security.PasswordHasher;
+import org.apache.http.impl.bootstrap.HttpServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -102,11 +104,6 @@ class DiscussionInteractorTest {
         interactor.switchToInstructionView();
 
         assertEquals("instructions", managerModel.getState());
-    }
-
-    @Test
-    void getObjectTest() throws IOException, URISyntaxException {
-
     }
 
 }

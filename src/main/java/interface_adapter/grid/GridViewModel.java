@@ -128,16 +128,6 @@ public class GridViewModel extends ViewModel<GridState> {
     }
 
     /**
-     * Sets the game over state.
-     * (Currently not implemented)
-     *
-     * @param isGameOver true if the game is over, false otherwise
-     */
-    public void setGameOver(boolean isGameOver) {
-        //
-    }
-
-    /**
      * Resets the grid to its initial state and notifies listeners of the change.
      */
     public void resetGrid() {
