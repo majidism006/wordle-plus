@@ -50,13 +50,11 @@ public class GridInputData {
     }
 
     /**
-     * Gets the guessed word.
-     * (Currently returns an empty string, to be implemented)
+     * Gets the guess placed in the grid.
      *
-     * @return the guessed word
+     * @return the letter
      */
     public String getGuess() {
-        // TODO: complete method
-        return "";
+        return letter;
     }
 }
