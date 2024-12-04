@@ -134,7 +134,7 @@ public class GridViewModel extends ViewModel<GridState> {
      * @param isGameOver true if the game is over, false otherwise
      */
     public void setGameOver(boolean isGameOver) {
-        // TODO: to be implemented
+        //
     }
 
     /**

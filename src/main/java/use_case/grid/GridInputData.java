@@ -56,7 +56,6 @@ public class GridInputData {
      * @return the guessed word
      */
     public String getGuess() {
-        // TODO: complete method
         return "";
     }
 }

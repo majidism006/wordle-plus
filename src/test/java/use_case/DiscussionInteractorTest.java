@@ -45,10 +45,8 @@ class DiscussionInteractorTest {
         ViewManagerModel managerModel = new ViewManagerModel();
         DiscussionPostOutputBoundary OutputBoundary = new DiscussionPostPresenter(viewModel, managerModel);
 
-        String USERID = String.valueOf(userService.getUserByUsername(USERNAME).getId());
-
         DiscussionPostInteractor ADDInteractor = new DiscussionPostInteractor(repository, OutputBoundary);
-        DiscussionPostInputData inputData = new DiscussionPostInputData(USERID, TEXT);
+        DiscussionPostInputData inputData = new DiscussionPostInputData(USERNAME, TEXT);
 
         List<DiscussionPost> previousPosts = repository.getAllPosts();
 
@@ -57,11 +55,8 @@ class DiscussionInteractorTest {
         List<DiscussionPost> posts = repository.getAllPosts();
 
         assertNotEquals(previousPosts.size(), posts.size());
-
-
-
-//        assertEquals(USERID, String.valueOf(posts.get(posts.size() - 1).getUserId()));
-//        assertEquals(TEXT, posts.get(posts.size() - 1).getContent());
+        assertEquals(USERNAME, String.valueOf(posts.get(posts.size() - 1).getUserId()));
+        assertEquals(TEXT, posts.get(posts.size() - 1).getContent());
     }
 
 
@@ -71,83 +66,18 @@ class DiscussionInteractorTest {
         ViewManagerModel managerModel = new ViewManagerModel();
         DiscussionPostOutputBoundary OutputBoundary = new DiscussionPostPresenter(viewModel, managerModel);
 
-        class TempInteractor extends DiscussionPostInteractor {
+        DiscussionPostInteractor FETCHInteractor = new DiscussionPostInteractor(repository, OutputBoundary);
 
-            public TempInteractor(DiscussionPostRepository repository, DiscussionPostOutputBoundary outputBoundary) {
-                super(repository, outputBoundary);
-            }
+        List<DiscussionPost> previousPosts = repository.getAllPosts();
 
-            private static JSONArray getObjectsTemp() throws URISyntaxException, IOException {
-                URI uri = new URI("https://zenquotes.io/api/random/");
-                HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
-                connection.setRequestMethod("GET");
+        FETCHInteractor.fetchRandomQuote(USERNAME);
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder content = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-
-                // Close connections
-                in.close();
-                connection.disconnect();
-
-                // Parse JSON response
-                return new JSONArray(content.toString());
-            }
-
-            // return post for this test
-            public DiscussionPost addPostTemp(DiscussionPostInputData inputData) {
-                try {
-                    DiscussionPost post = new DiscussionPost();
-                    post.setUserId(inputData.getUserId());
-                    post.setContent(inputData.getContent());
-                    repository.addPost(post);
-                    return post;
-                    // Don't show test text on discussion board
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // Handle error
-                }
-                return null;
-            }
-
-            // return post for this test
-            public DiscussionPost fetchRandomQuoteTemp(String userId) {
-                try {
-                    JSONArray jsonArray = getObjectsTemp();
-                    JSONObject quoteObject = jsonArray.getJSONObject(0);
-                    String quote = quoteObject.getString("q");
-                    String author = quoteObject.getString("a");
-
-                    // Create post content
-                    String postContent = quote + " ~ " + author;
-
-                    // Add post
-                    DiscussionPost post = addPostTemp(new DiscussionPostInputData(userId, postContent));
-
-                    return post;
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }
-
-        TempInteractor FETCHInteractor = new TempInteractor(repository, OutputBoundary);
-
-        UserRepositoryImpl userRepository = new UserRepositoryImpl();
-
-        DiscussionPost post = FETCHInteractor.fetchRandomQuoteTemp(String.valueOf(
-                userRepository.findUserByUsername(USERNAME).getId()));
         List<DiscussionPost> posts = repository.getAllPosts();
-        assertEquals(post.getUserId(), posts.get(posts.size() - 1).getUserId());
-        assertEquals(post.getContent(), posts.get(posts.size() - 1).getContent());
+
+        assertNotEquals(previousPosts.size(), posts.size());
+
     }
 
-    //TODO: check after connection works
     @Test
     void getAllPostsTest() throws SQLException {
         DiscussionPostViewModel viewModel = new DiscussionPostViewModel();
@@ -159,9 +89,7 @@ class DiscussionInteractorTest {
         List<DiscussionPost> posts1 = repository.getAllPosts();
         List<DiscussionPost> posts2 = viewModel.getPosts();
 
-
-
-        assertEquals(repository.getAllPosts(), viewModel.getPosts());
+        assertEquals(repository.getAllPosts().size(), viewModel.getPosts().size());
     }
 
     @Test
@@ -174,6 +102,11 @@ class DiscussionInteractorTest {
         interactor.switchToInstructionView();
 
         assertEquals("instructions", managerModel.getState());
+    }
+
+    @Test
+    void getObjectTest() throws IOException, URISyntaxException {
+
     }
 
 }

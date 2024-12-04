@@ -49,22 +49,29 @@ class GridInteractorTest {
     void executeTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         GridViewModel gridViewModel = new GridViewModel();
-        gridViewModel.setTargetWord("ABBBB");
         GameEndViewModel gameEndViewModel = new GameEndViewModel();
         GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
+
         GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
+
+        GridState gridState = new GridState();
+        gridState.setTargetWord("ABBBB");
+        GameState gameState = new GameState(gridState);
+        gameRepository.saveGameState(gameState);
+        gridViewModel.setState(gridState);
 
         GridState previousState = gridViewModel.getState();
         GridInputData inputData = new GridInputData(0,0, "A");
+        gridViewModel.setCellContent(0,0, "A");
         interactor.execute(inputData);
         assertEquals(previousState, gridViewModel.getState());
 
-////        for(int i = 0; i < 4; i++) {
-////            inputData = new GridInputData(0, 1, "B");
-////            interactor.execute(inputData);
-////        }
-////
-////        assertNotEquals(previousState, gridViewModel.getState());
+//        for(int i = 0; i < 4; i++) {
+//            inputData = new GridInputData(0, 1, "B");
+//            interactor.execute(inputData);
+//        }
+//
+//        assertNotEquals(previousState, gridViewModel.getState());
     }
 
     @Test
@@ -74,28 +81,16 @@ class GridInteractorTest {
         GameEndViewModel gameEndViewModel = new GameEndViewModel();
         GridOutputBoundary gridOutputBoundary = new GridPresenter(viewManagerModel, gridViewModel, gameEndViewModel);
 
-        class TempInteractor extends GridInteractor {
-
-            public TempInteractor(GridOutputBoundary outputBoundary, GameRepository gameRepository, UserService userService) {
-                super(outputBoundary, gameRepository, userService);
-            }
-
-            public GuessResult checkGuess(GameState gameState, String guess) {
-                // Reduce number of remaining attempts
-                gameState.setRemainingAttempts(gameState.getRemainingAttempts() - 1);
-                // Don't save for the test
-                return gameState.checkGuess(guess);
-            }
-        }
+        GridInteractor interactor = new GridInteractor(gridOutputBoundary, gameRepository, userService);
 
         GridState gridState = new GridState();
         gridState.setTargetWord(WORD);
         GameState gameState = new GameState(gridState);
-        TempInteractor tempInteractor = new TempInteractor(gridOutputBoundary, gameRepository, userService);
+        gameRepository.saveGameState(gameState);
 
-        assert !tempInteractor.checkGuess(gameState, GUESS).isCorrect();
-        assert gameState.getRemainingAttempts() == 5;
-        assert tempInteractor.checkGuess(gameState, WORD).isCorrect();
+        assert !interactor.checkGuess(GUESS).isCorrect();
+        assert gameRepository.getGameState().getRemainingAttempts() == 5;
+        assert interactor.checkGuess(WORD).isCorrect();
     }
 
     @Test
