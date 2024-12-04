@@ -44,7 +44,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
         this.gridViewModel = gridViewModel;
         this.gridViewModel.addPropertyChangeListener(this);
 
-
         gridCells = new JTextField[rows][cols];
 
         // Main layout with BorderLayout to include the title and grid
@@ -130,16 +129,18 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 gridCells[row][col].setText(letter);
 
                 if (state.isCellCorrectPosition(row, col)) {
-                    gridCells[row][col].setBackground(Color.GREEN); // Correct letter, correct position
+                    gridCells[row][col].setBackground(Color.GREEN);
                 } else if (state.isCellCorrectLetter(row, col)) {
-                    gridCells[row][col].setBackground(Color.ORANGE); // Correct letter, incorrect position
+                    gridCells[row][col].setBackground(Color.ORANGE);
                 } else {
-                    gridCells[row][col].setBackground(Color.GRAY); // Incorrect letter
+                    gridCells[row][col].setBackground(Color.GRAY);
                 }
             }
         }
     }
-
+    /**
+    Clears the row s when we play again
+     */
     public void clear() {
         for (int row = 0; row < gridCells.length; row++) {
             for (int col = 0; col < gridCells[row].length; col++) {
