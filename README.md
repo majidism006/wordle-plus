@@ -98,7 +98,7 @@ The purpose of this project is twofold:
 4. **Command-Line Alternative (if IntelliJ is not used)**:
     - Compile the project:
       ```bash
-      javac -d bin src/**/*.java
+      javac -d bin src/java/**/*.java
       ```
     - Run the application:
       ```bash
