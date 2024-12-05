@@ -80,19 +80,19 @@ The purpose of this project is twofold:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/wordle-game.git
+   git clone https://github.com/raghavatruntime/wordle-clone.git
    ```
 
 2. **Navigate to the Project Directory**:
    ```bash
-   cd wordle-game
+   cd wordle-clone
    ```
 
 3. **Using IntelliJ IDEA**:
     - Open IntelliJ IDEA.
-    - Select **File > Open** and navigate to the `wordle-game` directory.
+    - Select **File > Open** and navigate to the `wordle-clone` directory.
     - IntelliJ will detect the project structure. Ensure the `src/` folder is marked as a source directory under **File > Project Structure**.
-    - Locate the main class (e.g., `view.WordleInstructionsGUI`).
+    - Locate the main class (e.g., `app.Main`).
     - Right-click the file and select **Run** to launch the application.
 
 4. **Command-Line Alternative (if IntelliJ is not used)**:
@@ -102,7 +102,7 @@ The purpose of this project is twofold:
       ```
     - Run the application:
       ```bash
-      java -cp bin view.WordleInstructionsGUI
+      java -cp bin app.Main
       ```
 
     
