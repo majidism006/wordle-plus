@@ -6,20 +6,17 @@ package use_case.grid;
 public class GridInputData {
 
     private final int row;
-    private final int col;
-    private final String letter;
+    private final String guess;
 
     /**
      * Constructs a new GridInputData with the specified row, column, and letter.
      *
-     * @param row the row index
-     * @param col the column index
-     * @param letter the letter to be placed in the grid
+     * @param row   the row index
+     * @param guess the guessed word
      */
-    public GridInputData(int row, int col, String letter) {
+    public GridInputData(int row, String guess) {
         this.row = row;
-        this.col = col;
-        this.letter = letter;
+        this.guess = guess;
     }
 
     /**
@@ -32,20 +29,12 @@ public class GridInputData {
     }
 
     /**
-     * Gets the column index.
+     * Gets the guessed word.
+     * (Currently returns an empty string, to be implemented)
      *
-     * @return the column index
-     */
-    public int getCol() {
-        return col;
-    }
-
-    /**
-     * Gets the guess placed in the grid.
-     *
-     * @return the letter
+     * @return the guessed word
      */
     public String getGuess() {
-        return letter;
+        return guess;
     }
 }

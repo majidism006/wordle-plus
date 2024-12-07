@@ -25,8 +25,7 @@ public class GridInteractor implements GridInputBoundary {
 
     @Override
     public void execute(GridInputData gridInputData) {
-        GuessResult result = checkGuess(gridInputData.getGuess());
-        gridPresenter.presentGuessResult(result);
+
     }
 
     @Override
@@ -54,6 +53,20 @@ public class GridInteractor implements GridInputBoundary {
             int currentLosses = userService.getUserLosses(currentUser);
             userService.setUserLosses(currentUser, currentLosses + 1);
         }
+    }
+
+    @Override
+    public void handleGuess(GridInputData inputData) {
+        int row = inputData.getRow();
+        String guessedWord = inputData.getGuess();
+        // Domain logic for word checking
+        GuessResult guessResult = checkGuess(guessedWord);
+
+        GridOutputData outputData = new GridOutputData(
+                row,
+                guessResult
+        );
+        gridPresenter.presentOutput(outputData);
     }
 
 }

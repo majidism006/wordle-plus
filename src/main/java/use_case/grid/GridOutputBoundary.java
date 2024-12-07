@@ -15,7 +15,9 @@ public interface GridOutputBoundary {
     /**
      * Presents the result of a guess.
      *
-     * @param result the result of the guess
+     * @param outputData the outputData
      */
-    void presentGuessResult(GuessResult result);
+    void presentGuessResult(GridOutputData outputData);
+
+    void presentOutput(GridOutputData outputData);
 }

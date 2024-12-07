@@ -14,21 +14,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import entity.CellResult;
 import entity.GuessResult;
 import interface_adapter.grid.GridController;
 import interface_adapter.grid.GridState;
 import interface_adapter.grid.GridViewModel;
 
-/**
- * The View for the Wordle Grid.
- */
-public class GridView extends JPanel implements PropertyChangeListener {
+public class GridView extends JPanel {
 
     private static final String VIEW_NAME = "grid";
     private final GridViewModel gridViewModel;
@@ -42,15 +39,13 @@ public class GridView extends JPanel implements PropertyChangeListener {
 
     public GridView(GridViewModel gridViewModel) {
         this.gridViewModel = gridViewModel;
-        this.gridViewModel.addPropertyChangeListener(this);
+        gridViewModel.addPropertyChangeListener(new GridViewListener());
 
         gridCells = new JTextField[ROWS][COLS];
 
-        // Main layout with BorderLayout to include the title and grid
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
-        // Title label
         JLabel titleLabel = new JLabel("WORDLE!!!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, TWENTY));
         titleLabel.setForeground(Color.WHITE);
@@ -73,26 +68,20 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 cell.setBackground(Color.BLACK);
                 cell.setForeground(Color.WHITE);
                 cell.setCaretColor(Color.WHITE);
-
-                // Add grey border
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
-                // Apply the custom DocumentFilter
                 ((AbstractDocument) cell.getDocument()).setDocumentFilter(new UppercaseDocumentFilter(row, col));
 
-                int finalCol = col;
                 int finalRow = row;
+                int finalCol = col;
                 cell.addKeyListener(new java.awt.event.KeyAdapter() {
                     @Override
                     public void keyPressed(java.awt.event.KeyEvent e) {
                         if (e.getKeyCode() == java.awt.event.KeyEvent.VK_BACK_SPACE && cell.getText().isEmpty()) {
-                            // Move to the previous cell on Backspace if the current cell is empty
                             if (finalCol > 0) {
                                 gridCells[finalRow][finalCol - 1].requestFocus();
                             }
-                        }
-                        else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                            // If Enter is pressed after filling the row, switch to the logout view
+                          
+                        } else if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                             handleEnterKey(finalRow);
                         }
                     }
@@ -102,61 +91,60 @@ public class GridView extends JPanel implements PropertyChangeListener {
                 gridPanel.add(cell);
             }
         }
-        // Add grid panel to the center of the layout
         add(gridPanel, BorderLayout.CENTER);
     }
 
-    /**
-     * Listens to property changes and updates the grid cells when state changes.
-     */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        final GridState state = (GridState) evt.getNewValue();
-        updateGrid(state);
-        if (evt.getPropertyName().equals("reset")) {
-            clear();
-        }
+    private void updateCell(int row, int col, String content, Color color) {
+        JTextField cell = gridCells[row][col];
+        cell.setText(content);
+        cell.setBackground(color);
     }
 
-    /**
-     * Updates the grid display based on the provided GridState.
-     * @param state of the grid
-     */
-    private void updateGrid(GridState state) {
-        for (int row = 0; row < gridCells.length; row++) {
-            for (int col = 0; col < gridCells[row].length; col++) {
-                String letter = state.getCellContent(row, col);
-                gridCells[row][col].setText(letter);
-
-                if (state.isCellCorrectPosition(row, col)) {
-                    gridCells[row][col].setBackground(Color.GREEN);
-                }
-                else if (state.isCellCorrectLetter(row, col)) {
-                    gridCells[row][col].setBackground(Color.ORANGE);
-                }
-                else {
-                    gridCells[row][col].setBackground(Color.GRAY);
-                }
-            }
-        }
+    private Color mapColor(String colorName) {
+        return switch (colorName.toLowerCase()) {
+            case "green" -> Color.GREEN;
+            case "yellow" -> Color.ORANGE;
+            case "grey" -> Color.GRAY;
+            default -> Color.BLACK;
+        };
     }
-
-    /**
-    * Clears the row s when we play again.
-     **/
 
     public void clear() {
         for (int row = 0; row < gridCells.length; row++) {
             for (int col = 0; col < gridCells[row].length; col++) {
-                gridCells[row][col].setText("");
-                gridCells[row][col].setBackground(Color.BLACK);
+                updateCell(row, col, "", Color.BLACK);
             }
         }
     }
 
-    /**
-     * Custom DocumentFilter to enforce uppercase letters and single character input.
-     */
+    private class GridViewListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if ("cellUpdate".equals(evt.getPropertyName())) {
+                GridState state = (GridState) evt.getNewValue();
+                int currentRow = state.getCurrentRow();
+
+                for (int col = 0; col < 5; col++) {
+                    String content = state.getCellContent(currentRow, col);
+                    String colorName = gridViewModel.getCellColor(
+                            state.isCellCorrectPosition(currentRow, col),
+                            state.isCellCorrectLetter(currentRow, col)
+                    );
+                    Color color = mapColor(colorName);
+                    updateCell(currentRow, col, content, color);
+                }
+            }
+            else if ("isCorrect".equals(evt.getPropertyName())) {
+                gridController.recordGameResult(true);
+                JOptionPane.showMessageDialog(GridView.this, "Congratulations! You guessed the word!");
+                gridController.switchToGameEndView();
+            }
+            else if ("reset".equals(evt.getPropertyName())) {
+                clear();
+            }
+        }
+    }
+
     private class UppercaseDocumentFilter extends DocumentFilter {
         private final int row;
         private final int col;
@@ -213,12 +201,6 @@ public class GridView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Validates if the input string contains only alphabetic characters.
-     *
-     * @param text The input string.
-     * @return True if the text contains only alphabetic characters, false otherwise.
-     */
     private boolean isValidCharacter(String text) {
         for (char c : text.toCharArray()) {
             if (!Character.isLetter(c)) {
@@ -229,66 +211,22 @@ public class GridView extends JPanel implements PropertyChangeListener {
         return true;
     }
 
-        private void handleEnterKey(int row) {
+    private void handleEnterKey(int row) {
         if (isRowComplete(row)) {
-            StringBuilder guessedWord = new StringBuilder();
-
-            // Collect the guessed word from the current row
-            for (int col = 0; col < gridCells[row].length; col++) {
-                guessedWord.append(gridCells[row][col].getText());
-            }
-
-            // Get the feedback for the guessed word
-            GuessResult guessResult = gridController.checkWord(guessedWord.toString());
-
-            // Update cell backgrounds based on feedback
-            for (int col = 0; col < guessResult.getCellResults().size(); col++) {
-                CellResult cellResult = guessResult.getCellResults().get(col);
-
-                if (cellResult.isCorrectPosition()) {
-                    gridCells[row][col].setBackground(Color.GREEN);
-                }
-                else if (cellResult.isCorrectLetter()) {
-                    gridCells[row][col].setBackground(Color.ORANGE);
-                }
-                else {
-                    gridCells[row][col].setBackground(Color.GRAY);
-                }
-            }
-
-            if (guessResult.isCorrect()) {
-                gridController.recordGameResult(true);
-                JOptionPane.showMessageDialog(this, "Congratulations! You guessed the word!");
-                gridController.switchToGameEndView();
-            }
-            else if (row == gridCells.length - 1) {
+            String guessedWord = getRowWord(row);
+            gridController.submitGuess(row, guessedWord);
+            if (row == gridCells.length - 1) {
                 gridController.recordGameResult(false);
-                JOptionPane.showMessageDialog(this, "Game Over! Try again!" );
+                JOptionPane.showMessageDialog(this, "Game Over! Try again!");
                 gridController.switchToGameEndView();
             }
             else {
                 focusNextRow(row + 1);
             }
-
         }
-    }
-
-    private void focusNextRow(int nextRow) {
-        if (nextRow < gridCells.length) {
-            gridCells[nextRow][0].requestFocus();
-        }
-    }
-
-    private String getRowWord(int row) {
-        StringBuilder word = new StringBuilder();
-        for (int col = 0; col < gridCells[row].length; col++) {
-            word.append(gridCells[row][col].getText());
-        }
-        return word.toString();
     }
 
     private boolean isRowComplete(int row) {
-        // Check if all cells in the row are filled
         for (int col = 0; col < gridCells[row].length; col++) {
             if (gridCells[row][col].getText().isEmpty()) {
                 return false;
@@ -297,14 +235,22 @@ public class GridView extends JPanel implements PropertyChangeListener {
         return true;
     }
 
+    private String getRowWord(int row) {
+        StringBuilder guessedWord = new StringBuilder();
+        for (int col = 0; col < gridCells[row].length; col++) {
+            guessedWord.append(gridCells[row][col].getText());
+        }
+        return guessedWord.toString();
+    }
+
+    private void focusNextRow(int nextRow) {
+        if (nextRow < gridCells.length) {
+            gridCells[nextRow][0].requestFocus();
+        }
     public String getViewName() {
         return VIEW_NAME;
     }
 
-    /**
-     * Set the GridController for this view.
-     * @param gridController the GridController to set
-     */
     public void setGridController(GridController gridController) {
         this.gridController = gridController;
     }

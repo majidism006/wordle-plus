@@ -33,4 +33,6 @@ public interface GridInputBoundary {
      * @param userWon true if the user won the game, false otherwise
      */
     void recordGameResult(boolean userWon);
+
+    void handleGuess(GridInputData inputData);
 }
