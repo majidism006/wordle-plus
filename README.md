@@ -1,4 +1,4 @@
-# **Wordle Game**
+# **Wordle+ : Cloud-Native Social Puzzle Platform**
 We made our own version of the iconic NY Times puzzle game; Wordle. We made this for the CSC207 group project.
 
 ## Names and GitHub IDs
