@@ -1,5 +1,5 @@
 # **Wordle+ : Cloud-Native Social Puzzle Platform**
-We made our own version of the iconic NY Times puzzle game; Wordle. We made this for the CSC207 group project.
+We made our own version of the iconic NY Times puzzle game; Wordle, with various difficulty levels. We also built a social platform for players to compete and interact.
 
 ## Names and GitHub IDs
 | Contributor Name          |       ID        |
