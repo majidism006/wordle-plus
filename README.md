@@ -10,8 +10,6 @@ We made our own version of the iconic NY Times puzzle game; Wordle, with various
 | Carol Xu      |    CaaarolXu    |
 | Ismail Majid  |   majidism006    |
 
-Here’s a complete README file for your Wordle project based on the provided checklist:
-
 ---
 
 ## **Summary**
